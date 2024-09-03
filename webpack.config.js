@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const fs = require('fs');
 
 module.exports = {
   entry: './src/index.js',
@@ -14,6 +15,14 @@ module.exports = {
     },
     compress: true,
     port: 3000,
+    server: {
+      type: 'https',
+      options: {
+        key: fs.readFileSync(path.join(__dirname, 'certs', 'key.pem')),
+        cert: fs.readFileSync(path.join(__dirname, 'certs', 'cert.pem')),
+      },
+    },
+    historyApiFallback: true,
   },
   module: {
     rules: [
