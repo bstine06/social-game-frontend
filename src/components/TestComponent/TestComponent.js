@@ -9,21 +9,30 @@ function TestComponent() {
             method: 'GET',
             credentials: 'include' // Include cookies in the request
         })
-        .then(response => response.text())
+        .then(response => {
+            console.log('Response Status:', response.status);
+            console.log('Response Headers:', response.headers);
+            return response.text();
+        })
         .then(sessionData => {
+            console.log('Session Data:', sessionData);
             if (sessionData.includes("No session ID found")) {
-                // Step 2: If no session ID found, set a new session
                 return fetch('http://localhost:8443/set-session', {
                     method: 'GET',
                     credentials: 'include' // Include cookies in the request
                 })
                 .then(response => response.text())
-                .then(data => setMessage("New session created: " + data));
+                .then(data => setMessage("New session created: " + data))
+                .catch(error => console.error('Error creating session:', error));
             } else {
                 setMessage("Session found: " + sessionData);
             }
         })
-        .catch(error => console.error('Error fetching session data:', error));
+        .catch(error => {
+            console.error('Error fetching session data:', error);
+            alert(`Error: ${error.message}`); // Display a user-friendly message
+        });
+        
     }, []);
 
     return (
