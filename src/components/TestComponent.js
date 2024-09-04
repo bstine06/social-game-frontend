@@ -38,7 +38,7 @@ function TestComponent() {
 
     return (
         <div>
-            <h1>Response from Spring Boot:</h1>
+            <h2>Unique session information:</h2>
             <pre>{message}</pre>
         </div>
     );
