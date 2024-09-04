@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 
 function TestComponent() {
+    const backendUrl = process.env.REACT_APP_BACKEND_URL
     const [message, setMessage] = useState('');
 
     useEffect(() => {
         // Step 1: Attempt to get the session
-        fetch('http://192.168.4.98:8443/get-session', {
+        fetch(`${backendUrl}/get-session`, {
             method: 'GET',
             credentials: 'include' // Include cookies in the request
         })
@@ -17,7 +18,7 @@ function TestComponent() {
         .then(sessionData => {
             console.log('Session Data:', sessionData);
             if (sessionData.includes("No session ID found")) {
-                return fetch('http://192.168.4.98:8443/set-session', {
+                return fetch(`${backendUrl}/set-session`, {
                     method: 'GET',
                     credentials: 'include' // Include cookies in the request
                 })

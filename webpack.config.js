@@ -1,5 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const webpack = require('webpack');
+require('dotenv').config();
 // Remove the 'fs' import if not used elsewhere
 // const fs = require('fs');
 
@@ -16,6 +18,7 @@ module.exports = {
     },
     compress: true,
     port: 3000,
+    host: process.env.HOST || 'localhost', // Use environment variable or default to localhost
     // Remove or comment out the 'server' property to disable HTTPS
     // server: {
     //   type: 'https',
@@ -44,5 +47,8 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './src/index.html',
     }),
+    new webpack.DefinePlugin({
+      'process.env': JSON.stringify(process.env)
+    })
   ],
 };
