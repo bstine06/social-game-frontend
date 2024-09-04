@@ -5,7 +5,7 @@ function TestComponent() {
 
     useEffect(() => {
         // Step 1: Attempt to get the session
-        fetch('http://localhost:8443/get-session', {
+        fetch('http://192.168.4.98:8443/get-session', {
             method: 'GET',
             credentials: 'include' // Include cookies in the request
         })
@@ -17,7 +17,7 @@ function TestComponent() {
         .then(sessionData => {
             console.log('Session Data:', sessionData);
             if (sessionData.includes("No session ID found")) {
-                return fetch('http://localhost:8443/set-session', {
+                return fetch('http://192.168.4.98:8443/set-session', {
                     method: 'GET',
                     credentials: 'include' // Include cookies in the request
                 })
