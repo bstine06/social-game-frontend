@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client'; // Import from 'react-dom/client'
-import TestComponent from './components/TestComponent/TestComponent';
-import CreatePlayerComponent from './components/CreatePlayerComponent/CreatePlayerComponent';
+import TestComponent from './components/TestComponent';
+import CreatePlayerComponent from './components/CreatePlayerComponent';
 
 function App() {
   return (
