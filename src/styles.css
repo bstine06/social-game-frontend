@@ -1,6 +1,6 @@
 /* styles.css */
 html {
-  overflow: hidden!important;
+  overflow-x: hidden!important;
 }
 
 body {
