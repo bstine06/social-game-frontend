@@ -33,3 +33,17 @@ export const fetchPlayers = async () => {
     throw error;
   }
 };
+
+export const getPlayer = async () => {
+  try {
+    const response = await fetch(`${backendUrl}/get-player`, {
+      method: 'GET',
+      credentials: 'include'
+    });
+    // if (!response.ok) throw new Error('Network response was not ok' + response.text);
+    return await response.text();
+  } catch (error) {
+    console.error('Error:', error);
+    throw error;
+  }
+};

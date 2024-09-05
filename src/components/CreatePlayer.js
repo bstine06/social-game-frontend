@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { createPlayer } from '../api/playerApi';
 
-function CreatePlayerComponent({ onPlayerCreated }) {
+function CreatePlayer({ onPlayerCreated }) {
   const [name, setName] = useState('');
 
   const handleInputChange = (event) => {
@@ -31,4 +31,4 @@ function CreatePlayerComponent({ onPlayerCreated }) {
   );
 }
 
-export default CreatePlayerComponent;
+export default CreatePlayer;

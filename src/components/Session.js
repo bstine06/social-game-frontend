@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { getSession, setSession } from '../api/sessionApi';
+import { getSession } from '../api/sessionApi';
 
-function TestComponent() {
+function Session({ onSessionReady }) {
   const [message, setMessage] = useState('');
 
   useEffect(() => {
@@ -9,12 +9,8 @@ function TestComponent() {
       try {
         const sessionData = await getSession();
         console.log('Session Data:', sessionData);
-        if (sessionData.includes("No session ID found")) {
-          const newSession = await setSession();
-          setMessage("New session created: " + newSession);
-        } else {
-          setMessage("Session found: " + sessionData);
-        }
+        setMessage("Session found: " + sessionData);
+        onSessionReady();  // Notify Dashboard that session is ready
       } catch (error) {
         console.error('Error fetching session data:', error);
         alert(`Error: ${error.message}`);
@@ -22,7 +18,7 @@ function TestComponent() {
     };
 
     fetchSession();
-  }, []);
+  }, [onSessionReady]);  // Ensure session fetch happens only once
 
   return (
     <div>
@@ -32,4 +28,4 @@ function TestComponent() {
   );
 }
 
-export default TestComponent;
+export default Session;

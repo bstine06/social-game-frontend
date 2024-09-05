@@ -1,6 +1,6 @@
 import React from 'react';
 
-function ViewAllPlayersComponent({ players }) {
+function AllPlayers({ players }) {
   return (
     <div>
       <h2>View All Players</h2>
@@ -33,4 +33,4 @@ function ViewAllPlayersComponent({ players }) {
   );
 }
 
-export default ViewAllPlayersComponent;
+export default AllPlayers;

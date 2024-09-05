@@ -1,12 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client'; // Import from 'react-dom/client'
-import TestComponent from './components/TestComponent';
-import PlayerDashboard from './components/PlayerDashboard';
+import Dashboard from './components/Dashboard';
 import './styles.css';  // Import the CSS file
 
 function App() {
   return (
-    <PlayerDashboard />
+    <Dashboard />
   );
 }
 
