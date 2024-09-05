@@ -1,43 +1,22 @@
 import React, { useState } from 'react';
+import { createPlayer } from '../api/playerApi';
 
-function CreatePlayerComponent() {
-
-  const backendUrl = process.env.REACT_APP_BACKEND_URL;
-
-  // State to hold the input value
+function CreatePlayerComponent({ onPlayerCreated }) {
   const [name, setName] = useState('');
 
-  // Function to handle input change
   const handleInputChange = (event) => {
     setName(event.target.value);
   };
 
-  // Function to handle form submission
   const handleSubmit = async () => {
-    console.log('Submitting:', { playerName: name });
     try {
-      const response = await fetch(`${backendUrl}/add-player`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include', // Include cookies
-        body: JSON.stringify({ playerName: name }),
-      });
-      
-      console.log('Response status:', response.status);
-      
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-  
-      const result = await response.json();
-      console.log('Player created:', result);
+      await createPlayer(name);
+      onPlayerCreated(); // Notify parent to update player list
+      setName(''); // Clear input field
     } catch (error) {
-      console.error('Error:', error);
+      console.error('Error creating player:', error);
     }
   };
-  
 
   return (
     <div>
