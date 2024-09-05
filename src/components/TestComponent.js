@@ -39,7 +39,7 @@ function TestComponent() {
     return (
         <div>
             <h2>Unique session information:</h2>
-            <pre>{message}</pre>
+            <p>{message}</p>
         </div>
     );
 }

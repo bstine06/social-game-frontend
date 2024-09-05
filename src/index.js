@@ -3,14 +3,23 @@ import ReactDOM from 'react-dom/client'; // Import from 'react-dom/client'
 import TestComponent from './components/TestComponent';
 import CreatePlayerComponent from './components/CreatePlayerComponent';
 import ViewAllPlayersComponent from './components/ViewAllPlayersComponent';
+import './styles.css';  // Import the CSS file
 
 function App() {
   return (
-    <div>
-      <h1>Social Game Dashboard</h1>
-      <TestComponent />
-      <CreatePlayerComponent />
-      <ViewAllPlayersComponent />
+    <div id="dashboard-container">
+      <div className="item">
+        <h1>Social Game Dashboard</h1>
+      </div>
+      <div className="item">
+        <TestComponent />
+      </div>
+      <div className="item">
+        <CreatePlayerComponent />
+      </div>
+      <div className="item">
+        <ViewAllPlayersComponent />
+      </div>
     </div>
   );
 }

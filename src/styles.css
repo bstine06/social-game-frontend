@@ -1,0 +1,40 @@
+/* styles.css */
+html {
+  overflow: hidden!important;
+}
+
+body {
+  background-color: #333;
+  color:white;
+  font-family: Arial, sans-serif;
+  max-width: 100%!important;
+  position: relative
+}
+
+#dashboard-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(90%, 1fr)); /* Auto-adjust columns */
+  gap: 20px; /* Optional: space between items */
+  justify-items: center;
+}
+
+.item {
+  padding: 10px;
+  width:80%;
+  border: 1px solid #ccc;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  border: 1px solid #444;
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #555;
+}
