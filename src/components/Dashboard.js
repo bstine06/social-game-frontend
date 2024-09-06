@@ -5,7 +5,7 @@ import Session from './Session';
 import CurrentPlayer from './CurrentPlayer';
 import { fetchPlayers } from '../api/playerApi';
 
-function Dashboard() {
+function Dashboard({ onStartGame }) {
   const [players, setPlayers] = useState([]);
   const [sessionReady, setSessionReady] = useState(false); // Track session status
   const [refreshPlayer, setRefreshPlayer] = useState(false); // Trigger player refresh
@@ -30,10 +30,15 @@ function Dashboard() {
     setRefreshPlayer(prev => !prev); // Toggle to refresh current player info
   };
 
+  const startGame = () => {
+    onStartGame();
+  }
+
   return (
     <div id="dashboard-container">
       <div className="item">
         <h1>Social Game Dashboard</h1>
+        <button onClick={startGame}>Start game</button>
       </div>
       <div className="item">
         <Session onSessionReady={() => setSessionReady(true)} />  {/* Pass callback to session */}
