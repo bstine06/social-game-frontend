@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { createPlayer } from '../api/sessionApi';
+import { createPlayer } from '../../api/sessionApi';
 
-function CreatePlayer({ onPlayerCreated }) {
+function CreatePlayer({ onPlayerCreated, userSession }) {
   const [name, setName] = useState('');
 
   const handleInputChange = (event) => {
@@ -20,7 +20,11 @@ function CreatePlayer({ onPlayerCreated }) {
 
   return (
     <div>
-      <h2>Create Player. Enter name:</h2>
+      <h2>{userSession?.player
+          ? `Edit player name:`
+          : `Create Player. Enter name:`}
+      </h2>
+      
       <input
         type="text"
         value={name}

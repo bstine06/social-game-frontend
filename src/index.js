@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import ReactDOM from 'react-dom/client';
 import Dashboard from './components/Dashboard';
 import Game from './components/Game';
-import AppStatePolling from './components/AppStatePolling';
-import UserSessionPolling from './components/UserSessionPolling';
+import AppStatePolling from './components/polling/AppStatePolling';
+import UserSessionPolling from './components/polling/UserSessionPolling';
 import { updateGlobalAppState } from './api/appStateApi';
 import './styles.css';
 

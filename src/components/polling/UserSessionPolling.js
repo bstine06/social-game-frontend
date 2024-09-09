@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { getSession } from '../api/sessionApi';  // Assuming this is an async function
+import { getSession } from '../../api/sessionApi';  // Assuming this is an async function
 
 function UserSessionPolling({ onUpdateUserSession }) {
   

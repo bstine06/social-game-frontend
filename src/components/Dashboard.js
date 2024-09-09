@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import CreatePlayer from "./CreatePlayer";
-import AllSessions from "./AllSessions";
+import CreatePlayer from "./dashboard/CreatePlayer";
+import AllSessions from "./dashboard/AllSessions";
 import { fetchSessions } from "../api/sessionApi";
 
 function Dashboard({ onStartGame, userSession }) {
@@ -36,7 +36,7 @@ function Dashboard({ onStartGame, userSession }) {
       </div>
 
       <div className="item">
-        <CreatePlayer onPlayerCreated={handlePlayerCreated} />{" "}
+        <CreatePlayer onPlayerCreated={handlePlayerCreated} userSession={userSession}/>{" "}
         {/* Pass callback */}
       </div>
       <div className="item">
