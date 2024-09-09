@@ -15,7 +15,6 @@ function App() {
   };
 
   const updateAppState = (newAppState) => {
-    console.log(newAppState);
     // Only update the state if it's different to avoid unnecessary re-renders
     if (newAppState !== appState) {
       setAppState(newAppState);

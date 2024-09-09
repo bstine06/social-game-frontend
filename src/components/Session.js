@@ -8,7 +8,6 @@ function Session({ onSessionReady }) {
     const fetchSession = async () => {
       try {
         const sessionData = await getSession();
-        console.log('Session Data:', sessionData);
         setMessage("Session found: " + sessionData);
         onSessionReady();  // Notify Dashboard that session is ready
       } catch (error) {

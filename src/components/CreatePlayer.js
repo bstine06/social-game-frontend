@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { createPlayer } from '../api/playerApi';
+import { createPlayer } from '../api/sessionApi';
 
 function CreatePlayer({ onPlayerCreated }) {
   const [name, setName] = useState('');

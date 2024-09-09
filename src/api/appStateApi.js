@@ -12,7 +12,6 @@ export const getGlobalAppState = async () => {
     if (!response.ok) throw new Error('Network response was not ok');
     
     const data = await response.json(); // Parse the JSON response
-    console.log(data);
     return data.appState; // Return only the "appState" value
   } catch (error) {
     console.error('Error:', error);

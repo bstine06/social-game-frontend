@@ -1,33 +1,32 @@
 import React, { useState, useEffect } from 'react';
 import CreatePlayer from './CreatePlayer';
-import AllPlayers from './AllPlayers';
+import AllSessions from './AllSessions';
 import Session from './Session';
-import CurrentPlayer from './CurrentPlayer';
-import { fetchPlayers } from '../api/playerApi';
+import { fetchSessions } from '../api/sessionApi';
 
 function Dashboard({ onStartGame }) {
-  const [players, setPlayers] = useState([]);
+  const [sessions, setSessions] = useState([]);
   const [sessionReady, setSessionReady] = useState(false); // Track session status
-  const [refreshPlayer, setRefreshPlayer] = useState(false); // Trigger player refresh
+  const [refreshSession, setRefreshSession] = useState(false);
 
-  const fetchAllPlayers = async () => {
+  const fetchAllSessions = async () => {
     try {
-      const result = await fetchPlayers();
-      setPlayers(result);
+      const result = await fetchSessions();
+      setSessions(result);
     } catch (error) {
-      console.error('Error fetching players:', error);
+      console.error('Error fetching sessions:', error);
     }
   };
 
   useEffect(() => {
     if (sessionReady) {
-      fetchAllPlayers();  // Fetch players after session is ready
+      fetchAllSessions();  // Fetch all sessions after session is ready
     }
   }, [sessionReady]);  // Depend on sessionReady
 
   const handlePlayerCreated = () => {
-    fetchAllPlayers();  // Re-fetch the list of players
-    setRefreshPlayer(prev => !prev); // Toggle to refresh current player info
+    fetchAllSessions();  // Re-fetch the list of players
+    setRefreshSession(prev => !prev); // Toggle to refresh current player info
   };
 
   const startGame = () => {
@@ -46,13 +45,10 @@ function Dashboard({ onStartGame }) {
       {sessionReady && (
         <>
           <div className="item">
-            <CurrentPlayer refreshPlayer={refreshPlayer} />  {/* Pass refresh state */}
-          </div>
-          <div className="item">
             <CreatePlayer onPlayerCreated={handlePlayerCreated} /> {/* Pass callback */}
           </div>
           <div className="item">
-            <AllPlayers players={players} />
+            <AllSessions sessions={sessions} />
           </div>
         </>
       )}
