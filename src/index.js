@@ -3,11 +3,13 @@ import ReactDOM from 'react-dom/client';
 import Dashboard from './components/Dashboard';
 import Game from './components/Game';
 import AppStatePolling from './components/AppStatePolling';
+import UserSessionPolling from './components/UserSessionPolling';
 import { updateGlobalAppState } from './api/appStateApi';
 import './styles.css';
 
 function App() {
   const [appState, setAppState] = useState("loading");
+  const [userSession, setUserSession] = useState(null);
 
   const startGame = () => {
     setAppState("game"); // Trigger the game to start
@@ -21,11 +23,15 @@ function App() {
     }
   }
 
+  const updateUserSession = (newUserSession) => {
+    setUserSession(newUserSession);
+  }
 
-  const renderComponent = () => {
+
+  const renderComponent = (userSession) => {
     switch (appState) {
       case "pregame": 
-        return <Dashboard onStartGame={startGame} />;
+        return <Dashboard onStartGame={startGame} userSession={userSession} />;
       case "game":
         return <Game />;
       default:
@@ -35,9 +41,17 @@ function App() {
 
   return (
     <div id="app-container">
-      <p>App state: { appState }</p>
-      <AppStatePolling onUpdateAppState={updateAppState}/>
-      {renderComponent()}
+      <p>App state: {appState}</p>
+      <p>
+        Session ID: {userSession?.sessionId || "N/A"} |
+        {userSession?.player
+          ? ` Player Name: ${userSession.player.playerName} | Host: ${userSession.player.hostPlayer}`
+          : " No player created"}
+      </p>
+
+      <AppStatePolling onUpdateAppState={updateAppState} />
+      <UserSessionPolling onUpdateUserSession={updateUserSession} />
+      {renderComponent(userSession)}
     </div>
   );
 }

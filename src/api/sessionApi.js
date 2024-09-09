@@ -7,7 +7,7 @@ export const getSession = async () => {
       credentials: 'include'
     });
     if (!response.ok) throw new Error('Network response was not ok');
-    return await response.text();
+    return await response.json();
   } catch (error) {
     console.error('Error:', error);
     throw error;
