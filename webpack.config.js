@@ -12,6 +12,7 @@ module.exports = {
     filename: 'bundle.js',
   },
   mode: 'development',
+  devtool: 'cheap-module-source-map',
   devServer: {
     static: {
       directory: path.join(__dirname, 'dist'),
@@ -38,6 +39,7 @@ module.exports = {
           loader: 'babel-loader',
           options: {
             presets: ['@babel/preset-env', '@babel/preset-react'],
+            sourceMaps: true
           },
         },
       },

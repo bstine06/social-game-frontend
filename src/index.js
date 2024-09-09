@@ -2,22 +2,43 @@ import React, { useState } from 'react';
 import ReactDOM from 'react-dom/client';
 import Dashboard from './components/Dashboard';
 import Game from './components/Game';
+import AppStatePolling from './components/AppStatePolling';
+import { updateGlobalAppState } from './api/appStateApi';
 import './styles.css';
 
 function App() {
-  const [gameStarted, setGameStarted] = useState(false);
+  const [appState, setAppState] = useState("loading");
 
   const startGame = () => {
-    setGameStarted(true); // Trigger the game to start
+    setAppState("game"); // Trigger the game to start
+    updateGlobalAppState("game");
+  };
+
+  const updateAppState = (newAppState) => {
+    console.log(newAppState);
+    // Only update the state if it's different to avoid unnecessary re-renders
+    if (newAppState !== appState) {
+      setAppState(newAppState);
+    }
+  }
+
+
+  const renderComponent = () => {
+    switch (appState) {
+      case "pregame": 
+        return <Dashboard onStartGame={startGame} />;
+      case "game":
+        return <Game />;
+      default:
+        return <div>Invalid state</div>;
+    }
   };
 
   return (
     <div id="app-container">
-      {gameStarted ? (
-        <Game />  // Load the game component when game starts
-      ) : (
-        <Dashboard onStartGame={startGame} />  // Pass startGame function to Dashboard
-      )}
+      <p>App state: { appState }</p>
+      <AppStatePolling onUpdateAppState={updateAppState}/>
+      {renderComponent()}
     </div>
   );
 }

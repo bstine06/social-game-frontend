@@ -40,10 +40,17 @@ export const getPlayer = async () => {
       method: 'GET',
       credentials: 'include'
     });
-    // if (!response.ok) throw new Error('Network response was not ok' + response.text);
-    return await response.text();
+
+    if (response.status === 404) {
+      return "No player found"; // Expected behavior, no player data found
+    } else if (!response.ok) {
+      console.error('Failed to fetch player:', response.statusText);
+      return "No player found"; // Return null or a custom value if the response is not OK
+    }
+
+    return await response.text(); // Return player data as text
   } catch (error) {
-    console.error('Error:', error);
-    throw error;
+    console.error('Error fetching player:', error);
+    return "No player found"; // Return null or a fallback value in case of network errors
   }
 };
