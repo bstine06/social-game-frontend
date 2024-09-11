@@ -44,16 +44,17 @@ export const fetchSessions = async () => {
   }
 };
 
-export const createPlayer = async (playerName) => {
+export const setName = async (name) => {
   try {
-    const response = await fetch(`${backendUrl}/add-player`, {
+    const response = await fetch(`${backendUrl}/set-name`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       credentials: 'include',
-      body: JSON.stringify({ playerName }),
+      body: JSON.stringify({ name }),
     });
+    console.log("Setting name");
     if (!response.ok) throw new Error('Network response was not ok');
     return await response.json();
   } catch (error) {
@@ -62,7 +63,7 @@ export const createPlayer = async (playerName) => {
   }
 };
 
-export const getPlayer = async () => {
+export const getName = async () => {
   try {
     const response = await fetch(`${backendUrl}/get-player`, {
       method: 'GET',

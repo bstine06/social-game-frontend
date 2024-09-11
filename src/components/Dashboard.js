@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
-import CreatePlayer from "./dashboard/CreatePlayer";
+import SetNameComponent from "./dashboard/SetNameComponent";
 import AllSessions from "./dashboard/AllSessions";
 import { fetchSessions } from "../api/sessionApi";
 
 function Dashboard({ onStartGame, userSession }) {
   const [sessions, setSessions] = useState([]);
-  const hostPlayerFlag = userSession?.player?.hostPlayer;
 
   const fetchAllSessions = async () => {
     try {
@@ -20,7 +19,7 @@ function Dashboard({ onStartGame, userSession }) {
     fetchAllSessions(); // Fetch all sessions
   }, []);
 
-  const handlePlayerCreated = () => {
+  const handleNameSet = () => {
     fetchAllSessions(); // Re-fetch the list of players
   };
 
@@ -32,11 +31,11 @@ function Dashboard({ onStartGame, userSession }) {
     <div id="dashboard-container">
       <div className="item">
         <h1>Social Game Dashboard</h1>
-        <button disabled={!hostPlayerFlag} onClick={startGame}>Start game</button>
+        <button onClick={startGame}>Start game</button>
       </div>
 
       <div className="item">
-        <CreatePlayer onPlayerCreated={handlePlayerCreated} userSession={userSession}/>{" "}
+        <SetNameComponent onNameSet={handleNameSet} userSession={userSession}/>{" "}
         {/* Pass callback */}
       </div>
       <div className="item">

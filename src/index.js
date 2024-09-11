@@ -44,9 +44,9 @@ function App() {
       <p>App state: {appState}</p>
       <p>
         Session ID: {userSession?.sessionId || "N/A"} |
-        {userSession?.player
-          ? ` Player Name: ${userSession.player.playerName} | Host: ${userSession.player.hostPlayer}`
-          : " No player created"}
+        {userSession?.name
+          ? ` Name: ${userSession.name}`
+          : " No name created"}
       </p>
 
       <AppStatePolling onUpdateAppState={updateAppState} />
