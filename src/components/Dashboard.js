@@ -3,7 +3,7 @@ import SetNameComponent from "./dashboard/SetNameComponent";
 import AllSessions from "./dashboard/AllSessions";
 import { fetchSessions } from "../api/sessionApi";
 
-function Dashboard({ onStartGame, userSession }) {
+function Dashboard({ onStartGame, userSession, errorMessage }) {
   const [sessions, setSessions] = useState([]);
 
   const fetchAllSessions = async () => {
@@ -20,7 +20,7 @@ function Dashboard({ onStartGame, userSession }) {
   }, []);
 
   const handleNameSet = () => {
-    fetchAllSessions(); // Re-fetch the list of players
+    fetchAllSessions(); // Re-fetch the list of sessions
   };
 
   const startGame = () => {
@@ -32,6 +32,7 @@ function Dashboard({ onStartGame, userSession }) {
       <div className="item">
         <h1>Social Game Dashboard</h1>
         <button onClick={startGame}>Start game</button>
+        <p> {errorMessage} </p>
       </div>
 
       <div className="item">

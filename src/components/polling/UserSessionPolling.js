@@ -4,7 +4,9 @@ import { getSession } from '../../api/sessionApi';  // Assuming this is an async
 function UserSessionPolling({ onUpdateUserSession }) {
   
   useEffect(() => {
+    
     const fetchUserSession = async () => {
+      console.log("Fetching user session...")
       try {
         const userSession = await getSession();  // Await the API response
         onUpdateUserSession(userSession);  // Pass the result to the parent component or state

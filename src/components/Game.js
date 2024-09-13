@@ -1,23 +1,34 @@
 import React, { useEffect } from "react";
-import { startGame } from "../api/gameApi";
+import { initialize } from "../api/gameApi";
+import QuestionsGathering from "./game/QuestionsGathering";
 
-function Game() {
+function Game({ gameState, userSession }) {
+  useEffect(() => {
+    async function initializeGame() {
+      try {
+        const response = await initialize();
+        console.log(response);
+      } catch (error) {
+        console.error("Error starting game:", error);
+      }
+    }
 
-  // useEffect(async () => {
-  //   async function startGameApi() {
-  //     const response = await startGame();
-  //     console.log(response);
-  //   }
+    initializeGame();
+  }, []);
 
-  //   startGameApi();
-  // }, []);
+  const handleQuestionSubmit = (response) => {
+    if (response.success) {
+      console.log(gameState);
+    }
+  }
 
   return (
     <div>
       <h1>Game is now active!</h1>
-      {/* Add your game-related components here */}
+      <QuestionsGathering onQuestionSubmit={handleQuestionSubmit}/>
     </div>
   );
 }
 
 export default Game;
+
