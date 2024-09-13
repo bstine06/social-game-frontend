@@ -1,20 +1,8 @@
 import React, { useEffect } from "react";
-import { initialize } from "../api/gameApi";
 import QuestionsGathering from "./game/QuestionsGathering";
+import Answering from "./game/Answering";
 
 function Game({ gameState, userSession }) {
-  useEffect(() => {
-    async function initializeGame() {
-      try {
-        const response = await initialize();
-        console.log(response);
-      } catch (error) {
-        console.error("Error starting game:", error);
-      }
-    }
-
-    initializeGame();
-  }, []);
 
   const handleQuestionSubmit = (response) => {
     if (response.success) {
@@ -22,10 +10,27 @@ function Game({ gameState, userSession }) {
     }
   }
 
+  const handleAnswerSubmit = (response) => {
+    if (response.success) {
+      console.log(gameState);
+    }
+  }
+
+  const renderComponent = () => {
+    switch (gameState) {
+      case "asking": 
+        return <QuestionsGathering onQuestionSubmit={handleQuestionSubmit}/>;
+      case "answering":
+        return <Answering />;
+      default:
+        return <div>Invalid state</div>;
+    }
+  };
+
   return (
     <div>
       <h1>Game is now active!</h1>
-      <QuestionsGathering onQuestionSubmit={handleQuestionSubmit}/>
+      {renderComponent()}
     </div>
   );
 }

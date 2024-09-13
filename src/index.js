@@ -6,6 +6,7 @@ import AppStatePolling from './components/polling/AppStatePolling';
 import UserSessionPolling from './components/polling/UserSessionPolling';
 import { updateGlobalState } from './api/appStateApi';
 import { fetchSessions } from './api/sessionApi';
+import { initialize } from "./api/gameApi";
 import deepEqual from './deepEqual';
 import './styles.css';
 
@@ -26,10 +27,11 @@ function App() {
       return entry.name !== null ? acc + 1 : acc;
     }, 0);
     if (countRegistered >= 3) {
-      updateGlobalState({
+      await updateGlobalState({
         appState: "game",
         gameState: "inactive"
       });
+      await initialize();
     } else {
       setErrorMessage("Must have at least 3 players registered to start");
     }
@@ -70,6 +72,7 @@ function App() {
   return (
     <div id="app-container">
       <p>App state: {getAppState()}</p>
+      <p>Game state: {getGameState()}</p>
       <p>
         Session ID: {userSession?.sessionId || "N/A"} |
         {userSession?.name
