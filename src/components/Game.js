@@ -29,7 +29,6 @@ function Game({ gameState, userSession }) {
 
   return (
     <div>
-      <h1>Game is now active!</h1>
       {renderComponent()}
     </div>
   );

@@ -70,20 +70,24 @@ function App() {
   };
 
   return (
-    <div id="app-container">
-      <p>App state: {getAppState()}</p>
-      <p>Game state: {getGameState()}</p>
-      <p>
-        Session ID: {userSession?.sessionId || "N/A"} |
-        {userSession?.name
-          ? ` Name: ${userSession.name}`
-          : " No name created"}
-      </p>
-
-      <AppStatePolling onUpdateState={updateState} />
-      <UserSessionPolling onUpdateUserSession={updateUserSession} />
-      {renderComponent(userSession)}
-    </div>
+    <>
+      <div id="app-container">
+        <AppStatePolling onUpdateState={updateState} />
+        <UserSessionPolling onUpdateUserSession={updateUserSession} />
+        {renderComponent(userSession)}
+      </div>
+      <div id="developer-info">
+        <pre>DEVELOPER INFO</pre>
+        <pre>appState : {getAppState()}</pre>
+        <pre>gameState : {getGameState()}</pre>
+        <pre>
+          {userSession?.name
+            ? `name : ${userSession.name}`
+            : " No name created"}
+        </pre>
+        <pre>id : {userSession?.sessionId || "N/A"}</pre>
+      </div>
+    </>
   );
 }
 
