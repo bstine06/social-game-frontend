@@ -5,6 +5,7 @@ import ConfirmModal from './ConfirmModal';
 function QuestionsGathering({ onQuestionSubmit }) {
   const [questionInput, setQuestionInput] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isQuestionSubmitted, setQuestionSubmitted] = useState(false);
 
   const handleInputChange = (event) => {
     setQuestionInput(event.target.value);
@@ -12,8 +13,6 @@ function QuestionsGathering({ onQuestionSubmit }) {
 
   const handleSubmit = () => {
     // Open the modal for confirmation
-    console.log("setting modal open");
-    console.log(questionInput);
     setIsModalOpen(true);
   };
 
@@ -24,6 +23,7 @@ function QuestionsGathering({ onQuestionSubmit }) {
       onQuestionSubmit(response); // Notify parent of update
       setQuestionInput(''); // Clear input field
       setIsModalOpen(false); // Close modal
+      setQuestionSubmitted(true);
     } catch (error) {
       console.error('Error while submitting question:', error);
     }
@@ -34,11 +34,14 @@ function QuestionsGathering({ onQuestionSubmit }) {
     setIsModalOpen(false);
   };
 
+  if (isQuestionSubmitted) {
+    return <p>You're all done submitting your question!</p>;
+  }
+
   return (
     <div>
       <h2>Enter a question for others to answer:</h2>
       <h4>Make it funny!</h4>
-
       <input
         type="text"
         value={questionInput}
@@ -46,7 +49,7 @@ function QuestionsGathering({ onQuestionSubmit }) {
       />
       <button onClick={handleSubmit}>Submit</button>
 
-      {/* Show the modal if there's input and the modal is open */}
+      {/* Show the modal if it's open */}
       {isModalOpen && (
         <ConfirmModal 
           content={questionInput} 
