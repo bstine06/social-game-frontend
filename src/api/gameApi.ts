@@ -70,3 +70,19 @@ export const updateGameState = async (gameId) => {
   }
 }
 
+export const getGameById = async (gameId) => {
+  try {
+    const response = await fetch(`${backendUrl}/${requestMapping}/${gameId}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    if (!response.ok) throw new Error('Network response was not ok');
+    return await response.json();
+  } catch (error) {
+    console.error('Error:', error);
+    throw error;
+  }
+}
+

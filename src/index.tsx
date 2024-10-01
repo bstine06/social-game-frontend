@@ -1,23 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
-import { createGame, getGameByHostId } from './api/gameApi';
-import { createPlayer, getSessionRole } from './api/sessionApi';
+import { createGame, getGameByHostId, getGameById } from './api/gameApi';
+import { getSessionRole } from './api/sessionApi';
+import { createPlayerApi, getPlayerById } from './api/playerApi';
 import ChooseRole from './components/ChooseRole';
-import SessionPolling from './components/polling/SessionPolling';
+import JoinGame from './components/JoinGame';
+import Host from './components/Host';
 import './styles.css';
 
 // Define the role types
-type Role = 'HOST' | 'PLAYER' | 'UNASSIGNED';
+type Role = 'HOST' | 'PLAYER' | 'PLAYER_CREATION' | 'UNASSIGNED';
 
 function App() {
-  // Define state types explicitly
   const [loading, setLoading] = useState<boolean>(true);
   const [gameState, setGameState] = useState<string | null>(null);
   const [gameId, setGameId] = useState<string | null>(null);
-  const [role, setRole] = useState<Role>('UNASSIGNED');
+  const [role, setRole] = useState<Role | null>(null);
   const [playerId, setPlayerId] = useState<string | null>(null);
   const [hostId, setHostId] = useState<string | null>(null);
 
+  // on page load, retrieve any existing role from backend via session cookie
   useEffect(() => {
     const getRole = async (): Promise<void> => {
       try {
@@ -28,12 +30,11 @@ function App() {
       }
     };
 
-    // Set the role based on cookies
-    getRole(); // Call the async function
-  }, []); // This useEffect runs once on component mount to set the role
+    getRole();
+  }, []);
 
+  // on page load, retrieve any game data related to any existing role
   useEffect(() => {
-    // If role is still UNASSIGNED, skip fetching data
     if (role === 'UNASSIGNED') {
       setLoading(false);
       return;
@@ -52,8 +53,6 @@ function App() {
           const game = await getGameById(player.gameId);
           setGameId(game.gameId);
           setGameState(game.gameState);
-        } else {
-          throw new Error("Cannot verify session of unknown role type");
         }
       } catch (err: any) {
         console.error(err.message);
@@ -62,34 +61,50 @@ function App() {
       }
     };
 
-    // Fetch data based on the role
-    getDataById();
-  }, [role]); // This useEffect depends on the 'role' state
+    if (role) {
+      getDataById();
+    }
+  }, [role]);
 
-  // Define functions for role actions
-  const createAndHostGame = (): void => {
-    setRole('HOST');
-    createGame();
+  // Handler to create a game when "Host" is clicked
+  const createAndHostGame = async () => {
+    try {
+      const game = await createGame(); // Call API to create a new game
+      setGameId(game.gameId); // Set gameId returned from backend
+      setGameState(game.gameState); // Set gameState returned from backend
+      setRole('HOST'); // Update role to 'HOST' after game creation
+    } catch (error) {
+      console.error('Error creating and hosting game:', error);
+    }
   };
 
-  const createPlayer = (): void => {
-    setRole("PLAYER");
+  const createPlayer = async (gameId : string, name : string): void => {
+    await createPlayerApi(gameId, name);
+    setRole('PLAYER');
   };
 
-  // Ensure proper typing for the role parameter
-  const renderComponent = (role: Role, loading: boolean): JSX.Element | null => {
-    if (loading) return <p>Loading...</p>; // Display loading message
+  const joinGame = (): void => {
+    setRole('PLAYER_CREATION');
+  }
+
+  const renderComponent = (role: Role | null, loading: boolean): JSX.Element | null => {
+    if (loading) return <p>Loading...</p>;
+
     if (role === "UNASSIGNED") {
       return (
-        <ChooseRole onChooseHost={createAndHostGame} onChooseJoin={createPlayer} />
+        <ChooseRole onChooseHost={createAndHostGame} onChooseJoin={joinGame} />
       );
-    } else if (role === "HOST") {
-      return <pre>HOST</pre>;
-    } else if (role === "PLAYER") {
+    } else if (role === "HOST" && gameId) {
+      return <Host gameId={gameId} />;
+    } else if (role === "PLAYER" && gameId) {
       return <pre>PLAYER</pre>;
+    } else if (role === "PLAYER_CREATION") {
+      return (
+        <JoinGame createPlayer={createPlayer}/>
+      );
     }
 
-    return null; // Fallback
+    return null;
   };
 
   return (
@@ -99,8 +114,7 @@ function App() {
         <pre>gameId : {gameId || "null"}</pre>
         <pre>gameState : {gameState || "null"}</pre>
         <pre>role: {role}</pre>
-        <pre>hostId : {hostId || "null"}</pre>
-        <pre>playerId : {playerId || "null"}</pre>
+        <pre>id : {hostId ? hostId: playerId ? playerId : "null"}</pre>
         <pre>loading: {loading ? 'true' : 'false'}</pre>
       </div>
       {renderComponent(role, loading)}
@@ -108,6 +122,5 @@ function App() {
   );
 }
 
-// Use ReactDOM with TypeScript
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(<App />);

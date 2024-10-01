@@ -1,10 +1,14 @@
 import React, { useEffect } from 'react';
 import { getGameStateByGameId } from '../../api/appStateApi';
 
-function AppStatePolling({ onUpdateState }) {
+interface GameStatePollingProps {
+  onUpdateState : () => void;
+}
+
+const GameStatePolling: React.FC<GameStatePollingProps> ({ onUpdateState }) => {
   
   useEffect(() => {
-    console.log('Fetching global app state');
+    console.log('Fetching global game state');
     const fetchGameState = async (gameId) => {
       try {
         const state = await getGameStateByGameId(gameId);  // Await the API response
@@ -32,4 +36,4 @@ function AppStatePolling({ onUpdateState }) {
   return null;  // Since there's nothing to render
 }
 
-export default AppStatePolling;
+export default GameStatePolling;
