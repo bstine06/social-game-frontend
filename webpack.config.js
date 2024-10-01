@@ -6,7 +6,7 @@ require('dotenv').config();
 // const fs = require('fs');
 
 module.exports = {
-  entry: './src/index.js',
+  entry: './src/index.tsx',
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js',
@@ -33,7 +33,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.(ts|tsx)$/,
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
@@ -57,4 +57,7 @@ module.exports = {
       'process.env': JSON.stringify(process.env)
     })
   ],
+  resolve: {
+    extensions: ['.ts', '.tsx', '.js', '.jsx'], // Resolve these extensions
+  },
 };

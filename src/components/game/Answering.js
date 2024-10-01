@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getQuestions, submitAnswer } from '../../api/gameApi';
+import { getQuestions, submitAnswer } from '../../api/gameplayApi';
 import ConfirmModal from './ConfirmModal';
 import AnswerOneQuestion from './AnswerOneQuestion';
 

@@ -1,25 +1,25 @@
 import React, { useEffect } from 'react';
-import { getGlobalState } from '../../api/appStateApi';
+import { getGameStateByGameId } from '../../api/appStateApi';
 
 function AppStatePolling({ onUpdateState }) {
   
   useEffect(() => {
     console.log('Fetching global app state');
-    const fetchGlobalState = async () => {
+    const fetchGameState = async (gameId) => {
       try {
-        const state = await getGlobalState();  // Await the API response
-        console.log('Global state:', state);
+        const state = await getGameStateByGameId(gameId);  // Await the API response
+        console.log('Game state:', state);
         onUpdateState(state);  // Pass the result to the parent component or state
       } catch (error) {
-        console.error('Error fetching global state:', error);
+        console.error('Error fetching game state:', error);
       }
     };
   
-    fetchGlobalState();  // Fetch initially
+    fetchGameState();  // Fetch initially
   
     const intervalId = setInterval(() => {
-      console.log('Polling for global state');
-      fetchGlobalState();
+      console.log('Polling for game state');
+      fetchGameState();
     }, 5000);  // Fetch every 5 seconds
   
     return () => {

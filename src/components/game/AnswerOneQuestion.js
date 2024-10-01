@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { submitAnswer } from '../../api/gameApi';
+import { submitAnswer } from '../../api/gameplayApi';
 import ConfirmModal from './ConfirmModal';
 
 function AnswerOneQuestion({ question, questionId, onAnswerSubmit }) {
