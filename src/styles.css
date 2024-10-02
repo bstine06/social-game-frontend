@@ -20,3 +20,8 @@ body {
 #app-container {
   padding: 10px;
 }
+
+.container {
+  padding: 12px;
+  text-align: center;
+}

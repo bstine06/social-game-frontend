@@ -1,16 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import PlayerCreation from './PlayerCreation';
-import { getGameById } from '../api/gameApi';
+import { getGameById } from '../../api/gameApi';
 
 // Define the type for the props
 interface JoinGameProps {
-    createPlayer: () => void; // Function to handle hosting
+    onCreatePlayer: () => void; // Function to handle hosting
+    onCancelJoin: () => void;
 }
 
-const JoinGame: React.FC<JoinGameProps> = ({ createPlayer }) => {
+const JoinGame: React.FC<JoinGameProps> = ({ onCreatePlayer, onCancelJoin }) => {
   const [gameIdInput, setGameIdInput] = useState<string>("");
   const [isValidInput, setIsValidInput] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
+
+  const handleBackSubmit = async () => {
+    onCancelJoin();
+  }
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.value.replace(/[^a-zA-Z0-9]/g, '')
@@ -39,13 +44,14 @@ const JoinGame: React.FC<JoinGameProps> = ({ createPlayer }) => {
         );
     } else {
         return (
-            <PlayerCreation createPlayer={createPlayer} gameId={gameIdInput}/>
+            <PlayerCreation onCreatePlayer={onCreatePlayer} gameId={gameIdInput}/>
         );
     }
   };
   
   return (
     <>
+    <button onClick={handleBackSubmit}>Back</button>
     {renderComponent()}
     </>
   );

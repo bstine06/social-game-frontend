@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
 import { createGame, getGameByHostId, getGameById } from './api/gameApi';
 import { getSessionRole } from './api/sessionApi';
-import { createPlayerApi, getPlayerById } from './api/playerApi';
+import { getPlayerById } from './api/playerApi';
 import ChooseRole from './components/ChooseRole';
-import JoinGame from './components/JoinGame';
-import Host from './components/Host';
+import JoinGame from './components/player/JoinGame';
+import Host from './components/host/Host';
 import './styles.css';
 
 // Define the role types
@@ -78,10 +78,18 @@ function App() {
     }
   };
 
-  const createPlayer = async (gameId : string, name : string): void => {
-    await createPlayerApi(gameId, name);
+  const resetUserSession = () => {
+    setLoading(true);
+    setGameId(null)
+    setGameState(null);
+    setRole('UNASSIGNED');
+    setPlayerId(null);
+    setHostId(null);
+  }
+
+  const setRoleToPlayer = () => {
     setRole('PLAYER');
-  };
+  }
 
   const joinGame = (): void => {
     setRole('PLAYER_CREATION');
@@ -95,12 +103,12 @@ function App() {
         <ChooseRole onChooseHost={createAndHostGame} onChooseJoin={joinGame} />
       );
     } else if (role === "HOST" && gameId) {
-      return <Host gameId={gameId} />;
+      return <Host gameId={gameId} gameState={gameState} onCancelHost={resetUserSession}/>;
     } else if (role === "PLAYER" && gameId) {
       return <pre>PLAYER</pre>;
     } else if (role === "PLAYER_CREATION") {
       return (
-        <JoinGame createPlayer={createPlayer}/>
+        <JoinGame onCreatePlayer={setRoleToPlayer} onCancelJoin={resetUserSession}/>
       );
     }
 

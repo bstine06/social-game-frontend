@@ -18,6 +18,23 @@ export const createGame = async () => {
   }
 }
 
+export const deleteGameApi = async (gameId : string) => {
+  try {
+    const response = await fetch(`${backendUrl}/${requestMapping}/${gameId}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include'
+    });
+    if (!response.ok) throw new Error('Network response was not ok');
+    return await response.json();
+  } catch (error) {
+    console.error('Error:', error);
+    throw error;
+  }
+}
+
 export const getGameByHostId = async () => {
   try {
     const response = await fetch(`${backendUrl}/${requestMapping}/get-by-host-id`, {

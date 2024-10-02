@@ -40,7 +40,6 @@ export const createPlayerApi = async (gameId: string, name: string) => {
 };
 
 export const getAllPlayerNamesInGame = async (gameId : string) => {
-    console.log(gameId);
     try {
       // Make the fetch request
       const response = await fetch(`${backendUrl}/${requestMapping}/${gameId}`, {

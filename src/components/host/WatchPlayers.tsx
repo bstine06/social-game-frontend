@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { getAllPlayerNamesInGame } from '../api/playerApi'
+import { getAllPlayerNamesInGame } from '../../api/playerApi'
 
 // Define the type for the props
 interface WatchPlayersProps {
   gameId: string;
+  onPlayerCountChanged: () => void;
 }
 
-const WatchPlayers: React.FC<WatchPlayersProps> = ({ gameId }) => {
+const WatchPlayers: React.FC<WatchPlayersProps> = ({ gameId, onPlayerCountChanged }) => {
     const [playerNames, setPlayerNames] = useState<string[]>([]); // Assuming the players data is an array of strings
   
     // Polling for player data every 5 seconds
@@ -16,6 +17,7 @@ const WatchPlayers: React.FC<WatchPlayersProps> = ({ gameId }) => {
         try {
           const fetchedPlayerNames = await getAllPlayerNamesInGame(gameId);
           setPlayerNames(fetchedPlayerNames);
+          onPlayerCountChanged(fetchedPlayerNames.length)
         } catch (error) {
           console.error('Error fetching players:', error);
         }
@@ -33,7 +35,7 @@ const WatchPlayers: React.FC<WatchPlayersProps> = ({ gameId }) => {
   
     return (
       <div>
-        <h3>Players in the game:</h3>
+        <h3>players:</h3>
         <ul>
           {playerNames.map((playerName, index) => (
             <li key={index}>{playerName}</li>
