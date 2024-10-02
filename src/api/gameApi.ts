@@ -53,6 +53,7 @@ export const getGameByHostId = async () => {
   }
 
 export const getGameStateByGameId = async (gameId) => {
+  console.log(gameId);
   try {
     const response = await fetch(`${backendUrl}/${requestMapping}/${gameId}/state`, {
       method: 'GET',
@@ -64,7 +65,7 @@ export const getGameStateByGameId = async (gameId) => {
     if (!response.ok) throw new Error('Network response was not ok');
     
     const data = await response.json(); // Parse the JSON response
-    return data; // Return only the "appState" value
+    return data.gameState; // Return only the "gameState" value
   } catch (error) {
     console.error('Error:', error);
     throw error;

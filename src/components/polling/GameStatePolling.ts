@@ -1,13 +1,15 @@
 import React, { useEffect } from 'react';
-import { getGameStateByGameId } from '../../api/appStateApi';
+import { getGameStateByGameId } from '../../api/gameApi';
 
 interface GameStatePollingProps {
   onUpdateState : () => void;
+  gameId: string;
 }
 
-const GameStatePolling: React.FC<GameStatePollingProps> ({ onUpdateState }) => {
+const GameStatePolling: React.FC<GameStatePollingProps>  = ({ onUpdateState, gameId }) => {
   
   useEffect(() => {
+    console.log(gameId);
     console.log('Fetching global game state');
     const fetchGameState = async (gameId) => {
       try {
@@ -19,18 +21,18 @@ const GameStatePolling: React.FC<GameStatePollingProps> ({ onUpdateState }) => {
       }
     };
   
-    fetchGameState();  // Fetch initially
+    fetchGameState(gameId);  // Fetch initially
   
     const intervalId = setInterval(() => {
       console.log('Polling for game state');
-      fetchGameState();
+      fetchGameState(gameId);
     }, 5000);  // Fetch every 5 seconds
   
     return () => {
       console.log('Cleaning up interval');
       clearInterval(intervalId);  // Cleanup on unmount
     };
-  }, []);  // Only re-run effect if onUpdateState changes
+  }, []);
   
 
   return null;  // Since there's nothing to render

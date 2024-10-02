@@ -1,27 +1,26 @@
 import React, { useState } from 'react';
-import HostLobby from './HostLobby';
-import HostHeader from './HostHeader';
-import HostQuestion from './HostQuestion';
+import PlayerLobby from './PlayerLobby';
+import PlayerHeader from './PlayerHeader';
+import PlayerQuestion from './PlayerQuestion';
 
-interface HostProps {
+interface PlayerProps {
     gameId: string;
     gameState: string;
-    onCancelHost: () => void;
-    onStartGame: () => void;
+    onCancelPlayer: () => void;
 }
 
-const Host: React.FC<HostProps> = ({gameId, gameState, onCancelHost, onStartGame}) => {
+const Host: React.FC<HostProps> = ({gameId, gameState, onCancelPlayer}) => {
 
     const renderComponent = () => {
         switch(gameState) { 
             case 'LOBBY': { 
                return (
-                <HostLobby gameId={gameId} onCancelHost={onCancelHost} onStartGame={onStartGame}/>
+                <PlayerLobby gameId={gameId}/>
                ) 
             } 
             case 'QUESTION': { 
                return (
-                <HostQuestion onCancelHost={onCancelHost}/>
+                <PlayerQuestion onCancelHost={onCancelHost}/>
                )
             } 
             default: { 

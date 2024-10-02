@@ -33,7 +33,7 @@ const HostHeader: React.FC<HostHeaderProps> = ({ onCancelHost, gameId }) => {
   return (
     <>
     <div className="header">
-      <button onClick={handleBackSubmit}>BACK</button>
+      <button onClick={handleBackSubmit}>EXIT</button>
       <p>HOST</p>
       <p>{gameId}</p>
     </div>
