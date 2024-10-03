@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Header from '../common/Header';
 import PlayerQuestion from './PlayerQuestion';
+import PlayerVote from './PlayerVote';
 import { deletePlayerApi } from '../../api/playerApi';
 
 
@@ -30,6 +31,9 @@ const Player: React.FC<PlayerProps> = ({gameId, gameState, playerName, onCancelP
             case 'QUESTION': {
                 return (<PlayerQuestion gameId={gameId} onQuestionSubmit={startWaiting}/>)
             } 
+            case 'VOTE': {
+                return (<PlayerVote gameId={gameId} onVoteSubmit={startWaiting}/>)
+            }
             default: { 
                
             } 
@@ -49,7 +53,7 @@ const Player: React.FC<PlayerProps> = ({gameId, gameState, playerName, onCancelP
         <>
         <Header gameId={gameId} playerName={playerName} onCancel={deletePlayer} confirmModalContent={`This will permanently remove you from the game (${gameId})`} />
         {!waiting && renderComponent()}
-        {waiting && <p>waiting for everyone else to submit their questions...</p>}
+        {waiting && <p>waiting...</p>}
         </>
     )
 }
