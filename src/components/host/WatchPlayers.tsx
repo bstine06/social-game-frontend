@@ -4,7 +4,7 @@ import { getAllPlayerNamesInGame } from '../../api/playerApi'
 // Define the type for the props
 interface WatchPlayersProps {
   gameId: string;
-  onPlayerCountChanged: () => void;
+  onPlayerCountChanged: (count: number) => void;
 }
 
 const WatchPlayers: React.FC<WatchPlayersProps> = ({ gameId, onPlayerCountChanged }) => {
@@ -36,11 +36,11 @@ const WatchPlayers: React.FC<WatchPlayersProps> = ({ gameId, onPlayerCountChange
     return (
       <div>
         <h3>players:</h3>
-        <ul>
+        <div className="watch-players">
           {playerNames.map((playerName, index) => (
-            <li key={index}>{playerName}</li>
+            <p key={index}>{playerName}</p>
           ))}
-        </ul>
+        </div>
       </div>
     );
   };

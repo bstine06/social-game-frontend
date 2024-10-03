@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import PlayerHeader from './PlayerHeader';
+import Header from '../common/Header';
 import PlayerQuestion from './PlayerQuestion';
+import { deletePlayerApi } from '../../api/playerApi';
 
 
 interface PlayerProps {
     gameId: string;
     gameState: string;
-    playerName: playerName;
+    playerName: string;
     onCancelPlayer: () => void;
 }
 
@@ -35,9 +36,18 @@ const Player: React.FC<PlayerProps> = ({gameId, gameState, playerName, onCancelP
          } 
     }
 
+    const deletePlayer = async () => {
+        try {
+          await deletePlayerApi();
+          onCancelPlayer(); //Notify parent that the player is cancelled
+        } catch (error) {
+          console.error("Error deleting player", error);
+        }
+      };
+
     return (
         <>
-        <PlayerHeader gameId={gameId} playerName={playerName} onCancelPlayer={onCancelPlayer} />
+        <Header gameId={gameId} playerName={playerName} onCancel={deletePlayer} confirmModalContent={`This will permanently remove you from the game (${gameId})`} />
         {!waiting && renderComponent()}
         {waiting && <p>waiting for everyone else to submit their questions...</p>}
         </>

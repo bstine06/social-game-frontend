@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PlayerCreation from './PlayerCreation';
-import { getGameById } from '../../api/gameApi';
+import { getGameByIdApi } from '../../api/gameApi';
 
 // Define the type for the props
 interface JoinGameProps {
@@ -24,7 +24,7 @@ const JoinGame: React.FC<JoinGameProps> = ({ onCreatePlayer, onCancelJoin }) => 
 
   const handleSubmit = async () => {
     try {
-        const game = await getGameById(gameIdInput);
+        const game = await getGameByIdApi(gameIdInput);
         setIsValidInput(true); // React schedules this update, but it's not immediate
         setErrorMessage("");   // Clear the error message if valid
     } catch (error) {
@@ -37,7 +37,7 @@ const JoinGame: React.FC<JoinGameProps> = ({ onCreatePlayer, onCancelJoin }) => 
         return (
             <div>
                 <h2>Enter game id:</h2>
-                <input type="text" maxLength="4" value={gameIdInput} onChange={handleInputChange} />
+                <input type="text" maxLength={4} value={gameIdInput} onChange={handleInputChange} />
                 <button onClick={handleSubmit}>Submit</button>
                 <p className="error">{errorMessage}</p>
             </div>

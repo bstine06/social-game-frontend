@@ -1,15 +1,14 @@
 const backendUrl = process.env.REACT_APP_BACKEND_URL;
-const requestMapping = "question";
+const requestMapping = "vote";
 
-export const submitQuestionApi = async (gameId: string, question: string) => {
+export const getCurrentBallotApi = async (gameId: string) => {
   try {
-    const response = await fetch(`${backendUrl}/${requestMapping}`, {
-      method: 'POST',
+    const response = await fetch(`${backendUrl}/${requestMapping}/${gameId}/get-current-ballot`, {
+      method: 'GET',
       headers: {
         'Content-Type': 'application/json',
       },
-      credentials: 'include',
-      body: JSON.stringify({gameId, question})
+      credentials: 'include'
     });
     if (!response.ok) throw new Error('Network response was not ok');
     return await response.json();

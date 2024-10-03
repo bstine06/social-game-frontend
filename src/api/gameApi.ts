@@ -1,7 +1,7 @@
 const backendUrl = process.env.REACT_APP_BACKEND_URL;
 const requestMapping = "game";
 
-export const createGame = async () => {
+export const createGameApi = async () => {
   try {
     const response = await fetch(`${backendUrl}/${requestMapping}`, {
       method: 'POST',
@@ -35,7 +35,7 @@ export const deleteGameApi = async (gameId : string) => {
   }
 }
 
-export const getGameByHostId = async () => {
+export const getGameByHostIdApi = async () => {
   try {
     const response = await fetch(`${backendUrl}/${requestMapping}/get-by-host-id`, {
       method: 'GET',
@@ -52,7 +52,7 @@ export const getGameByHostId = async () => {
     }
   }
 
-export const getGameStateByGameId = async (gameId) => {
+export const getGameStateByGameIdApi = async (gameId: string) => {
   try {
     const response = await fetch(`${backendUrl}/${requestMapping}/${gameId}/state`, {
       method: 'GET',
@@ -66,12 +66,11 @@ export const getGameStateByGameId = async (gameId) => {
     const data = await response.json(); // Parse the JSON response
     return data.gameState; // Return only the "gameState" value
   } catch (error) {
-    console.error('Error:', error);
     throw error;
   }
 };
 
-export const updateGameState = async (gameId) => {
+export const updateGameStateApi = async (gameId: string) => {
   try {
     const response = await fetch(`${backendUrl}/${requestMapping}/${gameId}/state`, {
       method: 'PATCH',
@@ -82,12 +81,11 @@ export const updateGameState = async (gameId) => {
     if (!response.ok) throw new Error('Network response was not ok');
     return await response.json();
   } catch (error) {
-    console.error('Error:', error);
     throw error;
   }
 }
 
-export const getGameById = async (gameId) => {
+export const getGameByIdApi = async (gameId: string) => {
   try {
     const response = await fetch(`${backendUrl}/${requestMapping}/${gameId}`, {
       method: 'GET',
@@ -98,7 +96,6 @@ export const getGameById = async (gameId) => {
     if (!response.ok) throw new Error('Network response was not ok');
     return await response.json();
   } catch (error) {
-    console.error('Error:', error);
     throw error;
   }
 }

@@ -1,4 +1,5 @@
 import React from 'react';
+const gameName = process.env.REACT_APP_GAME_NAME;
 
 // Define the type for the props
 interface ChooseRoleProps {
@@ -8,10 +9,10 @@ interface ChooseRoleProps {
 
 const ChooseRole: React.FC<ChooseRoleProps> = ({ onChooseHost, onChooseJoin }) => {
   return (
-    <div>
-      <h2>How will you be using this device?</h2>
-      <button onClick={onChooseHost}>Host</button>
-      <button onClick={onChooseJoin}>Join</button>
+    <div className="container">
+      <h2>{`Welcome to ${gameName}!`}</h2>
+      <button className="big-button" onClick={onChooseHost}>Host</button>
+      <button className="big-button" onClick={onChooseJoin}>Join</button>
     </div>
   );
 }

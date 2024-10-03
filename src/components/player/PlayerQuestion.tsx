@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import validator from "validator";
-import ConfirmModal from '../ConfirmModal';
+import ConfirmModal from '../common/ConfirmModal';
 import { submitQuestionApi } from '../../api/questionApi';
 
 interface PlayerQuestionProps {

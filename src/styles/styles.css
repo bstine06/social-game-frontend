@@ -25,3 +25,12 @@ body {
   padding: 12px;
   text-align: center;
 }
+
+.big-button {
+  margin: 10px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}

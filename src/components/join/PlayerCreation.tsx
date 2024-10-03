@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import ConfirmModal from '../ConfirmModal';
+import ConfirmModal from '../common/ConfirmModal';
 import { createPlayerApi } from '../../api/playerApi';
 
 // Define the type for the props

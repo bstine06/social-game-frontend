@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import WatchPlayers from './WatchPlayers';
-import ConfirmModal from '../ConfirmModal';
+import ConfirmModal from '../common/ConfirmModal';
 import { deleteGameApi } from '../../api/gameApi';
 
 // Define the type for the props
@@ -11,10 +11,10 @@ interface HostLobbyProps {
 }
 
 const HostLobby: React.FC<HostLobbyProps> = ({ gameId, onCancelHost, onStartGame }) => {
-  const [playerCount, setPlayerCount] = useState<int>(0);
+  const [playerCount, setPlayerCount] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(false);
 
-  const updatePlayerCount = (count : int) => {
+  const updatePlayerCount = (count : number) => {
     setPlayerCount(count);
   }
 

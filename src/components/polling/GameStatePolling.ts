@@ -1,17 +1,17 @@
 import React, { useEffect } from 'react';
-import { getGameStateByGameId } from '../../api/gameApi';
+import { getGameStateByGameIdApi } from '../../api/gameApi';
 
 interface GameStatePollingProps {
-  onUpdateState : () => void;
+  onUpdateState : (state: string) => void;
   gameId: string;
 }
 
 const GameStatePolling: React.FC<GameStatePollingProps>  = ({ onUpdateState, gameId }) => {
   
   useEffect(() => {
-    const fetchGameState = async (gameId) => {
+    const fetchGameState = async (gameId: string) => {
       try {
-        const state = await getGameStateByGameId(gameId);  // Await the API response
+        const state = await getGameStateByGameIdApi(gameId);  // Await the API response
         onUpdateState(state);  // Pass the result to the parent component or state
       } catch (error) {
         // console.error('Error fetching game state:', error);

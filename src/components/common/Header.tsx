@@ -3,12 +3,14 @@ import ConfirmModal from '../common/ConfirmModal';
 import { deleteGameApi } from '../../api/gameApi';
 import '../../styles/header.css';
 
-interface HostHeaderProps {
-  onCancelHost: () => void;
+interface HeaderProps {
+  onCancel: () => void;
   gameId: string;
+  playerName?: string;
+  confirmModalContent: string;
 }
 
-const HostHeader: React.FC<HostHeaderProps> = ({ onCancelHost, gameId }) => {
+const Header: React.FC<HeaderProps> = ({ onCancel, gameId, playerName, confirmModalContent }) => {
   const [isBackModalOpen, setIsBackModalOpen] = useState<boolean>(false);
 
   const handleBackSubmit = async () => {
@@ -16,13 +18,8 @@ const HostHeader: React.FC<HostHeaderProps> = ({ onCancelHost, gameId }) => {
   };
 
   const handleBackConfirm = async () => {
-    try {
-      await deleteGameApi(gameId);
-      setIsBackModalOpen(false); // Close modal
-      onCancelHost(); //Notify parent that the game is cancelled
-    } catch (error) {
-      console.error("Error deleting game", error);
-    }
+    setIsBackModalOpen(false); // Close modal
+    onCancel(); //Notify parent that the game is cancelled
   };
 
   const handleBackCancel = () => {
@@ -34,15 +31,16 @@ const HostHeader: React.FC<HostHeaderProps> = ({ onCancelHost, gameId }) => {
     <>
     <div className="header">
       <button onClick={handleBackSubmit}>EXIT</button>
-      <p>HOST</p>
+      {playerName && <p>{playerName}</p>}
+      {!playerName && <p>HOST</p>}
       <p>{gameId}</p>
     </div>
       {isBackModalOpen && (
         <ConfirmModal
-          message="Are you sure want to go back?"
-          content={`This will delete your game (${gameId}).`}
-          confirmText="Yes, delete"
-          cancelText="No, don't delete my game!"
+          message="Are you sure want to exit?"
+          content={confirmModalContent}
+          confirmText="Yes, please exit"
+          cancelText="No, don't exit"
           onConfirm={handleBackConfirm}
           onCancel={handleBackCancel}
         />
@@ -51,4 +49,4 @@ const HostHeader: React.FC<HostHeaderProps> = ({ onCancelHost, gameId }) => {
   );
 };
 
-export default HostHeader;
+export default Header;
