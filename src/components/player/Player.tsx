@@ -1,27 +1,33 @@
-import React, { useState } from 'react';
-import PlayerLobby from './PlayerLobby';
+import React, { useState, useEffect } from 'react';
 import PlayerHeader from './PlayerHeader';
 import PlayerQuestion from './PlayerQuestion';
+
 
 interface PlayerProps {
     gameId: string;
     gameState: string;
+    playerName: playerName;
     onCancelPlayer: () => void;
 }
 
-const Host: React.FC<HostProps> = ({gameId, gameState, onCancelPlayer}) => {
+const Player: React.FC<PlayerProps> = ({gameId, gameState, playerName, onCancelPlayer}) => {
+    const [waiting, setWaiting] = useState<boolean>(true);
+
+    useEffect(() => {
+        setWaiting(false);
+    }, [gameState])
+
+    const startWaiting = () => {
+        setWaiting(true);
+    }
 
     const renderComponent = () => {
         switch(gameState) { 
             case 'LOBBY': { 
-               return (
-                <PlayerLobby gameId={gameId}/>
-               ) 
-            } 
-            case 'QUESTION': { 
-               return (
-                <PlayerQuestion onCancelHost={onCancelHost}/>
-               )
+               return (<p> waiting for the game to start... </p>);
+            }
+            case 'QUESTION': {
+                return (<PlayerQuestion gameId={gameId} onQuestionSubmit={startWaiting}/>)
             } 
             default: { 
                
@@ -31,10 +37,11 @@ const Host: React.FC<HostProps> = ({gameId, gameState, onCancelPlayer}) => {
 
     return (
         <>
-        <HostHeader gameId={gameId} onCancelHost={onCancelHost} />
-        {renderComponent()}
+        <PlayerHeader gameId={gameId} playerName={playerName} onCancelPlayer={onCancelPlayer} />
+        {!waiting && renderComponent()}
+        {waiting && <p>waiting for everyone else to submit their questions...</p>}
         </>
     )
 }
 
-export default Host;
+export default Player;

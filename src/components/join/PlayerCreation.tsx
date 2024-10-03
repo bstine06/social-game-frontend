@@ -45,7 +45,6 @@ const PlayerCreation: React.FC<PlayerCreationProps> = ({ onCreatePlayer, gameId 
       <input type="text" value={nameInput} onChange={handleInputChange} />
       <button onClick={handleSubmit}>Submit</button>
     </div>
-    {/* Show the modal if there's input and the modal is open */}
     {isModalOpen && (
       <ConfirmModal 
         message="Are you sure want to use this name?"

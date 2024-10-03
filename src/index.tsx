@@ -4,8 +4,10 @@ import { createGame, getGameByHostId, getGameById, updateGameState } from './api
 import { getSessionRole } from './api/sessionApi';
 import { getPlayerById } from './api/playerApi';
 import ChooseRole from './components/ChooseRole';
-import JoinGame from './components/player/JoinGame';
+import JoinGame from './components/join/JoinGame';
 import Host from './components/host/Host';
+import Player from './components/player/Player';
+import ErrorModal from './components/ErrorModal';
 import GameStatePolling from './components/polling/GameStatePolling';
 import './styles.css';
 
@@ -18,7 +20,9 @@ function App() {
   const [gameId, setGameId] = useState<string | null>(null);
   const [role, setRole] = useState<Role | null>(null);
   const [playerId, setPlayerId] = useState<string | null>(null);
+  const [playerName, setPlayerName] = useState<string>("");
   const [hostId, setHostId] = useState<string | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
   // on page load, retrieve any existing role from backend via session cookie
   useEffect(() => {
@@ -51,6 +55,7 @@ function App() {
         } else if (role === 'PLAYER') {
           const player = await getPlayerById();
           setPlayerId(player.playerId);
+          setPlayerName(player.name);
           const game = await getGameById(player.gameId);
           setGameId(game.gameId);
           setGameState(game.gameState);
@@ -67,7 +72,6 @@ function App() {
     }
   }, [role]);
 
-  // Handler to create a game when "Host" is clicked
   const createAndHostGame = async () => {
     try {
       const game = await createGame(); // Call API to create a new game
@@ -101,7 +105,15 @@ function App() {
   }
 
   const updateLocalState = (state: string): void => {
+    if (state === "error") {
+      setErrorMessage(`Game ${gameId} was terminated. You've been returned to the home screen.`);
+      resetUserSession();
+    }
     setGameState(state);
+  }
+
+  const closeErrorModal = () => {
+    setErrorMessage("");
   }
 
   const renderComponent = (role: Role | null, loading: boolean): JSX.Element | null => {
@@ -113,12 +125,10 @@ function App() {
       );
     } else if (role === "HOST" && gameId) {
       return <Host gameId={gameId} gameState={gameState} onCancelHost={resetUserSession} onStartGame={startGame}/>;
-    } else if (role === "PLAYER" && gameId) {
-      return <pre>PLAYER</pre>;
     } else if (role === "PLAYER_CREATION") {
-      return (
-        <JoinGame onCreatePlayer={setRoleToPlayer} onCancelJoin={resetUserSession}/>
-      );
+      return <JoinGame onCreatePlayer={setRoleToPlayer} onCancelJoin={resetUserSession}/>
+    } else if (role === "PLAYER" && gameId) {
+      return <Player gameId={gameId} gameState={gameState} playerName={playerName} onCancelPlayer={resetUserSession}/>;
     }
 
     return null;
@@ -136,6 +146,7 @@ function App() {
         <pre>id : {hostId ? hostId: playerId ? playerId : "null"}</pre>
         <pre>loading: {loading ? 'true' : 'false'}</pre>
       </div>
+      {errorMessage && <ErrorModal message={errorMessage} onClose={closeErrorModal} />}
       {renderComponent(role, loading)}
     </>
   );

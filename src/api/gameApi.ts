@@ -53,7 +53,6 @@ export const getGameByHostId = async () => {
   }
 
 export const getGameStateByGameId = async (gameId) => {
-  console.log(gameId);
   try {
     const response = await fetch(`${backendUrl}/${requestMapping}/${gameId}/state`, {
       method: 'GET',
@@ -61,7 +60,7 @@ export const getGameStateByGameId = async (gameId) => {
         'Content-Type': 'application/json',
       }
     });
-
+    if (response.status === 404) throw new Error('Game not found');
     if (!response.ok) throw new Error('Network response was not ok');
     
     const data = await response.json(); // Parse the JSON response

@@ -52,9 +52,25 @@ export const getAllPlayerNamesInGame = async (gameId : string) => {
       if (!response.ok) throw new Error("Network response was not ok");
       const players = await response.json();
       const playerNames = players.map((player : any) => player.name);
-      return playerNames
+      return playerNames;
     } catch (error) {
       console.error("Error:", error);
       throw error;
     }
   };
+
+  export const deletePlayerApi = async () => {
+    try {
+        const response = await fetch(`${backendUrl}/${requestMapping}`, {
+            method: "DELETE",
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+        if (!response.ok) throw new Error("Network response was not ok");
+    } catch (error) {
+        console.error("Error:", error);
+        throw error;
+    }
+  }
