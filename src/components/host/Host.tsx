@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import HostLobby from './HostLobby';
 import Header from '../common/Header';
 import HostQuestion from './HostQuestion';
@@ -26,21 +26,18 @@ const Host: React.FC<HostProps> = ({gameId, gameState, onCancelHost, onStartGame
               />
             );
           }
-          case "QUESTION": {
+          case "QUESTION": 
             return <HostQuestion />;
-          }
-          case "ASSIGN": {
+          case "ASSIGN": 
             return <p>Loading...</p>;
-          }
-          case "ANSWER": {
+          case "ANSWER": 
             return <HostAnswer />;
-          }
-          case "FIND_BALLOT": {
+          case "FIND_BALLOT": 
             return <p>Loading...</p>;
-          }
-          case "DISPLAY_BALLOT": {
-            return <HostDisplayBallot gameId={gameId}/>;
-          }
+          case "DISPLAY_BALLOT":
+                return <HostDisplayBallot gameId={gameId} displayingVotes={false} />;
+          case "DISPLAY_VOTES":
+                return <HostDisplayBallot gameId={gameId} displayingVotes={true} />;
           default: {
           }
         } 

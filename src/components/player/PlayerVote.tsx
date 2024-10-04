@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { getCurrentBallotApi, submitVoteApi } from "../../api/voteApi";
 import ConfirmModal from "../common/ConfirmModal";
+import he from 'he';
 
 interface PlayerVoteProps {
   gameId: string;
@@ -63,21 +64,21 @@ const PlayerVote: React.FC<PlayerVoteProps> = ({ gameId, onVoteSubmit }) => {
   return (
     <>
       <div className="container">
-        {question && <h2>{question.content}</h2>}{" "}
+        {question && <h2>{he.decode(question.content)}</h2>}{" "}
         {answers.map((answer) => (
         <button
           key={answer.answerId}
-          onClick={() => handleSubmit(answer.answerId, answer.content)} // Call handleSubmit on button click
+          onClick={() => handleSubmit(answer.answerId, he.decode(answer.content))} // Call handleSubmit on button click
         >
-          {answer.content}
+          {he.decode(answer.content)}
         </button>
       ))}
       </div>
       {isModalOpen && selectedAnswer && (
       <ConfirmModal 
         message="Are you sure want to vote for this answer?"
-        content={selectedAnswer.content}
-        confirmText="Yes, I know what I'm doing"
+        content={`"${selectedAnswer.content}"`}
+        confirmText="Yes"
         cancelText="No, I'm indecisive"
         onConfirm={handleConfirm} 
         onCancel={handleCancel} 

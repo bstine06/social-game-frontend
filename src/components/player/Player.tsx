@@ -3,6 +3,7 @@ import Header from '../common/Header';
 import PlayerQuestion from './PlayerQuestion';
 import PlayerVote from './PlayerVote';
 import { deletePlayerApi } from '../../api/playerApi';
+import PlayerAnswer from './PlayerAnswer';
 
 
 interface PlayerProps {
@@ -31,6 +32,9 @@ const Player: React.FC<PlayerProps> = ({gameId, gameState, playerName, onCancelP
             case 'QUESTION': {
                 return (<PlayerQuestion gameId={gameId} onQuestionSubmit={startWaiting}/>)
             } 
+            case 'ANSWER': {
+                return (<PlayerAnswer gameId={gameId} onAllAnswersSubmitted={startWaiting}/>)
+            }
             case 'VOTE': {
                 return (<PlayerVote gameId={gameId} onVoteSubmit={startWaiting}/>)
             }

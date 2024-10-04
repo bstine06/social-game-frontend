@@ -18,3 +18,20 @@ export const submitQuestionApi = async (gameId: string, question: string) => {
     throw error;
   }
 }
+
+export const getQuestionsForPlayerApi = async () => {
+  try {
+    const response = await fetch(`${backendUrl}/${requestMapping}/get-questions-for-player`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include'
+    });
+    if (!response.ok) throw new Error('Network response was not ok');
+    return await response.json();
+  } catch (error) {
+    console.error('Error:', error);
+    throw error;
+  }
+}

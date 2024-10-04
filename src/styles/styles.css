@@ -34,3 +34,20 @@ body {
   cursor: pointer;
   font-size: 16px;
 }
+
+.answer-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2 columns with equal width */
+  gap: 10px;
+  align-items: stretch; /* Ensures all items in the row stretch to the same height */
+}
+
+.answer-display {
+  background-color: #222;
+  padding: 12px;
+}
+
+.vote {
+  background-color: rgb(130, 44, 210);
+  padding: 8px;
+}
