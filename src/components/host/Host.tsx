@@ -4,6 +4,7 @@ import Header from '../common/Header';
 import HostQuestion from './HostQuestion';
 import HostAnswer from './HostAnswer';
 import HostDisplayBallot from './HostDisplayBallot';
+import HostScore from './HostScore';
 import { deleteGameApi } from '../../api/gameApi';
 
 interface HostProps {
@@ -39,6 +40,8 @@ const Host: React.FC<HostProps> = ({gameId, gameState, onCancelHost, onStartGame
                 return <HostDisplayBallot gameId={gameId} displayingVotes={false} />;
           case "DISPLAY_VOTES":
                 return <HostDisplayBallot gameId={gameId} displayingVotes={true} />;
+          case "SCORE":
+                return <HostScore gameId={gameId}/>
           default: {
           }
         } 

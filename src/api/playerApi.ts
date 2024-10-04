@@ -59,6 +59,25 @@ export const getAllPlayerNamesInGame = async (gameId : string) => {
     }
   };
 
+  export const getPlayersInGameApi = async (gameId : string) => {
+    try {
+      // Make the fetch request
+      const response = await fetch(`${backendUrl}/${requestMapping}/${gameId}`, {
+        method: "GET",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (!response.ok) throw new Error("Network response was not ok");
+      const players = await response.json();
+      return players;
+    } catch (error) {
+      console.error("Error:", error);
+      throw error;
+    }
+  };
+
   export const deletePlayerApi = async () => {
     try {
         const response = await fetch(`${backendUrl}/${requestMapping}`, {
