@@ -35,6 +35,7 @@ const Host: React.FC<HostProps> = ({gameId, gameState, onCancelHost, onStartGame
           case "FIND_BALLOT": 
             return <p>Loading...</p>;
           case "DISPLAY_BALLOT":
+          case "VOTE":
                 return <HostDisplayBallot gameId={gameId} displayingVotes={false} />;
           case "DISPLAY_VOTES":
                 return <HostDisplayBallot gameId={gameId} displayingVotes={true} />;

@@ -25,33 +25,24 @@ interface VoteDisplay {
 }
 
 const HostDisplayBallot: React.FC<HostDisplayBallotProps> = ({ gameId, displayingVotes }) => {
-  const [answers, setAnswers] = useState<AnswerDisplay[]>([]); // Initialize the state as an empty array
+  const [answers, setAnswers] = useState<AnswerDisplay[]>([]);
   const [question, setQuestion] = useState<QuestionDisplay | null>(null);
   const [votes, setVotes] = useState<VoteDisplay[]>([]);
 
   useEffect(() => {
-    const getCurrentBallot = async (gameId: string) => {
+    const fetchBallotData = async () => {
       const currentBallot = await getCurrentBallotApi(gameId);
       setQuestion(currentBallot.question);
       setAnswers(currentBallot.answers);
+
+      if (displayingVotes) {
+        const currentBallotVotes = await getCurrentBallotVotesApi(gameId);
+        setVotes(currentBallotVotes);
+      }
     };
 
-    const getCurrentBallotVotes = async (gameId: string) => {
-      const currentBallotVotes = await getCurrentBallotVotesApi(gameId);
-      setVotes(currentBallotVotes);
-    }
-
-    getCurrentBallot(gameId);
-    if (displayingVotes) getCurrentBallotVotes(gameId);
-  }, []);
-  
-  const votesByAnswerId = votes.reduce((acc, vote) => {
-    if (!acc[vote.answerId]) {
-      acc[vote.answerId] = [];
-    }
-    acc[vote.answerId].push(vote.playerName);
-    return acc;
-  }, {} as Record<string, string[]>);
+    fetchBallotData();
+  }, [gameId, displayingVotes]); // Add dependencies to ensure fresh data is fetched
 
   return (
     <div className="container">
@@ -65,8 +56,8 @@ const HostDisplayBallot: React.FC<HostDisplayBallotProps> = ({ gameId, displayin
                 <p>{he.decode(answer.content)}</p>
                 {answerVotes.length > 0 && (
                   <div className="votes">
-                    {answerVotes.map(vote => (
-                      <div key={vote.playerName} className="vote">{vote.playerName}</div>
+                    {answerVotes.map((vote, index) => (
+                      <div key={`${vote.playerName}-${index}`} className="vote">{vote.playerName}</div>
                     ))}
                   </div>
                 )}
@@ -77,7 +68,7 @@ const HostDisplayBallot: React.FC<HostDisplayBallotProps> = ({ gameId, displayin
       </div>
     </div>
   );
-  
 };
 
 export default HostDisplayBallot;
+
