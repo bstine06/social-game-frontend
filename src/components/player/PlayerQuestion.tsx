@@ -43,7 +43,7 @@ const PlayerQuestion: React.FC<PlayerQuestionProps> = ({
 
   return (
     <>
-      <div>
+      <div className="container">
         <h4>Enter a question for your friends to answer!</h4>
         <h2>Make it funny!</h2>
         <input type="text" value={questionInput} onChange={handleInputChange} />

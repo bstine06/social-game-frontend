@@ -5,31 +5,39 @@ import he from 'he';
 
 interface PlayerVoteProps {
   gameId: string;
+  playerId: string
   onVoteSubmit: () => void;
 }
 
 interface AnswerDisplay {
-    content: string;
-    answerId: string;
-    playerName: string;
-  }
+  content: string;
+  answerId: string;
+  playerId: string;
+  playerName: string;
+}
   
-  interface QuestionDisplay {
-    content: string;
-    questionId: string;
-    playerName: string;
-  }
+interface QuestionDisplay {
+  content: string;
+  questionId: string;
+  playerName: string;
+}
 
-const PlayerVote: React.FC<PlayerVoteProps> = ({ gameId, onVoteSubmit }) => {
+const PlayerVote: React.FC<PlayerVoteProps> = ({ gameId, playerId, onVoteSubmit }) => {
   const [answers, setAnswers] = useState<AnswerDisplay[]>([]); // Initialize the state as an empty array
   const [question, setQuestion] = useState<QuestionDisplay | null>(null);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [selectedAnswer, setSelectedAnswer] = useState<{ id: string; content: string } | null>(null); // State to store selected answer
+  const [canVote, setCanVote] = useState<boolean>(true);
 
   useEffect(() => {
     const getCurrentBallot = async (gameId: string) => {
       const currentBallot = await getCurrentBallotApi(gameId);
-      console.log(currentBallot);
+      currentBallot.answers.forEach((answer: AnswerDisplay) => {
+        if (answer.playerId === playerId) {
+          setCanVote(false);
+          return;
+        }
+      });
       setQuestion(currentBallot.question);
       setAnswers(currentBallot.answers);
     };
@@ -64,10 +72,12 @@ const PlayerVote: React.FC<PlayerVoteProps> = ({ gameId, onVoteSubmit }) => {
   return (
     <>
       <div className="container">
-        {question && <h2>{he.decode(question.content)}</h2>}{" "}
-        {answers.map((answer) => (
+        {!canVote && <p>waiting for others to vote...</p>}
+        {canVote && question && <h2>{he.decode(question.content)}</h2>}{" "}
+        {canVote && answers.map((answer) => (
         <button
           key={answer.answerId}
+          className="big-button"
           onClick={() => handleSubmit(answer.answerId, he.decode(answer.content))} // Call handleSubmit on button click
         >
           {he.decode(answer.content)}

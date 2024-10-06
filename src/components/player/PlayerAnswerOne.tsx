@@ -51,7 +51,7 @@ const PlayerAnswerOne: React.FC<PlayerAnswerOneProps> = ({
 
   return (
     <>
-      <div>
+      <div className="container">
         <h4>Enter an answer to your friend's question:</h4>
         <h2>{he.decode(question.content)}</h2>
         <input type="text" value={answerInput} onChange={handleInputChange} />

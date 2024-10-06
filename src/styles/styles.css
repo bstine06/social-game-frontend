@@ -26,6 +26,17 @@ body {
   text-align: center;
 }
 
+.big-input {
+  margin: 10px;
+  padding: 10px;
+  border: none;
+  font-size: 16px;
+}
+
+#game-id-input {
+  width: 4em;
+}
+
 .big-button {
   margin: 10px;
   padding: 10px 20px;

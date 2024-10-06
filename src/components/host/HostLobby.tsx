@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import WatchPlayers from './WatchPlayers';
-import ConfirmModal from '../common/ConfirmModal';
-import { deleteGameApi } from '../../api/gameApi';
+const frontendUrl = process.env.REACT_APP_FRONTEND_URL;
 
 // Define the type for the props
 interface HostLobbyProps {
@@ -34,7 +33,7 @@ const HostLobby: React.FC<HostLobbyProps> = ({ gameId, onCancelHost, onStartGame
         <>
         <p>This device is going to host your game. 
         It will be used as a display for everyone.</p>
-      <h3>Players, go to ___URL____ and press join.</h3>
+      <h3>{`Players, go to ${frontendUrl} and press join.`}</h3>
       <h3>Then, enter {gameId} to join this game</h3>
       <button disabled={playerCount < 3} onClick={handleStartGame}>Start</button>
       <WatchPlayers gameId={gameId} onPlayerCountChanged={updatePlayerCount}/>

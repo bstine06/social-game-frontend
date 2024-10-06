@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PlayerCreation from './PlayerCreation';
 import { getGameByIdApi } from '../../api/gameApi';
+import Header from '../common/Header';
 
 // Define the type for the props
 interface JoinGameProps {
@@ -35,10 +36,10 @@ const JoinGame: React.FC<JoinGameProps> = ({ onCreatePlayer, onCancelJoin }) => 
   const renderComponent = () : JSX.Element => {
     if (!isValidInput) {
         return (
-            <div>
+            <div className="container">
                 <h2>Enter game id:</h2>
-                <input type="text" maxLength={4} value={gameIdInput} onChange={handleInputChange} />
-                <button onClick={handleSubmit}>Submit</button>
+                <input id="game-id-input" className="big-input" type="text" maxLength={4} value={gameIdInput} onChange={handleInputChange} />
+                <button className="big-button" onClick={handleSubmit}>Submit</button>
                 <p className="error">{errorMessage}</p>
             </div>
         );
@@ -51,7 +52,7 @@ const JoinGame: React.FC<JoinGameProps> = ({ onCreatePlayer, onCancelJoin }) => 
   
   return (
     <>
-    <button onClick={handleBackSubmit}>Back</button>
+    <Header onCancel={handleBackSubmit} gameId={""} confirmModalContent={''}/>
     {renderComponent()}
     </>
   );

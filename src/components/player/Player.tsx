@@ -8,12 +8,13 @@ import PlayerAnswer from './PlayerAnswer';
 
 interface PlayerProps {
     gameId: string;
+    playerId: string;
     gameState: string;
     playerName: string;
     onCancelPlayer: () => void;
 }
 
-const Player: React.FC<PlayerProps> = ({gameId, gameState, playerName, onCancelPlayer}) => {
+const Player: React.FC<PlayerProps> = ({gameId, playerId, gameState, playerName, onCancelPlayer}) => {
     const [waiting, setWaiting] = useState<boolean>(true);
 
     useEffect(() => {
@@ -36,7 +37,7 @@ const Player: React.FC<PlayerProps> = ({gameId, gameState, playerName, onCancelP
                 return (<PlayerAnswer gameId={gameId} onAllAnswersSubmitted={startWaiting}/>)
             }
             case 'VOTE': {
-                return (<PlayerVote gameId={gameId} onVoteSubmit={startWaiting}/>)
+                return (<PlayerVote gameId={gameId} playerId={playerId} onVoteSubmit={startWaiting}/>)
             }
             default: { 
                

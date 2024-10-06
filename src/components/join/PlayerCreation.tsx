@@ -43,7 +43,7 @@ const PlayerCreation: React.FC<PlayerCreationProps> = ({ onCreatePlayer, gameId 
       <h4>Game: {gameId}</h4>
       <h2>Enter name:</h2>
       <input type="text" value={nameInput} onChange={handleInputChange} />
-      <button onClick={handleSubmit}>Submit</button>
+      <button className="big-button" onClick={handleSubmit}>Submit</button>
     </div>
     {isModalOpen && (
       <ConfirmModal 

@@ -128,7 +128,7 @@ function App() {
     } else if (role === "PLAYER_CREATION") {
       return <JoinGame onCreatePlayer={setRoleToPlayer} onCancelJoin={resetUserSession}/>
     } else if (role === "PLAYER" && gameId) {
-      return <Player gameId={gameId} gameState={gameState} playerName={playerName} onCancelPlayer={resetUserSession}/>;
+      return <Player gameId={gameId} playerId={playerId} gameState={gameState} playerName={playerName} onCancelPlayer={resetUserSession}/>;
     }
 
     return null;
