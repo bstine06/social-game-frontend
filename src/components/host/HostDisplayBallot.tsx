@@ -27,6 +27,7 @@ interface VoteDisplay {
 const HostDisplayBallot: React.FC<HostDisplayBallotProps> = ({ gameId, displayingVotes }) => {
   const [answers, setAnswers] = useState<AnswerDisplay[]>([]);
   const [question, setQuestion] = useState<QuestionDisplay | null>(null);
+  const [questionPlayerName, setQuestionPlayerName] = useState<string>("");
   const [votes, setVotes] = useState<VoteDisplay[]>([]);
 
   useEffect(() => {
@@ -38,6 +39,9 @@ const HostDisplayBallot: React.FC<HostDisplayBallotProps> = ({ gameId, displayin
       if (displayingVotes) {
         const currentBallotVotes = await getCurrentBallotVotesApi(gameId);
         setVotes(currentBallotVotes);
+        setQuestionPlayerName(currentBallot.question.playerName)
+      } else {
+        setQuestionPlayerName("");
       }
     };
 
@@ -46,7 +50,10 @@ const HostDisplayBallot: React.FC<HostDisplayBallotProps> = ({ gameId, displayin
 
   return (
     <div className="container">
-      {question && <h2>{he.decode(question.content)}</h2>}
+      <div className="question-display">
+        {question && <p className="question-player-name">{he.decode(questionPlayerName)}</p>}
+        {question && <h2>{he.decode(question.content)}</h2>}
+      </div>
       <div className="answer-grid">
         {answers.map((answer) => {
           const answerVotes = votes.filter(vote => vote.answerId === answer.answerId);

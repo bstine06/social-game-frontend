@@ -53,6 +53,20 @@ body {
   align-items: stretch; /* Ensures all items in the row stretch to the same height */
 }
 
+.question-display {
+  display: grid;
+  grid-template-rows: repeat(auto-fit, minmax(0, 1fr)); /* Ensures one item per row */
+  justify-items: center; /* Centers horizontally */
+  align-items: center; /* Centers vertically */
+}
+
+.question-player-name {
+  max-width: 50px;
+  background-color: rgb(130, 44, 210);
+  padding: 8px;
+  margin: 0;
+}
+
 .answer-display {
   background-color: #222;
   padding: 12px;

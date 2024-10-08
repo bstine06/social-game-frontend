@@ -72,10 +72,11 @@ const PlayerVote: React.FC<PlayerVoteProps> = ({ gameId, playerId, onVoteSubmit 
   return (
     <>
       <div className="container">
-        {!canVote && <p>waiting for others to vote...</p>}
-        {canVote && question && <h2>{he.decode(question.content)}</h2>}{" "}
-        {canVote && answers.map((answer) => (
+        {!canVote && <p>you can't vote for this one!</p>}
+        {question && <h2>{he.decode(question.content)}</h2>}{" "}
+        {answers.map((answer) => (
         <button
+          disabled = {!canVote}
           key={answer.answerId}
           className="big-button"
           onClick={() => handleSubmit(answer.answerId, he.decode(answer.content))} // Call handleSubmit on button click

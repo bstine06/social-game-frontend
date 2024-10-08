@@ -8,7 +8,7 @@ import JoinGame from './components/join/JoinGame';
 import Host from './components/host/Host';
 import Player from './components/player/Player';
 import ErrorModal from './components/common/ErrorModal';
-import GameStatePolling from './components/polling/GameStatePolling';
+import GameState from './components/websocket/GameState';
 import './styles/styles.css';
 
 // Define the role types
@@ -136,8 +136,6 @@ function App() {
 
   return (
     <>
-      {/* Only render GameStatePolling if gameId is available */}
-      {gameId && <GameStatePolling onUpdateState={updateLocalState} gameId={gameId} />} 
       <div id="developer-info">
         <pre>DEVELOPER INFO</pre>
         <pre>gameId : {gameId || "none"}</pre>
@@ -148,6 +146,7 @@ function App() {
       </div>
       {errorMessage && <ErrorModal message={errorMessage} onClose={closeErrorModal} />}
       {renderComponent(role, loading)}
+      {gameId && <GameState onGameStateUpdate={updateLocalState} gameId={gameId} />}
     </>
   );
 }
