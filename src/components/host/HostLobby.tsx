@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
-import WatchPlayers from './WatchPlayers';
+import WatchPlayers from '../websocket/WatchPlayers';
 const frontendUrl = process.env.REACT_APP_FRONTEND_URL;
 
 // Define the type for the props
 interface HostLobbyProps {
   gameId: string;
-  onCancelHost : () => void;
   onStartGame : () => void;
 }
 
-const HostLobby: React.FC<HostLobbyProps> = ({ gameId, onCancelHost, onStartGame }) => {
+const HostLobby: React.FC<HostLobbyProps> = ({ gameId, onStartGame }) => {
   const [playerCount, setPlayerCount] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(false);
 

@@ -90,6 +90,7 @@ function App() {
     setRole('UNASSIGNED');
     setPlayerId("");
     setHostId("");
+    setLoading(false);
   }
 
   const setRoleToPlayer = () => {
@@ -106,7 +107,11 @@ function App() {
 
   const updateLocalState = (state: string): void => {
     if (state === "error") {
-      setErrorMessage(`Game ${gameId} was terminated. You've been returned to the home screen.`);
+      setErrorMessage(`Game ${gameId} couldn't be found. You've been returned to the home screen.`);
+      resetUserSession();
+    } else
+    if (state === "NONEXISTENT") {
+      (playerId && setErrorMessage(`Game ${gameId} was deleted. You've been returned to the home screen.`));
       resetUserSession();
     }
     setGameState(state);
