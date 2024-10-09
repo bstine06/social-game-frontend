@@ -22,7 +22,6 @@ const Host: React.FC<HostProps> = ({gameId, gameState, onCancelHost, onStartGame
             return (
               <HostLobby
                 gameId={gameId}
-                onCancelHost={onCancelHost}
                 onStartGame={onStartGame}
               />
             );

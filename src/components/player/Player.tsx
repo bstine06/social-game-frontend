@@ -56,7 +56,7 @@ const Player: React.FC<PlayerProps> = ({gameId, playerId, gameState, playerName,
 
     return (
         <>
-        <Header gameId={gameId} playerName={playerName} onCancel={deletePlayer} confirmModalContent={`This will permanently remove you from the game (${gameId})`} />
+        <Header gameId={gameId} playerName={playerName} onCancel={deletePlayer} confirmModalContent={`This will remove you from the game (${gameId})`} />
         {!waiting && renderComponent()}
         {waiting && <p>waiting...</p>}
         </>

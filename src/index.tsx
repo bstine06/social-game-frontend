@@ -114,7 +114,6 @@ function App() {
       (playerId && setErrorMessage(`Game ${gameId} was deleted. You've been returned to the home screen.`));
       resetUserSession();
     }
-    setGameState(state);
   }
 
   const closeErrorModal = () => {

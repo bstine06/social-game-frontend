@@ -19,7 +19,12 @@ const GameState: React.FC<GameStateProps> = ({ onGameStateUpdate, gameId }) => {
 
         // Listen for the close event and handle it
         socket.onclose = (event) => {
-            onGameStateUpdate("NONEXISTENT");  // Invoke the callback to handle the connection closure
+            console.log(event);
+            if (event.code === 4000) {
+                onGameStateUpdate("NONEXISTENT");
+            } else {
+                onGameStateUpdate("");
+            }
         };
 
         // Cleanup WebSocket connection when the component unmounts
