@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import ConfirmModal from '../common/ConfirmModal';
 import { deleteGameApi } from '../../api/gameApi';
 import '../../styles/header.css';
+import he from 'he';
 
 interface HeaderProps {
   onCancel: () => void;
@@ -31,7 +32,7 @@ const Header: React.FC<HeaderProps> = ({ onCancel, gameId, playerName, confirmMo
     <>
     <div className="header">
       <button onClick={handleBackSubmit}>EXIT</button>
-      {playerName && <p>{playerName}</p>}
+      {playerName && <p>{he.decode(playerName)}</p>}
       {!playerName && <p>HOST</p>}
       <p>{gameId}</p>
     </div>

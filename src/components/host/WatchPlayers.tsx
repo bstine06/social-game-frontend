@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getAllPlayerNamesInGame } from '../../api/playerApi'
+import he from 'he';
 
 // Define the type for the props
 interface WatchPlayersProps {
@@ -38,7 +39,7 @@ const WatchPlayers: React.FC<WatchPlayersProps> = ({ gameId, onPlayerCountChange
         <h3>players:</h3>
         <div className="watch-players">
           {playerNames.map((playerName, index) => (
-            <p key={index}>{playerName}</p>
+            <p key={index}>{he.decode(playerName)}</p>
           ))}
         </div>
       </div>

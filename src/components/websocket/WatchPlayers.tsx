@@ -16,7 +16,6 @@ const WatchPlayers: React.FC<WatchPlayersProps> = ({
   const [errorMessage, setErrorMessage] = useState<string>("");
 
   useEffect(() => {
-    console.log("mounting WatchPlayers (websocket)");
     // Establish WebSocket connection to the Spring Boot backend
     const socket = new WebSocket(
       `${websocketUrl}/watch-players?gameId=${gameId}`
@@ -29,7 +28,7 @@ const WatchPlayers: React.FC<WatchPlayersProps> = ({
         setPlayerNames(parsedData);
         onPlayerCountChanged(parsedData.length);
       } catch (error) {
-        console.error("Error parsing WebSocket message:", error);
+        setErrorMessage("There was an error communicating with the server.");
       }
     };
 
@@ -55,7 +54,7 @@ const WatchPlayers: React.FC<WatchPlayersProps> = ({
       </div>
       {errorMessage && (
         <ErrorModal
-          message={"There was an error communicating with the server."}
+          message={errorMessage}
           onClose={closeErrorModal}
         />
       )}

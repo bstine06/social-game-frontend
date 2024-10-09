@@ -8,7 +8,6 @@ interface GameStateProps {
 
 const GameState: React.FC<GameStateProps> = ({ onGameStateUpdate, gameId }) => {
     useEffect(() => {
-        console.log("mounting GameState (websocket)")
         // Establish WebSocket connection to the Spring Boot backend
         const socket = new WebSocket(`${websocketUrl}/game-updates?gameId=${gameId}`);
 
@@ -19,7 +18,6 @@ const GameState: React.FC<GameStateProps> = ({ onGameStateUpdate, gameId }) => {
 
         // Listen for the close event and handle it
         socket.onclose = (event) => {
-            console.log(event);
             if (event.code === 4000) {
                 onGameStateUpdate("NONEXISTENT");
             } else {
