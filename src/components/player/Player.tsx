@@ -15,15 +15,6 @@ interface PlayerProps {
 }
 
 const Player: React.FC<PlayerProps> = ({gameId, playerId, gameState, playerName, onCancelPlayer}) => {
-    const [waiting, setWaiting] = useState<boolean>(true);
-
-    useEffect(() => {
-        setWaiting(false);
-    }, [gameState])
-
-    const startWaiting = () => {
-        setWaiting(true);
-    }
 
     const renderComponent = () => {
         switch(gameState) { 
@@ -31,13 +22,13 @@ const Player: React.FC<PlayerProps> = ({gameId, playerId, gameState, playerName,
                return (<p> waiting for the game to start... </p>);
             }
             case 'QUESTION': {
-                return (<PlayerQuestion gameId={gameId} onQuestionSubmit={startWaiting}/>)
+                return (<PlayerQuestion gameId={gameId} />)
             } 
             case 'ANSWER': {
-                return (<PlayerAnswer gameId={gameId} onAllAnswersSubmitted={startWaiting}/>)
+                return (<PlayerAnswer gameId={gameId} />)
             }
             case 'VOTE': {
-                return (<PlayerVote gameId={gameId} playerId={playerId} onVoteSubmit={startWaiting}/>)
+                return (<PlayerVote gameId={gameId} playerId={playerId} />)
             }
             default: { 
                
@@ -57,8 +48,7 @@ const Player: React.FC<PlayerProps> = ({gameId, playerId, gameState, playerName,
     return (
         <>
         <Header gameId={gameId} playerName={playerName} role={"PLAYER"} onCancel={deletePlayer} confirmModalContent={`This will remove you from the game (${gameId})`} />
-        {!waiting && renderComponent()}
-        {waiting && <p>waiting...</p>}
+        {renderComponent()}
         </>
     )
 }

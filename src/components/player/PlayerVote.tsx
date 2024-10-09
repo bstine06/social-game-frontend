@@ -6,7 +6,6 @@ import he from 'he';
 interface PlayerVoteProps {
   gameId: string;
   playerId: string
-  onVoteSubmit: () => void;
 }
 
 interface AnswerDisplay {
@@ -22,7 +21,7 @@ interface QuestionDisplay {
   playerName: string;
 }
 
-const PlayerVote: React.FC<PlayerVoteProps> = ({ gameId, playerId, onVoteSubmit }) => {
+const PlayerVote: React.FC<PlayerVoteProps> = ({ gameId, playerId }) => {
   const [answers, setAnswers] = useState<AnswerDisplay[]>([]); // Initialize the state as an empty array
   const [question, setQuestion] = useState<QuestionDisplay | null>(null);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -58,7 +57,6 @@ const PlayerVote: React.FC<PlayerVoteProps> = ({ gameId, playerId, onVoteSubmit 
     try {
       await submitVoteApi(selectedAnswer.id);
       setIsModalOpen(false); // Close modal
-      onVoteSubmit(); //Notify parent of player creation
     } catch (error) {
       console.error("Error submitting vote:", error);
     }

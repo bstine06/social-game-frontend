@@ -124,6 +124,10 @@ function App() {
     setErrorMessage("");
   }
 
+  const toggleDevDisplay = () => {
+    setDevDisplayOpen(!devDisplayOpen);
+  }
+
   const renderComponent = (role: Role, loading: boolean): JSX.Element | null => {
     if (loading) return <p>Loading...</p>;
 
@@ -144,6 +148,7 @@ function App() {
 
   return (
     <>
+      <button onClick={toggleDevDisplay}>Toggle Developer Panel</button>
       {devDisplayOpen && <DevDisplay gameId={gameId} gameState={gameState} role={role} hostId={hostId} playerId={playerId} loading={loading}/>}
       {errorMessage && <ErrorModal message={errorMessage} onClose={closeErrorModal} />}
       {renderComponent(role, loading)}

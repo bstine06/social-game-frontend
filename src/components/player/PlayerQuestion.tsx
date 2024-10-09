@@ -5,12 +5,10 @@ import { submitQuestionApi } from '../../api/questionApi';
 
 interface PlayerQuestionProps {
   gameId: string;
-  onQuestionSubmit: () => void;
 }
 
 const PlayerQuestion: React.FC<PlayerQuestionProps> = ({
   gameId,
-  onQuestionSubmit,
 }) => {
   const [questionInput, setQuestionInput] = useState<string>("");
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -30,7 +28,6 @@ const PlayerQuestion: React.FC<PlayerQuestionProps> = ({
       await submitQuestionApi(gameId, sanitizedInput);
       setQuestionInput(""); // Clear input field
       setIsModalOpen(false); // Close modal
-      onQuestionSubmit();
     } catch (error) {
       console.error("Error submitting question:", error);
     }
