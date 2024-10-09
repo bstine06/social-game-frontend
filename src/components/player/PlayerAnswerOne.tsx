@@ -24,7 +24,7 @@ const PlayerAnswerOne: React.FC<PlayerAnswerOneProps> = ({
   const [answerInput, setAnswerInput] = useState<string>("");
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newValue = event.target.value.replace(/[^a-zA-Z0-9\s.,!?'"()-]/g, "");
+    const newValue = event.target.value.replace(/[^a-zA-Z0-9\s.,_!?'"()-]/g, "");
     setAnswerInput(newValue);
   };
 

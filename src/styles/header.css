@@ -1,11 +1,28 @@
 .header {
-    display: flex;
-    align-items: center; /* Vertically center the items */
-    justify-content: space-between; /* Space them evenly across the width */
-    padding: 12px;
-    background-color: rgb(63, 20, 104);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Creates 3 equal columns */
+    align-items: center;
+    width: 100%;
+    background-color: #3f1468;
+    height: 100px;
+    font-size: 20px;
+    margin: 0;
   }
   
-  .header p {
+  .header > * {
+    font-weight: bold;
+    font-family: monospace;
+    text-align: center;
     margin: 0; /* Remove default margins from the <p> tags */
+  }
+
+  .header button {
+    font-size: 20px;
+    border-radius: 0px;
+    background-color: #602d8f;
+    color: rgb(200, 163, 234);
+    height: 100%;
+    border: none;
+    background: #7038a4;
+    background: linear-gradient(90deg, rgba(112,56,164,1) 0%, rgba(63,20,104,1) 100%);
   }

@@ -57,7 +57,7 @@ const Host: React.FC<HostProps> = ({gameId, gameState, onCancelHost, onStartGame
 
     return (
         <>
-        <Header gameId={gameId} onCancel={deleteGame} confirmModalContent={`This will delete the game (${gameId})`}/>
+        <Header gameId={gameId} onCancel={deleteGame} role={"HOST"} confirmModalContent={`This will delete the game (${gameId})`}/>
         {renderComponent()}
         </>
     )

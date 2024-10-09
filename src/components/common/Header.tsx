@@ -7,11 +7,12 @@ import he from 'he';
 interface HeaderProps {
   onCancel: () => void;
   gameId: string;
+  role: string;
   playerName?: string;
   confirmModalContent: string;
 }
 
-const Header: React.FC<HeaderProps> = ({ onCancel, gameId, playerName, confirmModalContent }) => {
+const Header: React.FC<HeaderProps> = ({ onCancel, gameId, role, playerName, confirmModalContent }) => {
   const [isBackModalOpen, setIsBackModalOpen] = useState<boolean>(false);
 
   const handleBackSubmit = async () => {
@@ -31,9 +32,10 @@ const Header: React.FC<HeaderProps> = ({ onCancel, gameId, playerName, confirmMo
   return (
     <>
     <div className="header">
-      <button onClick={handleBackSubmit}>EXIT</button>
-      {playerName && <p>{he.decode(playerName)}</p>}
-      {!playerName && <p>HOST</p>}
+      <button onClick={handleBackSubmit} className="small-button">EXIT</button>
+      {role==="PLAYER" && playerName && <h2>{he.decode(playerName)}</h2>}
+      {role==="HOST" && <h2>HOST</h2>}
+      {role==="PLAYER_CREATION" && <h2>JOIN GAME</h2>}
       <p>{gameId}</p>
     </div>
       {isBackModalOpen && (

@@ -16,7 +16,7 @@ const PlayerQuestion: React.FC<PlayerQuestionProps> = ({
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newValue = event.target.value.replace(/[^a-zA-Z0-9\s.,!?'"()-]/g, "");
+    const newValue = event.target.value.replace(/[^a-zA-Z0-9\s.,_!?'"()-]/g, "");
     setQuestionInput(newValue);
   };
 

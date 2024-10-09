@@ -10,6 +10,7 @@ import Player from './components/player/Player';
 import ErrorModal from './components/common/ErrorModal';
 import GameState from './components/websocket/GameState';
 import './styles/styles.css';
+import DevDisplay from './components/DevDisplay';
 
 // Define the role types
 type Role = 'HOST' | 'PLAYER' | 'PLAYER_CREATION' | 'UNASSIGNED';
@@ -23,6 +24,7 @@ function App() {
   const [playerName, setPlayerName] = useState<string>("");
   const [hostId, setHostId] = useState<string>("");
   const [errorMessage, setErrorMessage] = useState<string>("");
+  const [devDisplayOpen, setDevDisplayOpen] = useState<boolean>(false);
 
   // on page load, retrieve any existing role from backend via session cookie
   useEffect(() => {
@@ -113,6 +115,8 @@ function App() {
     if (state === "NONEXISTENT") {
       (playerId && setErrorMessage(`Game ${gameId} was deleted. You've been returned to the home screen.`));
       resetUserSession();
+    } else {
+      setGameState(state);
     }
   }
 
@@ -140,14 +144,7 @@ function App() {
 
   return (
     <>
-      <div id="developer-info">
-        <pre>DEVELOPER INFO</pre>
-        <pre>gameId : {gameId || "none"}</pre>
-        <pre>gameState : {gameState || "none"}</pre>
-        <pre>role: {role}</pre>
-        <pre>id : {hostId ? hostId: playerId ? playerId : "none"}</pre>
-        <pre>loading: {loading ? 'true' : 'false'}</pre>
-      </div>
+      {devDisplayOpen && <DevDisplay gameId={gameId} gameState={gameState} role={role} hostId={hostId} playerId={playerId} loading={loading}/>}
       {errorMessage && <ErrorModal message={errorMessage} onClose={closeErrorModal} />}
       {renderComponent(role, loading)}
       {gameId && <GameState onGameStateUpdate={updateLocalState} gameId={gameId} />}
