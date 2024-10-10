@@ -1,30 +1,17 @@
 import React, { useEffect, useState, useRef } from 'react';
 import ErrorModal from '../common/ErrorModal';
+import { WatchPlayersData, PlayerData } from '../types/playerDataTypes';
 
 const websocketUrl = process.env.REACT_APP_WEBSOCKET_URL;
 
 interface WatchPlayersProps {
     gameId: string;
-    onPlayerCountChanged: (count: number) => void;
-}
-
-interface Player {
-    playerId: string;
-    name: string;
-}
-
-interface PlayerData {
-    player: Player;
-    ready: boolean;
-}
-
-interface WatchPlayersData {
-    players: PlayerData[];
+    onPlayersChanged: (players: PlayerData[]) => void;
 }
 
 const WatchPlayers: React.FC<WatchPlayersProps> = ({
     gameId,
-    onPlayerCountChanged,
+    onPlayersChanged,
 }) => {
     const [players, setPlayers] = useState<PlayerData[]>([]);
     const [errorMessage, setErrorMessage] = useState<string>("");
@@ -47,7 +34,7 @@ const WatchPlayers: React.FC<WatchPlayersProps> = ({
             try {
                 const parsedData: WatchPlayersData = JSON.parse(event.data);
                 setPlayers(parsedData.players);
-                onPlayerCountChanged(parsedData.players.length);
+                onPlayersChanged(parsedData.players);
             } catch (error) {
                 setErrorMessage("There was an error communicating with the server.");
             }
@@ -55,9 +42,8 @@ const WatchPlayers: React.FC<WatchPlayersProps> = ({
 
         // Listen for the close event and handle it
         socket.onclose = (event) => {
-            console.log(`WebSocket closed with code: ${event.code}`);
-            if (event.code === 1006) {
-                console.log("WebSocket closed unexpectedly (code 1006), attempting to reconnect...");
+            if (event.code >= 1002 && event.code <=2999) {
+                //console.log("WebSocket closed unexpectedly attempting to reconnect...");
                 // Attempt to reconnect after a delay
                 reconnectTimeout.current = setTimeout(() => {
                     connectWebSocket();
@@ -87,32 +73,13 @@ const WatchPlayers: React.FC<WatchPlayersProps> = ({
                 clearTimeout(reconnectTimeout.current);
             }
         };
-    }, [gameId, onPlayerCountChanged]);
+    }, [gameId]);
 
     const closeErrorModal = () => {
         setErrorMessage("");
     };
 
-    return (
-        <>
-            <div>
-                <h3>Players:</h3>
-                <div className="watch-players">
-                    {players.map((playerData, index) => (
-                        <p key={index}>
-                            {playerData.player.name}
-                        </p>
-                    ))}
-                </div>
-            </div>
-            {errorMessage && (
-                <ErrorModal
-                    message={errorMessage}
-                    onClose={closeErrorModal}
-                />
-            )}
-        </>
-    );
+    return null;
 };
 
 export default WatchPlayers;

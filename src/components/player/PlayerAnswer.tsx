@@ -4,7 +4,6 @@ import PlayerAnswerOne from "./PlayerAnswerOne";
 
 interface PlayerAnswerProps {
   gameId: string;
-  onAllAnswersSubmitted: () => void;
 }
 
 interface Question {
@@ -13,11 +12,11 @@ interface Question {
 }
 
 const PlayerAnswer: React.FC<PlayerAnswerProps> = ({
-  gameId,
-  onAllAnswersSubmitted,
+  gameId
 }) => {
   const [questions, setQuestions] = useState<Question[]>([]);
   const [questionIndex, setQuestionIndex] = useState<number>(0);
+  const [allAnswersSubmitted, setAllAnswersSubmitted] = useState<boolean>(false);
 
   useEffect(() => {
     const getQuestionsForPlayer = async () => {
@@ -32,7 +31,7 @@ const PlayerAnswer: React.FC<PlayerAnswerProps> = ({
 
   const nextQuestion = () => {
     if (questionIndex + 1 >= questions.length) {
-      onAllAnswersSubmitted();
+      setAllAnswersSubmitted(true);
     } else {
       setQuestionIndex(questionIndex + 1);
     }
@@ -40,6 +39,7 @@ const PlayerAnswer: React.FC<PlayerAnswerProps> = ({
 
   return (
     <>
+    <div className="container">
       {questions.length > 0 && (
         <PlayerAnswerOne
           gameId={gameId}
@@ -47,6 +47,7 @@ const PlayerAnswer: React.FC<PlayerAnswerProps> = ({
           onAnswerSubmit={nextQuestion}
         />
       )}
+      </div>
     </>
   );
 };

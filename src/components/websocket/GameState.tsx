@@ -30,8 +30,8 @@ const GameState: React.FC<GameStateProps> = ({ onGameStateUpdate, gameId }) => {
         // Listen for the close event and handle it
         socket.onclose = (event) => {
             console.log(`WebSocket closed with code: ${event.code}`);
-            if (event.code === 1006) {
-                console.log("WebSocket closed unexpectedly (code 1006), attempting to reconnect...");
+            if (event.code >= 1002 && event.code <=2999) {
+                //console.log("WebSocket closed unexpectedly attempting to reconnect...");
                 // Attempt to reconnect after a delay
                 reconnectTimeout.current = setTimeout(() => {
                     connectWebSocket();
@@ -39,7 +39,7 @@ const GameState: React.FC<GameStateProps> = ({ onGameStateUpdate, gameId }) => {
             } else if (event.code === 4000) {
                 onGameStateUpdate("NONEXISTENT");
             } else {
-                onGameStateUpdate("");
+                onGameStateUpdate("NONEXISTENT");
             }
         };
 

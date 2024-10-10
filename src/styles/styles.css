@@ -20,6 +20,12 @@ body {
 .container {
   padding: 12px;
   text-align: center;
+  display: grid;
+    place-items: center; /* Centers the child both horizontally and vertically */
+}
+
+.container p {
+  font-size: 32px;
 }
 
 .big-input {

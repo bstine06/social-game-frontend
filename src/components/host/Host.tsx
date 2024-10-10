@@ -5,7 +5,9 @@ import HostQuestion from './HostQuestion';
 import HostAnswer from './HostAnswer';
 import HostDisplayBallot from './HostDisplayBallot';
 import HostScore from './HostScore';
+import WatchPlayers from '../websocket/WatchPlayers';
 import { deleteGameApi } from '../../api/gameApi';
+import { PlayerData } from '../types/playerDataTypes';
 
 interface HostProps {
     gameId: string;
@@ -15,6 +17,16 @@ interface HostProps {
 }
 
 const Host: React.FC<HostProps> = ({gameId, gameState, onCancelHost, onStartGame}) => {
+  const [players, setPlayers] = useState<PlayerData[]>([]);
+
+  const updatePlayers = (newPlayersList: PlayerData[]) => {
+    setPlayers(newPlayersList);
+  }
+
+  const handleStartGame = () => {
+    if (players.length < 3) return;
+    onStartGame();
+  }
 
     const renderComponent = () => {
         switch (gameState) {
@@ -22,16 +34,17 @@ const Host: React.FC<HostProps> = ({gameId, gameState, onCancelHost, onStartGame
             return (
               <HostLobby
                 gameId={gameId}
-                onStartGame={onStartGame}
+                onStartGame={handleStartGame}
+                players={players}
               />
             );
           }
           case "QUESTION": 
-            return <HostQuestion />;
+            return <HostQuestion players={players}/>;
           case "ASSIGN": 
             return <p>Loading...</p>;
           case "ANSWER": 
-            return <HostAnswer />;
+            return <HostAnswer players={players}/>;
           case "FIND_BALLOT": 
             return <p>Loading...</p>;
           case "DISPLAY_BALLOT":
@@ -58,6 +71,7 @@ const Host: React.FC<HostProps> = ({gameId, gameState, onCancelHost, onStartGame
     return (
         <>
         <Header gameId={gameId} onCancel={deleteGame} role={"HOST"} confirmModalContent={`This will delete the game (${gameId})`}/>
+        <WatchPlayers gameId={gameId} onPlayersChanged={updatePlayers}/>
         {renderComponent()}
         </>
     )

@@ -1,54 +1,36 @@
-import React, { useState } from 'react';
-import WatchPlayers from '../websocket/WatchPlayers';
+import React, { useState } from "react";
 const frontendUrl = process.env.REACT_APP_FRONTEND_URL;
+import { PlayerData } from "../types/playerDataTypes";
+import DisplayPlayers from "../common/DisplayPlayers";
 
 // Define the type for the props
 interface HostLobbyProps {
   gameId: string;
-  onStartGame : () => void;
+  players: PlayerData[];
+  onStartGame: () => void;
 }
 
-const HostLobby: React.FC<HostLobbyProps> = ({ gameId, onStartGame }) => {
-  const [playerCount, setPlayerCount] = useState<number>(0);
-  const [loading, setLoading] = useState<boolean>(false);
-
-  const updatePlayerCount = (count : number) => {
-    setPlayerCount(count);
-  }
-
-  const handleStartGame = () => {
-    if (playerCount < 3) return;
-    setLoading(true);
-    onStartGame();
-  }
-
-  const renderComponent = () => {
-    if (loading) { 
-      return (
-        <p>Starting game...</p>
-      );
-    } else {
-      return (
-        <>
-        <p>This device is going to host your game. 
-        It will be used as a display for everyone.</p>
-      <h3>{`Players, go to ${frontendUrl} and press join.`}</h3>
-      <h3>Then, enter {gameId} to join this game</h3>
-      <button disabled={playerCount < 3} onClick={handleStartGame}>Start</button>
-      <WatchPlayers gameId={gameId} onPlayerCountChanged={updatePlayerCount}/>
-      </>
-      )
-    }
-    
-  }
-
+const HostLobby: React.FC<HostLobbyProps> = ({
+  gameId,
+  players,
+  onStartGame,
+}) => {
   return (
     <>
-    <div className="container">
-      {renderComponent()}
-    </div>
+      <div className="container">
+        <p>
+          This device is going to host your game. It will be used as a display
+          for everyone.
+        </p>
+        <h3>{`Players, go to ${frontendUrl} and press join.`}</h3>
+        <h3>Then, enter {gameId} to join this game</h3>
+        <button disabled={players.length < 3} onClick={onStartGame}>
+          Start
+        </button>
+        <DisplayPlayers gameState={"LOBBY"} players={players} />
+      </div>
     </>
   );
-}
+};
 
 export default HostLobby;

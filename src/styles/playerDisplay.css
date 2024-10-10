@@ -1,0 +1,44 @@
+.player-ready-display {
+    width: 80%;
+    display: grid;
+    gap: 12px;
+    align-items: center;
+}
+
+.player-ready-element {
+    font-size: 24px;
+    display: grid;
+    grid-template-columns: 1fr 50px; /* One column for the player name, another for the status */
+    align-items: center;
+    padding: 10px;
+    font-family: monospace;
+    background-color: #222;
+    border: 1px white solid;
+}
+
+.player-ready-element p {
+    margin: 0;
+    padding-left: 10px;
+    font-weight: bold;
+    
+}
+
+.player-status {
+    width: 30px;
+    height: 30px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 50%; /* Makes it a circle */
+}
+
+/* Player is ready - use a checkmark background image */
+.player-ready {
+    background-image: url('../resources/check-symbol-4794.png');
+    background-color: #b3ffcc; /* Light green for ready */
+}
+
+/* Player is not ready - use a hourglass sign background image */
+.player-wait {
+    background-image: url('../resources/sandclock-5844.png');
+    background-color: #ffcccc; /* Light red for waiting */
+}

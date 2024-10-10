@@ -25,4 +25,10 @@
     border: none;
     background: #7038a4;
     background: linear-gradient(90deg, rgba(112,56,164,1) 0%, rgba(63,20,104,1) 100%);
+    transition: font-size 0.2s ease;
+  }
+
+  .header button:hover {
+    background: linear-gradient(90deg, rgb(23, 3, 42) 0%, rgba(63,20,104,1) 100%);
+    font-size:28px;
   }
