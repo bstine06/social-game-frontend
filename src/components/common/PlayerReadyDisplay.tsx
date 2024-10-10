@@ -5,14 +5,15 @@ import "../../styles/playerDisplay.css";
 
 interface PlayerReadyDisplayProps {
   players: PlayerData[];
+  showStatus? : boolean;
 }
 
-const PlayerReadyDisplay: React.FC<PlayerReadyDisplayProps> = ({ players }) => {
+const PlayerReadyDisplay: React.FC<PlayerReadyDisplayProps> = ({ players, showStatus = true }) => {
   return (
     <>
       <div className="player-ready-display">
         {players.map((player) => (
-          <PlayerReadyElement player={player} />
+          <PlayerReadyElement key={player.player.playerId} player={player} showStatus={showStatus} />
         ))}
       </div>
     </>

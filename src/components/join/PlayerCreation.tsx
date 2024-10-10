@@ -12,7 +12,7 @@ const PlayerCreation: React.FC<PlayerCreationProps> = ({ onCreatePlayer, gameId 
   const [nameInput, setNameInput] = useState<string>("");
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newValue = event.target.value.replace(/[^a-zA-Z0-9\s.,!?'"()-]/g, "")
+    const newValue = event.target.value;
     setNameInput(newValue);
   };
 

@@ -17,6 +17,13 @@ body {
   padding: 10px;
 }
 
+/* prevent text highlighting on buttons everywhere */
+button {
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
+}
+
 .container {
   padding: 12px;
   text-align: center;
@@ -26,6 +33,7 @@ body {
 
 .container p {
   font-size: 32px;
+  margin: 12px;
 }
 
 .big-input {
@@ -70,6 +78,23 @@ body {
   border-color: yellow;
 }
 
+.conversation-input {
+  resize: none;
+  font-size: 28px;
+  font-family: monospace;
+  margin: 10px;
+  height: 4em;
+  width: 70%;
+  padding: 10px;
+  border-radius: 15px;
+  background-color: #e0c0ff;
+  text-align: center;
+  border: white 5px solid;
+  -webkit-box-shadow: inset 0px 0px 11px 5px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: inset 0px 0px 11px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: inset 0px 0px 11px 5px rgba(0, 0, 0, 0.1);
+}
+
 .big-button {
   margin: 10px;
   padding: 10px 20px;
@@ -79,7 +104,37 @@ body {
   font-size: 32px;
   font-family: monospace;
   font-weight: 900;
+  background-color: #e0c0ff;
+  color: black;
+  transition: font-size 0.2s ease;
+  box-shadow: #e0c0ff 0 0 0 0;
+  -webkit-box-shadow: #e0c0ff 0 0 0 0;
+  -moz-box-shadow: #e0c0ff 0 0 0 0;
 }
+
+.big-button:hover {
+  background-color: #f4eaff;
+  box-shadow: #e0c0ff 0px 0px 5px 5px;
+  -webkit-box-shadow: #e0c0ff 0px 0px 5px 5px;
+  -moz-box-shadow: #e0c0ff 0px 0px 5px 5px;
+}
+
+.big-button:disabled {
+  background-color: #CCC;
+  color: #888;
+}
+
+.big-button:disabled:hover{
+  box-shadow:none;
+  -webkit-box-shadow:none;
+  -moz-box-shadow:none;
+}
+
+
+
+
+
+
 
 .answer-grid {
   display: grid;

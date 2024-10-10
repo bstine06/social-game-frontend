@@ -2,6 +2,7 @@ import React, { useState } from "react";
 const frontendUrl = process.env.REACT_APP_FRONTEND_URL;
 import { PlayerData } from "../types/playerDataTypes";
 import DisplayPlayers from "../common/DisplayPlayers";
+import PlayerReadyDisplay from "../common/PlayerReadyDisplay";
 
 // Define the type for the props
 interface HostLobbyProps {
@@ -22,12 +23,12 @@ const HostLobby: React.FC<HostLobbyProps> = ({
           This device is going to host your game. It will be used as a display
           for everyone.
         </p>
-        <h3>{`Players, go to ${frontendUrl} and press join.`}</h3>
-        <h3>Then, enter {gameId} to join this game</h3>
-        <button disabled={players.length < 3} onClick={onStartGame}>
+        <p>{`Players, go to ${frontendUrl} and press join.`}</p>
+        <p>Then, enter {gameId} to join this game</p>
+        <button className="big-button" disabled={players.length < 3} onClick={onStartGame}>
           Start
         </button>
-        <DisplayPlayers gameState={"LOBBY"} players={players} />
+        <PlayerReadyDisplay players={players} />
       </div>
     </>
   );
