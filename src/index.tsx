@@ -108,13 +108,21 @@ function App() {
   }
 
   const updateLocalState = (state: string): void => {
-    if (state === "error") {
-      setErrorMessage(`Game ${gameId} couldn't be found. You've been returned to the home screen.`);
-      resetUserSession();
-    } else
-    if (state === "NONEXISTENT") {
-      (playerId && setErrorMessage(`Game ${gameId} was deleted. You've been returned to the home screen.`));
-      resetUserSession();
+    if (state.includes("DELETED_BY")) {
+      switch (state) {
+        case "DELETED_BY_INSUFFICIENT_PLAYERS":
+          setErrorMessage(`Game ${gameId} was deleted because there were insufficient players remaining.`);
+          resetUserSession();
+          break;
+        case "DELETED_BY_HOST":
+          setErrorMessage(`Game ${gameId} was deleted by the host.`);
+          resetUserSession();
+          break;
+        case "DELETED_BY_CLEAN_UP":
+          setErrorMessage(`Game ${gameId} reached its time limit and was deleted automatically.`);
+          resetUserSession();
+          break;
+      }
     } else {
       setGameState(state);
     }

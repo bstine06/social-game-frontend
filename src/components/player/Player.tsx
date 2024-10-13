@@ -23,6 +23,9 @@ const Player: React.FC<PlayerProps> = ({
     playerName,
     onCancelPlayer,
 }) => {
+    const [deletePlayerConfirmMsg, setDeletePlayerConfirmMsg] = useState<string>(
+        `This will remove you from the game (${gameId})`
+    )
     const [players, setPlayers] = useState<PlayerData[]>([]);
     const [finished, setFinished] = useState<boolean>(false);
 
@@ -32,6 +35,14 @@ const Player: React.FC<PlayerProps> = ({
 
     const updatePlayers = (newPlayersList: PlayerData[]) => {
         setPlayers(newPlayersList);
+        console.log(newPlayersList.length);
+        setDeletePlayerConfirmMsg(decideDeletePlayerConfirmMsg(newPlayersList.length, gameId));
+    };
+
+    const decideDeletePlayerConfirmMsg = (playerCount: number, gameId: string) => {
+        return playerCount === 3
+            ? `Because there are only 3 players, this will delete the game (${gameId})`
+            : `This will remove you from the game (${gameId})`;
     };
 
     const handleFinishSubmission = () => {
@@ -100,7 +111,7 @@ const Player: React.FC<PlayerProps> = ({
                 playerName={playerName}
                 role={"PLAYER"}
                 onCancel={deletePlayer}
-                confirmModalContent={`This will remove you from the game (${gameId})`}
+                confirmModalContent={deletePlayerConfirmMsg}
             />
             <WatchPlayers gameId={gameId} onPlayersChanged={updatePlayers} />
             {finished ? renderWaitingComponent() : renderGameplayComponent()}

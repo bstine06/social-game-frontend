@@ -36,10 +36,6 @@ const GameState: React.FC<GameStateProps> = ({ onGameStateUpdate, gameId }) => {
                 reconnectTimeout.current = setTimeout(() => {
                     connectWebSocket();
                 }, 3000); // 3-second delay before reconnecting
-            } else if (event.code === 4000) {
-                onGameStateUpdate("NONEXISTENT");
-            } else {
-                onGameStateUpdate("NONEXISTENT");
             }
         };
 

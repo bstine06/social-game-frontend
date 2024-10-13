@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 const frontendUrl = process.env.REACT_APP_FRONTEND_URL;
 import { PlayerData } from "../types/playerDataTypes";
-import DisplayPlayers from "../common/DisplayPlayers";
 import PlayerReadyDisplay from "../common/PlayerReadyDisplay";
 
 // Define the type for the props
