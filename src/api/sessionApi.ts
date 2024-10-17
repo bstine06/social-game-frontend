@@ -14,7 +14,7 @@ export const getSessionRole = async () => {
     const data = await response.json(); // Parse the response as JSON
     return data.role; // Access the 'role' key to get its value
   } catch (error) {
-    console.error('Error:', error);
     throw error;
   }
 }
+

@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { createPlayerApi } from '../../api/playerApi';
 import validator from 'validator';
+import LilGuySelect from './LilGuySelect';
+import NameInput from './NameInput';
 
 // Define the type for the props
 interface PlayerCreationProps {
@@ -9,12 +11,14 @@ interface PlayerCreationProps {
 }
 
 const PlayerCreation: React.FC<PlayerCreationProps> = ({ onCreatePlayer, gameId }) => {
+  const [stage, setStage] = useState<string>("lilGuySelect");
   const [nameInput, setNameInput] = useState<string>("");
+  const [lilGuyShape, setLilGuyShape] = useState<number | null>(null);
+  const [lilGuyColor, setLilGuyColor] = useState<string>("");
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newValue = event.target.value;
-    setNameInput(newValue);
-  };
+  const advanceStage = () => {
+    setStage("lilGuySelect");
+  }
 
   const handleSubmit = async () => {
     try {
@@ -30,10 +34,8 @@ const PlayerCreation: React.FC<PlayerCreationProps> = ({ onCreatePlayer, gameId 
   return (
     <>
     <div className="container">
-      <h4>Game: {gameId}</h4>
-      <h2>Enter name:</h2>
-      <input type="text" className="big-input" value={nameInput} onChange={handleInputChange} />
-      <button className="big-button" onClick={handleSubmit}>Submit</button>
+      {stage=="nameInput" && <NameInput onNext={advanceStage}/>}
+      {stage=="lilGuySelect" && <LilGuySelect/>}
     </div>
     </>
   );

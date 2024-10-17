@@ -11,6 +11,8 @@ import ErrorModal from './components/common/ErrorModal';
 import GameState from './components/websocket/GameState';
 import './styles/styles.css';
 import DevDisplay from './components/DevDisplay';
+import Header from './components/common/Header';
+import LilGuySelect from './components/join/LilGuySelect';
 
 // Define the role types
 type Role = 'HOST' | 'PLAYER' | 'PLAYER_CREATION' | 'UNASSIGNED';
@@ -20,20 +22,33 @@ function App() {
   const [gameState, setGameState] = useState<string>("");
   const [gameId, setGameId] = useState<string>("");
   const [role, setRole] = useState<Role>('UNASSIGNED');
+  const [connected, setConnected] = useState<boolean>(false);
   const [playerId, setPlayerId] = useState<string>("");
   const [playerName, setPlayerName] = useState<string>("");
   const [hostId, setHostId] = useState<string>("");
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [devDisplayOpen, setDevDisplayOpen] = useState<boolean>(false);
 
+  const [devRoleDeclaration, setDevRoleDeclaration] = useState<Role>("PLAYER_CREATION");
+
   // on page load, retrieve any existing role from backend via session cookie
   useEffect(() => {
+    if (devRoleDeclaration) {
+      setRole(devRoleDeclaration);
+      return;
+    }
     const getRole = async (): Promise<void> => {
       try {
         const newRole = await getSessionRole();
         setRole(newRole);
+        setConnected(true);
       } catch (err: any) {
-        console.error(err.message);
+        setConnected(false);
+        if (err instanceof Error) {
+          if (err.message === "Failed to fetch") {
+            setErrorMessage("There was an error connecting to the game server.");
+          }
+        }
       }
     };
 
@@ -86,13 +101,11 @@ function App() {
   };
 
   const resetUserSession = () => {
-    setLoading(true);
     setGameId("")
     setGameState("");
     setRole('UNASSIGNED');
     setPlayerId("");
     setHostId("");
-    setLoading(false);
   }
 
   const setRoleToPlayer = () => {

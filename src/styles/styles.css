@@ -18,7 +18,8 @@ body {
 }
 
 /* prevent text highlighting on buttons everywhere */
-button {
+button, .btn {
+  cursor: pointer;
   -webkit-user-select: none; /* Safari */
   -ms-user-select: none; /* IE 10 and IE 11 */
   user-select: none; /* Standard syntax */
@@ -31,7 +32,7 @@ button {
     place-items: center; /* Centers the child both horizontally and vertically */
 }
 
-.container p {
+.container {
   font-size: 32px;
   margin: 12px;
 }
@@ -106,7 +107,7 @@ button {
   font-weight: 900;
   background-color: #e0c0ff;
   color: black;
-  transition: font-size 0.2s ease;
+  transition: 0.2s ease-in-out;
   box-shadow: #e0c0ff 0 0 0 0;
   -webkit-box-shadow: #e0c0ff 0 0 0 0;
   -moz-box-shadow: #e0c0ff 0 0 0 0;
@@ -122,6 +123,7 @@ button {
 .big-button:disabled {
   background-color: #CCC;
   color: #888;
+  cursor: no-drop;
 }
 
 .big-button:disabled:hover{

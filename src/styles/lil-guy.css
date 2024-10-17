@@ -1,0 +1,26 @@
+.lil-guy {
+    max-width: 100px;
+    max-height: 100px;
+    transition: all 200ms ease-in-out;
+    box-shadow: inset 0 0 5px 5px #333, 0 0 5px 5px #FFFFFF00;
+    border-radius: 15%;
+    transition: all 300ms ease-in-out;
+    background-color: #2A2A2A;
+    padding: 24px;
+}
+
+.lil-guy-selection-container {
+    display: flex;
+    margin-top: 40px;
+    gap: 40px;
+}
+
+.lil-guy-image {
+    width: 100%;
+    
+}
+
+.lil-guy.selected {
+    box-shadow: inset 0 0 5px 5px #00000000, 0 0 25px 5px #FFFFFFA0;
+    background-color: #222;
+}

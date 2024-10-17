@@ -1,0 +1,41 @@
+import React from "react";
+import LilGuy1 from "../../resources/lil-guys/LilGuy1";
+import LilGuy2 from "../../resources/lil-guys/LilGuy2";
+import LilGuy3 from "../../resources/lil-guys/LilGuy3";
+
+interface LilGuyProps {
+    onSelect: (selection: number) => void;
+    lilGuyIndex: number;
+    fillColor: string;
+    isSelected: boolean;
+}
+
+const LilGuy: React.FC<LilGuyProps> = ({
+    onSelect,
+    fillColor,
+    lilGuyIndex,
+    isSelected,
+}) => {
+    const handleSelect = () => {
+        onSelect(lilGuyIndex);
+    };
+
+    const renderLilGuy = () => {
+        switch (lilGuyIndex) {
+            case 1:
+                return <LilGuy1 fillColor={fillColor} />
+            case 2:
+                return <LilGuy2 fillColor={fillColor} />
+            case 3:
+                return <LilGuy3 fillColor={fillColor} />
+        }
+    }
+
+    return (
+        <div onClick={handleSelect} className={`lil-guy ${isSelected ? 'selected' : ''}`}>
+            {renderLilGuy()}
+        </div>
+    );
+};
+
+export default LilGuy;
