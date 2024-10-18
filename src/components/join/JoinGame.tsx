@@ -7,11 +7,13 @@ import Header from '../common/Header';
 interface JoinGameProps {
     onCreatePlayer: () => void; // Function to handle hosting
     onCancelJoin: () => void;
+    onColorSelect: (color: string) => void;
 }
 
 const JoinGame: React.FC<JoinGameProps> = ({
   onCreatePlayer,
   onCancelJoin,
+  onColorSelect,
 }) => {
   const [gameIdInput, setGameIdInput] = useState<string>("");
   const [isValidInput, setIsValidInput] = useState<boolean>(false);
@@ -63,7 +65,7 @@ const JoinGame: React.FC<JoinGameProps> = ({
       );
     } else {
       return (
-        <PlayerCreation onCreatePlayer={onCreatePlayer} gameId={gameIdInput} />
+        <PlayerCreation onCreatePlayer={onCreatePlayer} gameId={gameIdInput} onColorSelect={onColorSelect}/>
       );
     }
   };

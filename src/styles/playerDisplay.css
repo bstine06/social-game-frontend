@@ -1,19 +1,23 @@
 .player-ready-display {
-    width: 80%;
-    display: grid;
+    width: 95%;
+    display: flex;
     gap: 12px;
+    flex-wrap: wrap;
     align-items: center;
+    justify-content: center;
 }
 
 .player-ready-element {
-    font-size: 24px;
-    display: grid;
-    grid-template-columns: 1fr 50px; /* One column for the player name, another for the status */
+    font-size: 36px;
+    display: flex;
     align-items: center;
     padding: 10px;
     font-family: monospace;
-    background-color: #222;
+    background-color: #444;
     border: 1px white solid;
+    border-radius: 20px;
+    box-shadow: 0 0 25px 5px black;
+    flex-shrink: 1;
 }
 
 .player-ready-element p {
@@ -21,6 +25,10 @@
     padding-left: 10px;
     font-weight: bold;
     
+}
+
+.player-ready-element .lil-guy {
+    margin: 0;
 }
 
 .player-status {
@@ -33,12 +41,12 @@
 
 /* Player is ready - use a checkmark background image */
 .player-ready {
-    background-image: url('../resources/check-symbol-4794.png');
-    background-color: #b3ffcc; /* Light green for ready */
+    background: url("../resources/check-symbol-4794.png") no-repeat right 5px bottom 5px;
+    background-size: 50px 50px;
+    background-color: #009000; /* Light green for ready */
 }
 
 /* Player is not ready - use a hourglass sign background image */
-.player-wait {
-    background-image: url('../resources/sandclock-5844.png');
-    background-color: #ffcccc; /* Light red for waiting */
-}
+/* .player-wait {
+} */
+

@@ -1,26 +1,51 @@
 .lil-guy {
-    max-width: 100px;
+    max-width: calc(100% - 48px); /* Adjust width to account for padding */
     max-height: 100px;
-    transition: all 200ms ease-in-out;
-    box-shadow: inset 0 0 5px 5px #333, 0 0 5px 5px #FFFFFF00;
     border-radius: 15%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto; /* Center without affecting width */
     transition: all 300ms ease-in-out;
-    background-color: #2A2A2A;
-    padding: 24px;
+}
+
+.lil-guy:hover {
+    box-shadow: 0 0 10px 5px white;
+    -webkit-box-shadow: 0 0 10px 5px white;
+    -moz-box-shadow: 0 0 10px 5px white;
 }
 
 .lil-guy-selection-container {
-    display: flex;
-    margin-top: 40px;
-    gap: 40px;
+    width: 100%; /* Ensure it takes full width */
+    max-width: 800px; /* Keep the maximum limit */
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    align-items: center;
+    gap: 50px 10px;
+    justify-content: center; /* Center items */
+    padding: 0 12px; /* Add some padding to prevent edge touch */
+    box-sizing: border-box; /* Ensure padding is included in the width */
 }
 
-.lil-guy-image {
+.lil-guy-selection-container > .lil-guy {
+    background-color: #fafafa;
+    box-shadow: 0 0 10px 5px rgba(0,0,0,0);
+    -webkit-box-shadow: 0 0 10px 5px rgba(0,0,0,0);
+    -moz-box-shadow: 0 0 10px 5px rgba(0,0,0,0);
+}
+
+.lil-guy-display-container {
+    display: flex; gap: 12px;
+}
+
+@media (width < 600px) {
+    .lil-guy-selection-container {
+        max-width: 400px;
+    }
+}
+
+.lil-guy > svg {
+    transition: fill 300ms ease-in-out;
     width: 100%;
-    
-}
-
-.lil-guy.selected {
-    box-shadow: inset 0 0 5px 5px #00000000, 0 0 25px 5px #FFFFFFA0;
-    background-color: #222;
+    height: 100%;
 }

@@ -10,7 +10,7 @@ const LilGuy3: React.FC<LilGuy3Props> = ({ fillColor }) => {
             <g id="Layer_1">
                 <title>Layer 1</title>
                 <ellipse
-                    stroke-width="6"
+                    strokeWidth="6"
                     ry="45"
                     rx="45"
                     id="svg_1"
@@ -25,7 +25,7 @@ const LilGuy3: React.FC<LilGuy3Props> = ({ fillColor }) => {
                     id="svg_3"
                     cy="33"
                     cx="33"
-                    stroke-width="10"
+                    strokeWidth="10"
                     stroke="#000"
                 />
                 <ellipse
@@ -34,13 +34,13 @@ const LilGuy3: React.FC<LilGuy3Props> = ({ fillColor }) => {
                     id="svg_5"
                     cy="32.75309"
                     cx="66"
-                    stroke-width="10"
+                    strokeWidth="10"
                     stroke="#000"
                 />
                 <path
                     d="m27.16049,62.83951c0,0 0.24691,0 5.4321,0c8.14815,0 20,0 35.30864,0l4.93827,0l1.9753,0l0.24692,0"
                     id="svg_16"
-                    stroke-width="10"
+                    strokeWidth="10"
                     stroke="#000"
                     fill="none"
                 />

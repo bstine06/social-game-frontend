@@ -35,8 +35,20 @@ const Player: React.FC<PlayerProps> = ({
 
     const updatePlayers = (newPlayersList: PlayerData[]) => {
         setPlayers(newPlayersList);
-        console.log(newPlayersList.length);
-        setDeletePlayerConfirmMsg(decideDeletePlayerConfirmMsg(newPlayersList.length, gameId));
+        setDeletePlayerConfirmMsg(
+            decideDeletePlayerConfirmMsg(newPlayersList.length, gameId)
+        );
+        // Find the local player in the updated players list
+        const localPlayer = newPlayersList.find(
+            (p) => p.player.playerId === playerId
+        );
+
+        // If the local player is found and ready, set finished to true
+        if (localPlayer && localPlayer.ready) {
+            setFinished(true);
+        } else {
+            setFinished(false);
+        }
     };
 
     const decideDeletePlayerConfirmMsg = (playerCount: number, gameId: string) => {
@@ -50,7 +62,7 @@ const Player: React.FC<PlayerProps> = ({
         console.log(playersStillSubmitting);
         if (playersStillSubmitting.length > 1) {
             setFinished(true);
-        } else if (playersStillSubmitting[0].player.playerId === playerId) {
+        } else if (playersStillSubmitting.length > 0 && playersStillSubmitting[0].player.playerId === playerId) {
             setFinished(false);
         }
     };

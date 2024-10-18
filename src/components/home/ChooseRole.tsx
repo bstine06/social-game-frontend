@@ -11,26 +11,27 @@ interface ChooseRoleProps {
 const ChooseRole: React.FC<ChooseRoleProps> = ({ onChooseHost, onChooseJoin }) => {
   return (
     <div className="container">
+      <h2>I'M READY TO PLAY</h2>
       <div className="options-container">
         <div className="option btn" onClick={onChooseJoin}>
           <p className="option-name">JOIN</p>
           <p className="description">
-            Choose this to join a game created by a host.
+            Join a game created by a host.
           </p>
           <p className="description">
-            You'll enter a 4-character game id provided by the host device.
+            To join, you'll enter a 4-character Game ID provided by the host device.
           </p>
         </div>
         <div className="option btn" onClick={onChooseHost}>
           <p className="option-name">HOST</p>
           <p className="description">
-            Choose this to host a game.
+            Host a game for players to join.
           </p>
           <p className="description">
             The device that hosts will not be a participant in the game.
           </p>
           <p className="description">
-            It's recommended to use a large or shareable screen, that all players can see, for the host device.
+            It's recommended to use a large or shareable screen that all players can see for the host device.
           </p>
         </div>
       </div>

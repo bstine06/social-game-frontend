@@ -7,6 +7,9 @@
     height: 100px;
     font-size: 20px;
     margin: 0;
+    box-shadow: #000000 5px 0px 5px 5px;
+    -webkit-box-shadow: #000000 5px 0px 25px 5px;
+    -moz-box-shadow: #e0c0ff 5px 0px 5px 5px;
   }
   
   .header > * {

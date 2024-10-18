@@ -19,7 +19,7 @@ export const getPlayerById = async () => {
   }
 };
 
-export const createPlayerApi = async (gameId: string, name: string) => {
+export const createPlayerApi = async (gameId: string, name: string, shape: number, color: string) => {
   try {
     const response = await fetch(`${backendUrl}/${requestMapping}`, {
       method: "POST",
@@ -27,7 +27,7 @@ export const createPlayerApi = async (gameId: string, name: string) => {
       headers: {
         "Content-Type": "application/json", // Set the content type to JSON
       },
-      body: JSON.stringify({ gameId, name }),
+      body: JSON.stringify({ gameId, name, shape, color }),
     });
 
     if (!response.ok) throw new Error("Network response was not ok");

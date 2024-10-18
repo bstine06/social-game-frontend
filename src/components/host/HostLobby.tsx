@@ -23,7 +23,7 @@ const HostLobby: React.FC<HostLobbyProps> = ({
         <button className="big-button" disabled={players.length < 3} onClick={onStartGame}>
           Start
         </button>
-        <PlayerReadyDisplay players={players} />
+        <PlayerReadyDisplay players={players} showStatus={false}/>
       </div>
     </>
   );

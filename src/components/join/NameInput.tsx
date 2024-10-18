@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 interface NameInputProps {
-    onNext: ()=> void;
+    onNext: (name:string)=> void;
 }
 
 const NameInput: React.FC<NameInputProps> = ({
@@ -19,7 +19,7 @@ const NameInput: React.FC<NameInputProps> = ({
         <>
             <h2>Enter name:</h2>
             <input type="text" className="big-input" value={nameInput} onChange={handleInputChange} />
-            <button className="big-button" onClick={onNext}>Next Step</button>
+            <button className="big-button" onClick={() => onNext(nameInput)}>Next Step</button>
         </>
     )
 }

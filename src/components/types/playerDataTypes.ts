@@ -1,6 +1,8 @@
 export interface Player {
     playerId: string;
     name: string;
+    shape: number;
+    color: string;
 }
 
 export interface PlayerData {

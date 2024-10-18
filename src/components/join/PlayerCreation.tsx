@@ -8,22 +8,22 @@ import NameInput from './NameInput';
 interface PlayerCreationProps {
     onCreatePlayer: () => void; // Function to handle hosting
     gameId : string;
+    onColorSelect: (color: string) => void;
 }
 
-const PlayerCreation: React.FC<PlayerCreationProps> = ({ onCreatePlayer, gameId }) => {
-  const [stage, setStage] = useState<string>("lilGuySelect");
+const PlayerCreation: React.FC<PlayerCreationProps> = ({ onCreatePlayer, gameId, onColorSelect }) => {
+  const [stage, setStage] = useState<string>("nameInput");
   const [nameInput, setNameInput] = useState<string>("");
-  const [lilGuyShape, setLilGuyShape] = useState<number | null>(null);
-  const [lilGuyColor, setLilGuyColor] = useState<string>("");
 
-  const advanceStage = () => {
+  const advanceStage = (name: string) => {
+    setNameInput(name);
     setStage("lilGuySelect");
   }
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (shape: number, color: string) => {
     try {
       const sanitizedInput = validator.escape(nameInput); // Escapes any potentially harmful characters
-      await createPlayerApi(gameId, sanitizedInput);
+      await createPlayerApi(gameId, sanitizedInput, shape, color);
       setNameInput(""); // Clear input field
       onCreatePlayer(); //Notify parent of player creation
     } catch (error) {
@@ -35,7 +35,7 @@ const PlayerCreation: React.FC<PlayerCreationProps> = ({ onCreatePlayer, gameId 
     <>
     <div className="container">
       {stage=="nameInput" && <NameInput onNext={advanceStage}/>}
-      {stage=="lilGuySelect" && <LilGuySelect/>}
+      {stage=="lilGuySelect" && <LilGuySelect onColorSelect={onColorSelect} onSubmit={handleSubmit}/>}
     </div>
     </>
   );

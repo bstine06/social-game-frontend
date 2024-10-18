@@ -28,8 +28,9 @@ function App() {
   const [hostId, setHostId] = useState<string>("");
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [devDisplayOpen, setDevDisplayOpen] = useState<boolean>(false);
+  const [color, setColor] = useState<string>("#3f1468");
 
-  const [devRoleDeclaration, setDevRoleDeclaration] = useState<Role>("PLAYER_CREATION");
+  const [devRoleDeclaration, setDevRoleDeclaration] = useState<Role>();
 
   // on page load, retrieve any existing role from backend via session cookie
   useEffect(() => {
@@ -106,6 +107,7 @@ function App() {
     setRole('UNASSIGNED');
     setPlayerId("");
     setHostId("");
+    setColor("#3f1468");
   }
 
   const setRoleToPlayer = () => {
@@ -149,6 +151,10 @@ function App() {
     setDevDisplayOpen(!devDisplayOpen);
   }
 
+  const updateColor = (color: string) => {
+    setColor(color);
+  }
+
   const renderComponent = (role: Role, loading: boolean): JSX.Element | null => {
     if (loading) return <p>Loading...</p>;
 
@@ -159,7 +165,7 @@ function App() {
     } else if (role === "HOST" && gameId) {
       return <Host gameId={gameId} gameState={gameState} onCancelHost={resetUserSession} onStartGame={startGame}/>;
     } else if (role === "PLAYER_CREATION") {
-      return <JoinGame onCreatePlayer={setRoleToPlayer} onCancelJoin={resetUserSession}/>
+      return <JoinGame onCreatePlayer={setRoleToPlayer} onCancelJoin={resetUserSession} onColorSelect={updateColor}/>
     } else if (role === "PLAYER" && gameId) {
       return <Player gameId={gameId} playerId={playerId} gameState={gameState} playerName={playerName} onCancelPlayer={resetUserSession}/>;
     }
@@ -170,7 +176,7 @@ function App() {
   return (
     <>
       <button onClick={toggleDevDisplay}>Toggle Developer Panel</button>
-      {devDisplayOpen && <DevDisplay gameId={gameId} gameState={gameState} role={role} hostId={hostId} playerId={playerId} loading={loading}/>}
+      {devDisplayOpen && <DevDisplay gameId={gameId} gameState={gameState} role={role} hostId={hostId} playerId={playerId} loading={loading} color={color}/>}
       {errorMessage && <ErrorModal message={errorMessage} onClose={closeErrorModal} />}
       {renderComponent(role, loading)}
       {gameId && <GameState onGameStateUpdate={updateLocalState} gameId={gameId} />}

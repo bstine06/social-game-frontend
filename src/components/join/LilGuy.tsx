@@ -4,7 +4,7 @@ import LilGuy2 from "../../resources/lil-guys/LilGuy2";
 import LilGuy3 from "../../resources/lil-guys/LilGuy3";
 
 interface LilGuyProps {
-    onSelect: (selection: number) => void;
+    onSelect?: (selection: number) => void;
     lilGuyIndex: number;
     fillColor: string;
     isSelected: boolean;
@@ -17,7 +17,7 @@ const LilGuy: React.FC<LilGuyProps> = ({
     isSelected,
 }) => {
     const handleSelect = () => {
-        onSelect(lilGuyIndex);
+        if (onSelect) onSelect(lilGuyIndex);
     };
 
     const renderLilGuy = () => {
