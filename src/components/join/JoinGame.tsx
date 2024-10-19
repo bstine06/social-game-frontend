@@ -8,12 +8,14 @@ interface JoinGameProps {
     onCreatePlayer: () => void; // Function to handle hosting
     onCancelJoin: () => void;
     onColorSelect: (color: string) => void;
+    gameId: string;
 }
 
 const JoinGame: React.FC<JoinGameProps> = ({
   onCreatePlayer,
   onCancelJoin,
   onColorSelect,
+  gameId
 }) => {
   const [gameIdInput, setGameIdInput] = useState<string>("");
   const [isValidInput, setIsValidInput] = useState<boolean>(false);
@@ -44,7 +46,15 @@ const JoinGame: React.FC<JoinGameProps> = ({
   };
 
   const renderComponent = (): JSX.Element => {
-    if (!isValidInput) {
+    if (isValidInput) {
+      return (
+        <PlayerCreation onCreatePlayer={onCreatePlayer} gameId={gameIdInput} onColorSelect={onColorSelect}/>
+      );
+    } else if (gameId) {
+      return (
+        <PlayerCreation onCreatePlayer={onCreatePlayer} gameId={gameId} onColorSelect={onColorSelect}/>
+      );
+    } else {
       return (
         <div className="container">
           <h2>game ID:</h2>
@@ -63,10 +73,6 @@ const JoinGame: React.FC<JoinGameProps> = ({
           <p className="error">{errorMessage}</p>
         </div>
       );
-    } else {
-      return (
-        <PlayerCreation onCreatePlayer={onCreatePlayer} gameId={gameIdInput} onColorSelect={onColorSelect}/>
-      );
     }
   };
 
@@ -74,7 +80,7 @@ const JoinGame: React.FC<JoinGameProps> = ({
     <>
       <Header
         onCancel={handleBackSubmit}
-        gameId={""}
+        gameId={gameId ? gameId : ""}
         role={"PLAYER_CREATION"}
         confirmModalContent={""}
       />

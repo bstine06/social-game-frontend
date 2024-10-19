@@ -21,7 +21,6 @@ const Header: React.FC<HeaderProps> = ({ onCancel, gameId, role, playerName, con
 
   const handleBackConfirm = async () => {
     onCancel(); //Notify parent that the game is cancelled
-    //setIsBackModalOpen(false); // Close modal
   };
 
   const handleBackCancel = () => {

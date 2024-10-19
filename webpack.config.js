@@ -10,6 +10,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js',
+    publicPath: '/',  // Ensure that all assets are served from the root
   },
   mode: 'development',
   devtool: 'cheap-module-source-map',

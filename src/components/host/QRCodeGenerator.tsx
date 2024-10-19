@@ -8,7 +8,7 @@ interface QRCodeGeneratorProps {
 }
 
 const QRCodeGenerator: React.FC<QRCodeGeneratorProps> = ({ gameId }) => {
-    const qrValue = `${frontendUrl}/${gameId}`;  // The data to be encoded in the QR code.
+    const qrValue = `${frontendUrl}/game/${gameId}`;  // The data to be encoded in the QR code.
     
   
     return (
