@@ -6,11 +6,12 @@ body {
   position: relative;
   margin: 0px;
   padding: 0;
-  background-image: radial-gradient(#212121 20%, transparent 20%),
-     radial-gradient(#fafafa 20%, transparent 20%);
-  background-color: #43176d;
-  background-position: 0 0, 60px 60px;
-  background-size: 60px 60px;
+  background-image: 
+    radial-gradient(#8f54c5 13.6%, transparent 3.6%),
+    radial-gradient(#8f54c5 13.6%, transparent 3.6%);
+  background-position: 0px 0px, 56px 56px, -5.6px 5.6px, 50.4px 61.6px;
+  background-size: 112px 112px;
+  background-color: rgb(49, 6, 91);
   width: 100%;
 }
 
@@ -41,10 +42,16 @@ button, .btn {
   background-color: #222;
   border: 2px solid white;
   border-radius: 50px;
-  margin: 48px auto;
+  margin: 48px auto 12px;
   -webkit-box-shadow: 0px 20px 25px 5px rgb(0, 0, 0);
   -moz-box-shadow: 0px 20px 25px 5px rgb(0, 0, 0);
   box-shadow: 0px 20px 25px 5px rgb(0, 0, 0);
+}
+
+@media (width < 600px) {
+  .container {
+      margin-top: 12px;
+  }
 }
 
 .big-input {
@@ -154,7 +161,7 @@ button, .btn {
 
 
 h3 {
-  margin: 36px auto 12px auto;
+  margin: 12px auto 12px auto;
 }
 
 
@@ -188,4 +195,16 @@ h3 {
 .vote {
   background-color: rgb(130, 44, 210);
   padding: 8px;
+}
+
+p.description {
+  margin-top: 0;
+  font-size: 24px;
+  text-align: center;
+  margin-bottom: 0;
+}
+
+.instruction {
+  margin: 0;
+  font-size: 42px;
 }

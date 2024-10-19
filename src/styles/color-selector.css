@@ -1,5 +1,4 @@
 .color-selector-container {
-    margin: 20px;
     padding: 20px;
     background-color: #5f5f5f;
     display: grid;
@@ -9,8 +8,8 @@
 }
 
 .color-swatch {
-    width: min(10vw, 75px);
-    height: 75px;
+    width: min(15vw, 75px);
+    height: min(15vw, 75px);
     border: 3px solid #444;
     border-radius: 40%;
     margin: auto;

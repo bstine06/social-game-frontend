@@ -47,7 +47,7 @@ const JoinGame: React.FC<JoinGameProps> = ({
     if (!isValidInput) {
       return (
         <div className="container">
-          <h2>Enter game id:</h2>
+          <h2>game ID:</h2>
           <input
             id="game-id-input"
             className={`huge-input ${errorMessage ? 'input-error' : ''}`} 

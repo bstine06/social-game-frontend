@@ -39,13 +39,7 @@
 .option-name{
     padding: 12px;
     padding-bottom: 12px;
-    border-bottom: #555 solid 1px;
     margin: auto;
     font-size: 72px;
-}
-
-p.description {
-    font-size: 24px;
-    text-align: center;
-    margin-bottom: 0;
+    font-weight: 900;
 }
