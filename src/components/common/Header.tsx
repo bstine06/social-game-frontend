@@ -31,7 +31,7 @@ const Header: React.FC<HeaderProps> = ({ onCancel, gameId, role, playerName, con
   return (
     <>
     <div className="header">
-      <button onClick={handleBackSubmit} className="small-button">EXIT</button>
+      <button onClick={handleBackSubmit}>EXIT</button>
       {role==="PLAYER" && playerName && <h2>{he.decode(playerName)}</h2>}
       {role==="HOST" && <h2>HOST</h2>}
       {role==="PLAYER_CREATION" && <h2>JOIN GAME</h2>}

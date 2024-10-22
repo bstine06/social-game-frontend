@@ -11,7 +11,7 @@ body {
     radial-gradient(#8f54c5 13.6%, transparent 3.6%);
   background-position: 0px 0px, 56px 56px, -5.6px 5.6px, 50.4px 61.6px;
   background-size: 112px 112px;
-  background-color: rgb(49, 6, 91);
+  background-color: #31065b;
   width: 100%;
 }
 
@@ -207,4 +207,49 @@ p.description {
 .instruction {
   margin: 0;
   font-size: 42px;
+}
+
+.instruction.small {
+  margin-top: 12px;
+  font-size: 30px;
+}
+
+.reduced-margin-top {
+  margin-top: 12px;
+}
+
+.invisible-container {
+  margin: auto;
+  display: flex;
+  flex-wrap: wrap;
+  max-width: min(calc(100vw - 80px), 1200px);
+}
+
+.invisible-box {
+  box-sizing: border-box; /* Ensure padding and borders don't affect width */
+  margin: 20px;
+}
+
+.shrink-to-fit {
+  flex: 0 1 auto;
+  min-width: 400px;
+}
+
+.expand-to-fit {
+  flex: 1 1 0;
+}
+
+.top-align {
+  display: flex;
+  flex-direction: column;
+  align-items: top;
+}
+
+@media (width < 1200px) {
+  .invisible-container {
+    flex-direction: column;
+  }
+  .expand-to-fit {
+    width: 100%;
+  }
 }

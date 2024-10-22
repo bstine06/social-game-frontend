@@ -13,8 +13,8 @@ const QRCodeGenerator: React.FC<QRCodeGeneratorProps> = ({ gameId }) => {
   
     return (
       <div>
-        <h1>Scan this QR code</h1>
-        <QRCodeSVG value={qrValue} size={256} bgColor={"#ffffff"} fgColor={"#000000"} />
+        <h2>Scan to join</h2>
+        <QRCodeSVG value={qrValue} size={256} bgColor={"#222"} fgColor={"#fff"} />
       </div>
     );
   };

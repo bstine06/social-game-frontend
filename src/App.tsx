@@ -68,7 +68,7 @@ const App = () => {
         
         // Check that game is provided
         
-    }, [location, role]); // Also depend on role to prevent conflicting updates
+    }, [location]); // Also depend on role to prevent conflicting updates
 
     // on page load, retrieve any existing role from backend via session cookie
     useEffect(() => {
@@ -143,6 +143,7 @@ const App = () => {
     };
 
     const resetUserSession = () => {
+        console.log("RESET USER SESSION");
         setGameId("");
         setGameState("");
         setRole("UNASSIGNED");
