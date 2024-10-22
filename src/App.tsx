@@ -29,7 +29,7 @@ const App = () => {
     const [hostId, setHostId] = useState<string>("");
     const [errorMessage, setErrorMessage] = useState<string>("");
     const [devDisplayOpen, setDevDisplayOpen] = useState<boolean>(false);
-    const [color, setColor] = useState<string>("#3f1468");
+    const [color, setColor] = useState<string>("PURPLE");
 
     const [devRoleDeclaration, setDevRoleDeclaration] = useState<Role>();
 
@@ -149,7 +149,7 @@ const App = () => {
         setRole("UNASSIGNED");
         setPlayerId("");
         setHostId("");
-        setColor("#3f1468");
+        setColor("PURPLE");
     };
 
     const setRoleToPlayer = () => {
@@ -221,6 +221,7 @@ const App = () => {
                     gameState={gameState}
                     onCancelHost={resetUserSession}
                     onStartGame={startGame}
+                    color={color}
                 />
             );
         } else if (role === "PLAYER_CREATION") {
@@ -230,6 +231,7 @@ const App = () => {
                     onCancelJoin={resetUserSession}
                     onColorSelect={updateColor}
                     gameId={gameId}
+                    color={color}
                 />
             );
         } else if (role === "PLAYER" && gameId) {
@@ -240,6 +242,7 @@ const App = () => {
                     gameState={gameState}
                     playerName={playerName}
                     onCancelPlayer={resetUserSession}
+                    color={color}
                 />
             );
         }

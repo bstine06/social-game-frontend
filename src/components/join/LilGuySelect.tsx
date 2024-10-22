@@ -17,11 +17,10 @@ const LilGuySelect: React.FC<LilGuySelectProps> = ({
     onSubmit
 }) => {
     const [lilGuySelection, setLilGuySelection] = useState<number>(0);
-    const [colorSelection, setColorSelection] = useState<string>("#a65bdc");
+    const [colorSelection, setColorSelection] = useState<string>("PURPLE");
 
     const updateSelection = (selection : number) => {
         setLilGuySelection(selection);
-        if (selection === 0) setColorSelection("#a65bdc");
     }
 
     const handleChooseColor = (color: string) => {

@@ -14,6 +14,7 @@ interface PlayerProps {
     gameState: string;
     playerName: string;
     onCancelPlayer: () => void;
+    color: string;
 }
 
 const Player: React.FC<PlayerProps> = ({
@@ -22,6 +23,7 @@ const Player: React.FC<PlayerProps> = ({
     gameState,
     playerName,
     onCancelPlayer,
+    color
 }) => {
     const [deletePlayerConfirmMsg, setDeletePlayerConfirmMsg] = useState<string>(
         `This will remove you from the game (${gameId})`
@@ -124,6 +126,7 @@ const Player: React.FC<PlayerProps> = ({
                 role={"PLAYER"}
                 onCancel={deletePlayer}
                 confirmModalContent={deletePlayerConfirmMsg}
+                color={color}
             />
             <WatchPlayers gameId={gameId} onPlayersChanged={updatePlayers} />
             {finished ? renderWaitingComponent() : renderGameplayComponent()}

@@ -1,4 +1,5 @@
 import React from "react";
+import { getHex } from "../../utils/ColorUtils";
 import LilGuy1 from "../../resources/lil-guys/LilGuy1";
 import LilGuy2 from "../../resources/lil-guys/LilGuy2";
 import LilGuy3 from "../../resources/lil-guys/LilGuy3";
@@ -23,11 +24,11 @@ const LilGuy: React.FC<LilGuyProps> = ({
     const renderLilGuy = () => {
         switch (lilGuyIndex) {
             case 1:
-                return <LilGuy1 fillColor={fillColor} />
+                return <LilGuy1 fillColor={getHex(fillColor)} />
             case 2:
-                return <LilGuy2 fillColor={fillColor} />
+                return <LilGuy2 fillColor={getHex(fillColor)} />
             case 3:
-                return <LilGuy3 fillColor={fillColor} />
+                return <LilGuy3 fillColor={getHex(fillColor)} />
         }
     }
 

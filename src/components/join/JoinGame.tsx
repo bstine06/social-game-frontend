@@ -9,13 +9,15 @@ interface JoinGameProps {
     onCancelJoin: () => void;
     onColorSelect: (color: string) => void;
     gameId: string;
+    color: string;
 }
 
 const JoinGame: React.FC<JoinGameProps> = ({
   onCreatePlayer,
   onCancelJoin,
   onColorSelect,
-  gameId
+  gameId,
+  color
 }) => {
   const [gameIdInput, setGameIdInput] = useState<string>("");
   const [isValidInput, setIsValidInput] = useState<boolean>(false);
@@ -83,6 +85,7 @@ const JoinGame: React.FC<JoinGameProps> = ({
         gameId={gameId ? gameId : ""}
         role={"PLAYER_CREATION"}
         confirmModalContent={""}
+        color={color}
       />
       {renderComponent()}
     </>

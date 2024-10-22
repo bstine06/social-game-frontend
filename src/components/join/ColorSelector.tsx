@@ -1,6 +1,8 @@
 import React from "react";
 import ColorSwatch from "./ColorSwatch";
 import LilGuy from "./LilGuy";
+import { getColorOptions } from "../../utils/ColorUtils";
+import { ColorOption } from "../types/ColorMappingType";
 import "../../styles/color-selector.css";
 
 interface ColorSelectorProps {
@@ -9,27 +11,17 @@ interface ColorSelectorProps {
 }
 
 const ColorSelector: React.FC<ColorSelectorProps> = ({ onChooseColor, selectedColor }) => {
-    const colorOptions = [
-        "#FF0000", // Red
-        "#FFFF00", // Yellow
-        "#00FF00", // Green
-        "#00FFFF", // Cyan
-        "#FF00FF", // Magenta
-        "#FFA500", // Orange
-        "#008000", // Dark Green
-        "#0000FF", // Blue
-        "#a65bdc", // Purple
-    ];
+    const colorOptions = getColorOptions();
 
     return (
         <>
             <div className="color-selector-container">
-                {colorOptions.map((color, index) => (
+                {colorOptions.map((colorOption, index) => (
                     <ColorSwatch
                         key={index}
-                        selected={selectedColor===color}
-                        onClick={() => onChooseColor(color)}
-                        color={color}
+                        selected={selectedColor===colorOption.name}
+                        onClick={() => onChooseColor(colorOption.name)}
+                        color={colorOption.hex}
                     />
                 ))}
             </div>
