@@ -33,6 +33,43 @@ const App = () => {
 
     const [devRoleDeclaration, setDevRoleDeclaration] = useState<Role>();
 
+    // Hook to access the current route
+    const location = useLocation();
+
+    // Effect that runs whenever the route changes
+    useEffect(() => {
+
+        setLoading(true);
+
+        const loadGameIfExists = async () => {
+            // Match the URL pattern (assuming /game/:gameId)
+            const match = location.pathname.match(/^\/game\/(.+)/);
+            if (match) {
+                const extractedGameId = match[1];
+                try {
+                    await getGameByIdApi(extractedGameId);
+                    // Only set the role if the current role is 'UNASSIGNED'
+                    if (role === "UNASSIGNED") {
+                        setRole("PLAYER_CREATION"); // Set the role to PLAYER_CREATION if no role is assigned yet
+                    }
+                    setGameId(extractedGameId);
+                } catch (error) {
+                    setErrorMessage("The game you're trying to join does not exist");
+                }
+            } else {
+                setGameId(""); // Reset the gameId if not on a game route
+            }
+            // Remove the extra path from the URL but maintain the state
+            window.history.replaceState(null, '', '/');  // Update the URL without reloading
+        }
+
+        loadGameIfExists();
+        
+        
+        // Check that game is provided
+        
+    }, [location, role]); // Also depend on role to prevent conflicting updates
+
     // on page load, retrieve any existing role from backend via session cookie
     useEffect(() => {
         if (devRoleDeclaration) {
@@ -82,7 +119,8 @@ const App = () => {
                     setGameState(game.gameState);
                 }
             } catch (err: any) {
-                console.error(err.message);
+                setErrorMessage("There was an error loading your current game");
+                resetUserSession();
             } finally {
                 setLoading(false);
             }
@@ -92,49 +130,6 @@ const App = () => {
             getDataById();
         }
     }, [role]);
-
-    // Hook to access the current route
-    const location = useLocation();
-
-    // Effect that runs whenever the route changes
-    useEffect(() => {
-        const verifyGameExists = async (gameId: string) => {
-            try {
-                const game = await getGameByIdApi(gameId); // Call the API to check if the game exists
-                if (game) {
-                    setGameId(game.gameId); // Update the state with the gameId if the game exists
-                    
-                    // Only set the role if the current role is 'UNASSIGNED'
-                    if (role === "UNASSIGNED") {
-                        setRole("PLAYER_CREATION"); // Set the role to PLAYER_CREATION if no role is assigned yet
-                    }
-    
-                    // Remove the extra path from the URL but maintain the state
-                    window.history.replaceState(null, '', '/');  // Update the URL without reloading
-                } else {
-                    // Handle the case where the game doesn't exist (e.g., show an error or redirect)
-                    setErrorMessage('The game does not exist.');
-                }
-            } catch (error) {
-                // Handle the API error (e.g., network issues or API failure)
-                console.error('Failed to fetch the game:', error);
-                setErrorMessage('Failed to fetch game information.');
-            }
-        };
-    
-        // Match the URL pattern (assuming /game/:gameId)
-        const match = location.pathname.match(/^\/game\/(.+)/);
-    
-        if (match) {
-            const extractedGameId = match[1];
-            
-            // Verify the game exists before proceeding
-            verifyGameExists(extractedGameId);
-        } else {
-            setGameId(""); // Reset the gameId if not on a game route
-        }
-    }, [location, role]); // Also depend on role to prevent conflicting updates
-    
 
     const createAndHostGame = async () => {
         try {
@@ -253,6 +248,17 @@ const App = () => {
 
     return (
         <>
+            
+            {errorMessage && (
+                <ErrorModal message={errorMessage} onClose={closeErrorModal} />
+            )}
+            {renderComponent(role, loading)}
+            {gameId && (
+                <GameState
+                    onGameStateUpdate={updateLocalState}
+                    gameId={gameId}
+                />
+            )}
             <button onClick={toggleDevDisplay}>Toggle Developer Panel</button>
             {devDisplayOpen && (
                 <DevDisplay
@@ -263,16 +269,6 @@ const App = () => {
                     playerId={playerId}
                     loading={loading}
                     color={color}
-                />
-            )}
-            {errorMessage && (
-                <ErrorModal message={errorMessage} onClose={closeErrorModal} />
-            )}
-            {renderComponent(role, loading)}
-            {gameId && (
-                <GameState
-                    onGameStateUpdate={updateLocalState}
-                    gameId={gameId}
                 />
             )}
         </>
