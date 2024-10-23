@@ -12,6 +12,8 @@ import ErrorModal from './components/common/ErrorModal';
 import GameState from './components/websocket/GameState';
 import './styles/styles.css';
 import DevDisplay from './components/DevDisplay';
+import { getColorScheme } from './utils/ColorUtils';
+import { ColorMapping } from './components/types/ColorMappingType';
 import Header from './components/common/Header';
 import LilGuySelect from './components/join/LilGuySelect';
 
@@ -114,6 +116,7 @@ const App = () => {
                     const player = await getPlayerById();
                     setPlayerId(player.playerId);
                     setPlayerName(player.name);
+                    setColor(player.color);
                     const game = await getGameByIdApi(player.gameId);
                     setGameId(game.gameId);
                     setGameState(game.gameState);
@@ -130,6 +133,16 @@ const App = () => {
             getDataById();
         }
     }, [role]);
+
+    // effect to change app colors on update of "color" state variable
+    useEffect(() => {
+        const colorScheme = getColorScheme(color);
+        document.body.style.backgroundImage = `
+            radial-gradient(${colorScheme.text} 13.6%, transparent 3.6%),
+            radial-gradient(${colorScheme.text} 13.6%, transparent 3.6%)
+        `;
+        document.body.style.backgroundColor = colorScheme.bg;
+    }, [color]);
 
     const createAndHostGame = async () => {
         try {

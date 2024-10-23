@@ -3,12 +3,12 @@ import { ColorMapping, ColorOption } from "../components/types/ColorMappingType"
 const colorMappings: { [key: string]: ColorMapping } = {
     "RED": { main: "#FF0000", text: "#FFCCCC", bg: "#770000", alt: "#ff916f" }, // Red
     "YELLOW": { main: "#FFFF00", text: "#252410", bg: "#d7d614", alt: "#ffff90" }, // Yellow → Darker Yellow
-    "GREEN": { main: "#00FF00", text: "#d4ffc7", bg: "#226619", alt: "#d4ffc7" }, // Green → Lighter Green
-    // "#00FFFF": { text: "#66FFFF" }, // Cyan → Lighter Cyan
-    // "#FF00FF": { text: "#FF66FF" }, // Magenta → Lighter Magenta
-    // "#FFA500": { text: "#FFB347" }, // Orange → Lighter Orange
-    // "#008000": { text: "#006400" }, // Dark Green → Darker Dark Green
-    // "#0000FF": { text: "#6666FF" }, // Blue → Lighter Blue
+    "GREEN": { main: "#00FF00", text: "#d4ffc7", bg: "#00AA00", alt: "#d4ffc7" }, // Green → Lighter Green
+    "CYAN": { main: "#66FFFF", text: "#003399", bg: "#66FFFF", alt: "#d4ffc7" }, // Cyan → Lighter Cyan
+    "MAGENTA": { main: "#FF00FF", text: "#FFFFFF", bg: "#FF00FF", alt: "#FF00FF" }, // Magenta → Lighter Magenta
+    "ORANGE": { main: "#ff7b00", text: "#FFFFFF", bg: "#ff7b00", alt: "#FFA500" }, // Orange → Lighter Orange
+    "DARK_GREEN": { main: "#008000", text: "#006400", bg: "#008000", alt: "#008000" }, // Dark Green → Darker Dark Green
+    "BLUE": { main: "#0000FF", text: "#EEFFFF", bg: "#0000FF", alt: "#0000FF" }, // Blue → Lighter Blue
     "PURPLE": { main: "#a65bdc", text: "#c8a3ea", bg: "#31065C", alt: "#000000" }, // Purple → Lighter Purple
 };
 
