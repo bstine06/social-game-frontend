@@ -18,8 +18,8 @@ const HostLobby: React.FC<HostLobbyProps> = ({
 }) => {
     return (
         <>
-            <div className="invisible-container">
-                <div className="container invisible-box shrink-to-fit">
+            <div className="two-three-container">
+                <div className="container expand-to-fit">
                     <QRCodeGenerator gameId={gameId} />
                     
 
@@ -28,7 +28,8 @@ const HostLobby: React.FC<HostLobbyProps> = ({
                     <p className="instruction small">or, use this game ID:</p>
                     <h2 className="reduced-margin-top">{gameId}</h2>
                 </div>
-                <div className="container invisible-box expand-to-fit top-align">
+                <div className="container expand-to-fit top-align">
+                  {/* <div className="two-three-container">
                   <button
                         className="big-button"
                         disabled={players.length < 3}
@@ -37,7 +38,9 @@ const HostLobby: React.FC<HostLobbyProps> = ({
                         Start Game
                     </button>
                     <h2>Players:</h2>
-                    <PlayerReadyDisplay players={players} showStatus={false} />
+                  </div> */}
+                  
+                    <PlayerReadyDisplay players={players} showStatus={false} showPlaceHolders={true}/>
                 </div>
             </div>
         </>

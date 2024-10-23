@@ -1,0 +1,19 @@
+.animate-pulse span {
+  margin: 0 -0.075em;
+  display: inline-block;
+  animation: animate-pulse 1.2s infinite alternate;
+  padding: 10px;
+  font-weight: 900;
+  font-size: clamp(1rem, 2vw + 1rem, 3rem);
+  transform: scale(0.8); /* Match the initial keyframe to prevent jumping */
+}
+
+/* Keyframe for scaling (pulsing) effect */
+@keyframes animate-pulse {
+  100% {
+      transform: scale(1.8);
+  }
+  0% {
+      transform: scale(0.8);
+  }
+}

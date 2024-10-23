@@ -7,7 +7,7 @@ const colorMappings: { [key: string]: ColorMapping } = {
     "CYAN": { main: "#66FFFF", text: "#003399", bg: "#66FFFF", alt: "#d4ffc7" }, // Cyan → Lighter Cyan
     "MAGENTA": { main: "#FF00FF", text: "#FFFFFF", bg: "#FF00FF", alt: "#FF00FF" }, // Magenta → Lighter Magenta
     "ORANGE": { main: "#ff7b00", text: "#FFFFFF", bg: "#ff7b00", alt: "#FFA500" }, // Orange → Lighter Orange
-    "DARK_GREEN": { main: "#008000", text: "#006400", bg: "#008000", alt: "#008000" }, // Dark Green → Darker Dark Green
+    "DARK_GREEN": { main: "#008000", text: "#DDFFAA", bg: "#008000", alt: "#008000" }, // Dark Green → Darker Dark Green
     "BLUE": { main: "#0000FF", text: "#EEFFFF", bg: "#0000FF", alt: "#0000FF" }, // Blue → Lighter Blue
     "PURPLE": { main: "#a65bdc", text: "#c8a3ea", bg: "#31065C", alt: "#000000" }, // Purple → Lighter Purple
 };
@@ -20,6 +20,7 @@ export const getColorScheme = (colorName: string): ColorMapping => {
         return mapping;
     }
     else {
+        // default to purple if there is an erroneous call to this function
         return colorMappings["PURPLE"]
     }
 };

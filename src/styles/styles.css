@@ -1,14 +1,18 @@
 /* styles.css */
+html {
+  min-width: 320px;
+}
+
 body {
-  background-color: #333;
+  min-width: 320px;
   color:white;
   font-family: Arial, sans-serif;
   position: relative;
   margin: 0px;
   padding: 0;
   background-image: 
-    radial-gradient(#8f54c5 13.6%, transparent 3.6%),
-    radial-gradient(#8f54c5 13.6%, transparent 3.6%);
+    radial-gradient(#c8a3ea 13.6%, transparent 3.6%),
+    radial-gradient(#c8a3ea 13.6%, transparent 3.6%);
   background-position: 0px 0px, 56px 56px, -5.6px 5.6px, 50.4px 61.6px;
   background-size: 112px 112px;
   background-color: #31065b;
@@ -38,7 +42,7 @@ button, .btn {
   display: grid;
   place-items: center; /* Centers the child both horizontally and vertically */
   font-size: 32px;
-  max-width: min(calc(100vw - 80px), 1200px); /* Adjust for padding */
+  max-width: min(calc(100% - 80px), 1200px); /* Adjust for padding */
   background-color: #222;
   border: 2px solid white;
   border-radius: 50px;
@@ -164,7 +168,25 @@ h3 {
   margin: 12px auto 12px auto;
 }
 
+.weaker {
+  margin-top: 0;
+  color: #777;
+  font-size: 20px;
+}
 
+
+  .qr-container {
+    display: flex;
+    justify-content: center;  /* Center horizontally */
+    align-items: center;      /* Center vertically */
+    width: 100%;              /* Full width container */
+}
+
+.qr-code {
+  width: 100%;               /* Adjust based on your needs */
+    max-width: max(800px, 40vw);
+    height: auto;
+}
 
 .answer-grid {
   display: grid;
@@ -218,38 +240,35 @@ p.description {
   margin-top: 12px;
 }
 
-.invisible-container {
-  margin: auto;
-  display: flex;
-  flex-wrap: wrap;
-  max-width: min(calc(100vw - 80px), 1200px);
-}
-
-.invisible-box {
-  box-sizing: border-box; /* Ensure padding and borders don't affect width */
-  margin: 20px;
-}
-
-.shrink-to-fit {
-  flex: 0 1 auto;
-  min-width: 400px;
-}
-
-.expand-to-fit {
-  flex: 1 1 0;
-}
-
 .top-align {
   display: flex;
   flex-direction: column;
-  align-items: top;
+  justify-items:flex-start;
 }
 
-@media (width < 1200px) {
-  .invisible-container {
-    flex-direction: column;
-  }
-  .expand-to-fit {
-    width: 100%;
+.expand-to-fit {
+  width: 100%;
+}
+
+.two-three-container {
+  justify-content: center;
+}
+
+@media (width > 800px) {
+  .two-three-container {
+    margin: auto;
+    display: grid;
+    grid-template-columns: 2fr 3fr;
   }
 }
+
+@media (width > 2000px) {
+  .two-three-container {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.host-container {
+  max-width: none;
+}
+

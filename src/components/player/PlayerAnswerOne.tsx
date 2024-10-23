@@ -34,13 +34,11 @@ const PlayerAnswerOne: React.FC<PlayerAnswerOneProps> = ({
 
   return (
     <>
-      <div className="container">
         <PlayerConversationInput 
           instructions={"Enter an answer to your friend's question."}
           prompt={question.content}
           onSubmit={handleSubmit}
         />
-      </div>
     </>
   );
 };

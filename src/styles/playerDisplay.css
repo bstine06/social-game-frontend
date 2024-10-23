@@ -1,13 +1,15 @@
 .player-ready-display {
     width: 95%;
-    display: flex;
+    display: grid;
     gap: 12px;
-    flex-wrap: wrap;
+    grid-template-columns: repeat(auto-fit, minmax(100%, 1fr)); /* Adjust 150px as needed */
     align-items: center;
     justify-content: center;
 }
 
+
 .player-ready-element {
+    height: 62px;
     font-size: 36px;
     display: flex;
     align-items: center;
@@ -15,16 +17,20 @@
     font-family: monospace;
     background-color: #444;
     border: 1px white solid;
-    border-radius: 20px;
+    border-radius: 50px;
     box-shadow: 0 0 25px 5px black;
     flex-shrink: 1;
+    max-width: 95%;
+    margin:auto;
+    padding-right: 20px;
 }
 
-.player-ready-element p {
+.player-name {
+    max-width: 80%;
     margin: 0;
     padding-left: 10px;
     font-weight: bold;
-    
+    overflow: hidden;
 }
 
 .player-ready-element .lil-guy {

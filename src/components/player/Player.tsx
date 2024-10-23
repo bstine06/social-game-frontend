@@ -7,6 +7,7 @@ import PlayerAnswer from "./PlayerAnswer";
 import WatchPlayers from "../websocket/WatchPlayers";
 import { PlayerData } from "../types/playerDataTypes";
 import PlayerReadyDisplay from "../common/PlayerReadyDisplay";
+import Waiting from "../common/Waiting";
 
 interface PlayerProps {
     gameId: string;
@@ -72,7 +73,12 @@ const Player: React.FC<PlayerProps> = ({
     const renderGameplayComponent = () => {
         switch (gameState) {
             case "LOBBY": {
-                return <p> waiting for the game to start... </p>;
+                return (
+                    <Waiting 
+                        message={"WAITING"}
+                        description={"for the game to start"}
+                    />
+                )
             }
             case "QUESTION": {
                 return (
@@ -99,13 +105,21 @@ const Player: React.FC<PlayerProps> = ({
     };
 
     const renderWaitingComponent = () => {
-        const playersStillWaiting = players.filter(p => !p.ready);
+        const playersStillWaiting = players.filter((p) => !p.ready);
 
         if (playersStillWaiting.length === 0) {
             return null;
         } else {
             // Some players are still not finished
-            return <PlayerReadyDisplay players={playersStillWaiting} />;
+            return (
+                <>
+                    <Waiting
+                        message={"WAITING"}
+                        description={"(for these slowpokes)"}
+                    />
+                    <PlayerReadyDisplay players={playersStillWaiting} />
+                </>
+            );
         }
     };
 

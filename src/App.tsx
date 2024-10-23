@@ -16,6 +16,7 @@ import { getColorScheme } from './utils/ColorUtils';
 import { ColorMapping } from './components/types/ColorMappingType';
 import Header from './components/common/Header';
 import LilGuySelect from './components/join/LilGuySelect';
+import Waiting from './components/common/Waiting';
 
 // Define the role types
 type Role = 'HOST' | 'PLAYER' | 'PLAYER_CREATION' | 'UNASSIGNED';
@@ -24,7 +25,7 @@ const App = () => {
     const [loading, setLoading] = useState<boolean>(true);
     const [gameState, setGameState] = useState<string>("");
     const [gameId, setGameId] = useState<string>("");
-    const [role, setRole] = useState<Role>("UNASSIGNED");
+    const [role, setRole] = useState<Role | null>(null);
     const [connected, setConnected] = useState<boolean>(false);
     const [playerId, setPlayerId] = useState<string>("");
     const [playerName, setPlayerName] = useState<string>("");
@@ -81,6 +82,7 @@ const App = () => {
         const getRole = async (): Promise<void> => {
             try {
                 const newRole = await getSessionRole();
+                console.log(newRole);
                 setRole(newRole);
                 setConnected(true);
             } catch (err: any) {
@@ -100,6 +102,7 @@ const App = () => {
 
     // on page load, retrieve any game data related to any existing role
     useEffect(() => {
+        console.log(role);
         if (role === "UNASSIGNED") {
             setLoading(false);
             return;
@@ -218,9 +221,13 @@ const App = () => {
         role: Role,
         loading: boolean
     ): JSX.Element | null => {
-        if (loading) return <p>Loading...</p>;
-
-        if (role === "UNASSIGNED") {
+        if (loading) {
+            return (
+                <Waiting
+                    message={"LOADING"}
+                />
+            );
+        } else if (role === "UNASSIGNED") {
             return (
                 <ChooseRole
                     onChooseHost={createAndHostGame}
@@ -269,7 +276,7 @@ const App = () => {
             {errorMessage && (
                 <ErrorModal message={errorMessage} onClose={closeErrorModal} />
             )}
-            {renderComponent(role, loading)}
+            {role && renderComponent(role, loading)}
             {gameId && (
                 <GameState
                     onGameStateUpdate={updateLocalState}
@@ -281,7 +288,7 @@ const App = () => {
                 <DevDisplay
                     gameId={gameId}
                     gameState={gameState}
-                    role={role}
+                    role={role ? role : 'undefined'}
                     hostId={hostId}
                     playerId={playerId}
                     loading={loading}
