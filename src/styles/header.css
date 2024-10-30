@@ -1,34 +1,50 @@
 .header {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); /* Creates 3 equal columns */
-    align-items: center;
-    width: 100%;
-    background-color: #31065C;
-    height: 100px;
-    font-size: 20px;
-    margin: 0;
-    box-shadow: #000000 5px 0px 5px 5px;
-    -webkit-box-shadow: #000000 5px 0px 25px 5px;
-    -moz-box-shadow: #000 5px 0px 5px 5px;
-  }
-  
-  .header > * {
-    font-weight: bold;
-    font-family: monospace;
-    text-align: center;
-    margin: 0; /* Remove default margins from the <p> tags */
-  }
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  /* Creates 3 equal columns */
+  align-items: center;
+  width: 100%;
+  background-color: #31065C;
+  height: 100px;
+  font-size: 20px;
+  margin: 0;
+  box-shadow: #000000 5px 0px 5px 5px;
+  -webkit-box-shadow: #000000 5px 0px 25px 5px;
+  -moz-box-shadow: #000 5px 0px 5px 5px;
+}
 
+.header>* {
+  font-weight: bold;
+  font-family: monospace;
+  text-align: center;
+  margin: 0;
+  /* Remove default margins from the <p> tags */
+}
+
+.header button {
+  font-size: 20px;
+  border-radius: 0px;
+  background-color: #31065C;
+  color: #c8a3ea;
+  height: 100%;
+  border: none;
+  transition: font-size 0.2s ease;
+}
+
+.header button:hover {
+  font-size: 48px;
+}
+
+/* reformat for hdtv  */
+@media (width > 3000px) {
+  .header {
+    height: 200px;
+    font-size: 7em;
+  }
   .header button {
-    font-size: 20px;
-    border-radius: 0px;
-    background-color: #31065C;
-    color: #c8a3ea;
-    height: 100%;
-    border: none;
-    transition: font-size 0.2s ease;
+    font-size: 1em;
   }
-
   .header button:hover {
-    font-size:48px;
+    font-size: 1.5em;
   }
+}

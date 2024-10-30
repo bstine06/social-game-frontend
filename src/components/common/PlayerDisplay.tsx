@@ -13,10 +13,8 @@ const PlayerDisplay: React.FC<PlayerDisplayProps> = ({
     showStatus = true,
 }) => {
 
-    const renderComponent = () => {
-        if (player.player.shape > 0) {
-            return (
-                <>
+    return (
+        <>
                     <div
                         className={`player-ready-element ${
                             showStatus &&
@@ -31,21 +29,7 @@ const PlayerDisplay: React.FC<PlayerDisplayProps> = ({
                         <p className="player-name">{he.decode(player.player.name)}</p>
                     </div>
                 </>
-            );
-        } else {
-            return (
-                <>
-                    <div
-                        className="player-ready-element disabled"
-                    >
-                        <p className="weaker player-name">this slot is still open!</p>
-                    </div>
-                </>
-            );
-        }
-    };
-
-    return <>{renderComponent()}</>;
+    );
 };
 
 export default PlayerDisplay;

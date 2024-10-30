@@ -51,9 +51,10 @@ const App = () => {
                 const extractedGameId = match[1];
                 try {
                     await getGameByIdApi(extractedGameId);
-                    // Only set the role if the current role is 'UNASSIGNED'
-                    if (role === "UNASSIGNED") {
+                    // Only set the role if the current role is 'UNASSIGNED' or null
+                    if (role === "UNASSIGNED" || role === null) {
                         setRole("PLAYER_CREATION"); // Set the role to PLAYER_CREATION if no role is assigned yet
+                        console.log("asdfaskdhfbas")
                     }
                     setGameId(extractedGameId);
                 } catch (error) {
@@ -229,10 +230,13 @@ const App = () => {
             );
         } else if (role === "UNASSIGNED") {
             return (
+                <>
+                <div className="logo"></div>
                 <ChooseRole
                     onChooseHost={createAndHostGame}
                     onChooseJoin={joinGame}
                 />
+                </>
             );
         } else if (role === "HOST" && gameId) {
             return (
