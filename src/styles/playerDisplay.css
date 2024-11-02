@@ -56,3 +56,11 @@
 /* .player-wait {
 } */
 
+.lobby-players-joined {
+    border: 8px solid red;
+  }
+  
+  .lobby-players-joined:last-child {
+    border: 10px solid yellow;
+  }
+

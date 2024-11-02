@@ -17,6 +17,7 @@ import { ColorMapping } from './components/types/ColorMappingType';
 import Header from './components/common/Header';
 import LilGuySelect from './components/join/LilGuySelect';
 import Waiting from './components/common/Waiting';
+import './styles/fonts/Eracake.otf';
 
 // Define the role types
 type Role = 'HOST' | 'PLAYER' | 'PLAYER_CREATION' | 'UNASSIGNED';
@@ -39,67 +40,60 @@ const App = () => {
     // Hook to access the current route
     const location = useLocation();
 
-    // Effect that runs whenever the route changes
-    useEffect(() => {
-
-        setLoading(true);
-
-        const loadGameIfExists = async () => {
-            // Match the URL pattern (assuming /game/:gameId)
-            const match = location.pathname.match(/^\/game\/(.+)/);
-            if (match) {
-                const extractedGameId = match[1];
-                try {
-                    await getGameByIdApi(extractedGameId);
-                    // Only set the role if the current role is 'UNASSIGNED' or null
-                    if (role === "UNASSIGNED" || role === null) {
-                        setRole("PLAYER_CREATION"); // Set the role to PLAYER_CREATION if no role is assigned yet
-                        console.log("asdfaskdhfbas")
-                    }
-                    setGameId(extractedGameId);
-                } catch (error) {
-                    setErrorMessage("The game you're trying to join does not exist");
-                }
-            } else {
-                setGameId(""); // Reset the gameId if not on a game route
-            }
-            // Remove the extra path from the URL but maintain the state
-            window.history.replaceState(null, '', '/');  // Update the URL without reloading
-        }
-
-        loadGameIfExists();
-        
-        
-        // Check that game is provided
-        
-    }, [location]); // Also depend on role to prevent conflicting updates
-
     // on page load, retrieve any existing role from backend via session cookie
+    // also, check if the route supplied included a game ID and if so, add to that game
+    // if theres a conflict between a pre-existing role and the the game ID supplied in the QR code, let
+    // the user know that they must exit their current game before joining a new one
     useEffect(() => {
+        setLoading(true);
+    
         if (devRoleDeclaration) {
             setRole(devRoleDeclaration);
             return;
         }
-        const getRole = async (): Promise<void> => {
+    
+        const initializeGame = async () => {
             try {
+                // Get the role directly from API
                 const newRole = await getSessionRole();
                 console.log(newRole);
                 setRole(newRole);
                 setConnected(true);
+    
+                // Now, based on the role, decide game loading behavior
+                const match = location.pathname.match(/^\/game\/(.+)/);
+                if (match) {
+                    const extractedGameId = match[1];
+                    try {
+                        await getGameByIdApi(extractedGameId);
+    
+                        // Check role before assigning PLAYER_CREATION
+                        if (newRole === "UNASSIGNED" || newRole === null) {
+                            setRole("PLAYER_CREATION");
+                            console.log("Assigned role: PLAYER_CREATION");
+                        } else {
+                            setErrorMessage("You cannot join a new game until you leave your current game.");
+                        }
+                        setGameId(extractedGameId);
+                    } catch (error) {
+                        setErrorMessage("The game you're trying to join does not exist");
+                    }
+                } else {
+                    setGameId(""); // Reset if not on a game route
+                }
+                // Remove extra path from URL without reloading
+                window.history.replaceState(null, '', '/');
             } catch (err: any) {
                 setConnected(false);
-                if (err instanceof Error) {
-                    if (err.message === "Failed to fetch") {
-                        setErrorMessage(
-                            "There was an error connecting to the game server."
-                        );
-                    }
+                if (err instanceof Error && err.message === "Failed to fetch") {
+                    setErrorMessage("There was an error connecting to the game server.");
                 }
             }
         };
-
-        getRole();
+    
+        initializeGame();
     }, []);
+    
 
     // on page load, retrieve any game data related to any existing role
     useEffect(() => {
@@ -231,7 +225,11 @@ const App = () => {
         } else if (role === "UNASSIGNED") {
             return (
                 <>
-                <div className="logo"></div>
+                <div className="container no-top-margin">
+                    <p className="logo-small">WE ARE NOW IN</p>
+                    <p className="logo-smallest">THE</p>
+                    <p className="logo">JOKE ZONE</p>
+                </div>
                 <ChooseRole
                     onChooseHost={createAndHostGame}
                     onChooseJoin={joinGame}
@@ -287,7 +285,7 @@ const App = () => {
                     gameId={gameId}
                 />
             )}
-            <button onClick={toggleDevDisplay}>Toggle Developer Panel</button>
+            {/* <button onClick={toggleDevDisplay}>Toggle Developer Panel</button> */}
             {devDisplayOpen && (
                 <DevDisplay
                     gameId={gameId}

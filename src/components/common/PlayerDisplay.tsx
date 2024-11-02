@@ -6,11 +6,13 @@ import LilGuy from "../join/LilGuy";
 interface PlayerDisplayProps {
     player: PlayerData;
     showStatus?: boolean;
+    showName?: boolean;
 }
 
 const PlayerDisplay: React.FC<PlayerDisplayProps> = ({
     player,
     showStatus = true,
+    showName = true
 }) => {
 
     return (
@@ -26,7 +28,7 @@ const PlayerDisplay: React.FC<PlayerDisplayProps> = ({
                             fillColor={player.player.color}
                             isSelected={false}
                         />
-                        <p className="player-name">{he.decode(player.player.name)}</p>
+                        {showName && <p className="player-name">{he.decode(player.player.name)}</p>}
                     </div>
                 </>
     );

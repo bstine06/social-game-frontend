@@ -1,6 +1,11 @@
 /* styles.css */
 html {
   min-width: 320px;
+  max-width: 4000px;
+  margin: auto;
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
 }
 
 body {
@@ -42,19 +47,29 @@ button, .btn {
   display: grid;
   place-items: center; /* Centers the child both horizontally and vertically */
   font-size: 32px;
-  max-width: min(calc(100% - 80px), 1200px); /* Adjust for padding */
-  background-color: #222;
+  max-width: min(min(calc(100% - 80px), 80%), 3840px); /* Adjust for padding */
+  background-color: rgba(34, 34, 34, 0.98);
   border: 2px solid white;
-  border-radius: 50px;
+  border-radius: clamp(50px, 2vw, 400px);
   margin: 48px auto 12px;
   -webkit-box-shadow: 0px 20px 25px 5px rgb(0, 0, 0);
   -moz-box-shadow: 0px 20px 25px 5px rgb(0, 0, 0);
   box-shadow: 0px 20px 25px 5px rgb(0, 0, 0);
 }
 
-@media (width < 600px) {
+.no-top-margin {
+  margin-top: 0;
+}
+
+@media (width < 700px) {
   .container {
       margin-top: 12px;
+  }
+  .no-top-margin {
+    margin-top: 0;
+  }
+  .container {
+    max-width: calc(100% - 80px);
   }
 }
 
@@ -66,7 +81,7 @@ button, .btn {
   font-family: monospace;
   font-weight: 900;
   text-align: center;
-  border-radius: 15px;
+  border-radius: clamp(15px, 2vw, 200px);
   background-color: #8f54c5;
   border: white 5px solid;
   -webkit-box-shadow: inset 0px 0px 11px 5px rgba(0, 0, 0, 0.1);
@@ -81,7 +96,7 @@ button, .btn {
   font-family: monospace;
   font-weight: 900;
   text-align: center;
-  border-radius: 15px;
+  border-radius: clamp(15px, 2vw, 200px);
   background-color: #8f54c5;
   border: white 5px solid;
   -webkit-box-shadow: inset 0px 0px 11px 5px rgba(0, 0, 0, 0.1);
@@ -108,7 +123,7 @@ button, .btn {
   height: 4em;
   width: 70%;
   padding: 10px;
-  border-radius: 15px;
+  border-radius: clamp(15px, 2vw, 200px);
   background-color: #e0c0ff;
   text-align: center;
   border: white 5px solid;
@@ -121,7 +136,7 @@ button, .btn {
   margin: 10px;
   padding: 10px 20px;
   border: none;
-  border-radius: 4px;
+  border-radius: clamp(4px, 2vw, 100px);
   cursor: pointer;
   font-size: 32px;
   font-family: monospace;
@@ -162,7 +177,10 @@ button, .btn {
   -moz-box-shadow:none;
 }
 
-
+h2 {
+  font-size: clamp(20px, 3.5vw, 100px);
+  margin: clamp(10px, 2vh, 40px);
+}
 
 h3 {
   margin: 12px auto 12px auto;
@@ -210,19 +228,19 @@ h3 {
 
 p.description {
   margin-top: 0;
-  font-size: 24px;
+  font-size: clamp(24px, 2.5vw, 72px);
   text-align: center;
   margin-bottom: 0;
 }
 
 .instruction {
   margin: 0;
-  font-size: 42px;
+  font-size: clamp(18px, 2.5vw, 80px);
 }
 
 .instruction.small {
   margin-top: 12px;
-  font-size: 30px;
+  /* font-size: 30px; */
 }
 
 .reduced-margin-top {
@@ -244,11 +262,11 @@ p.description {
   margin: auto;
   display: grid;
   grid-template-columns: 2fr 3fr;
-  max-width: calc(100% - 80px);
+  max-width: min(100%, 3840px);
 }
 .qr-code {
   width: 100%;            
-  max-width: max(800px, 40vw);
+  max-width: min(min(max(800px, 40vw), 48vh), 100%);
   height: auto;
 }
 .qr-container {
@@ -265,74 +283,138 @@ p.description {
   margin-top: 12px;
 }
 
-/* reformat for mobile */
-@media (width < 900px) {
-
-.two-three-container {
-  justify-content: center;
-  display:block;
-  max-width: none;
-  width: 100%;
-}
-
-.two-three-container > .container {
-  margin: auto;
-  width: 90%;
-  max-width: none;
-}
-
-.expand-to-fit {
-  width: 100%;
-  max-width: none;
-}
-  
-  .qr-code {          
-    max-width: 600px;
-  }
-}
-
-/* reformat for hdtv  */
-@media (width > 3000px) {
-
-  .two-three-container {
-    margin: auto;
-    display: flex;
-    gap: 40px;
-  }
-  .qr-container {
-    font-size: 3em;
-  }
-  .qr-container h2 {
-    margin: 24px;
-  }
-  .instruction.small {
-    margin-top: 24px;
-    font-size: 100px;
-  }
-  .qr-code {
-    width: 100%;            
-    max-width: max(1000px, 32vw);
-    height: auto;
-  }
-
-}
-
-
-.lobby-players-joined {
-  border: 8px solid red;
-}
-
-.lobby-players-joined:last-child {
-  border: 10px solid yellow;
+@font-face {
+  font-family: 'Eracake';
+  src: url('./fonts/Eracake.otf') format('opentype');
 }
 
 .logo {
-  background-image: url('/src/resources/image.png');
-  width: 80%; /* Set width */
+  font-family: 'Eracake', 'Trebuchet MS', sans-serif;
+  width: 95%; /* Set width */
+  max-width: 95%;
   margin:auto;
-  height: 100px; /* Set height */
-  background-size: contain;
-  background-repeat: no-repeat; /* Prevent tiling */
-  background-position: center; /* Center the background image */
-  background-color: WHITE;
+  font-size: clamp(48px, 14vw, 550px);
+  text-wrap:nowrap;
+  display: inline-block;
+  color: orange;
 }
+
+@supports (-webkit-text-stroke: 3px black) {
+  .logo {
+    -webkit-text-stroke: 3px rgb(255, 246, 231);
+  }
+}
+
+.logo-small {
+  font-family: 'Eracake', 'Trebuchet MS', sans-serif;
+  color: #c8a3ea;
+  width: 95%; /* Set width */
+  max-width: 95%;
+  margin:auto;
+  font-size: clamp(18px, calc(12px + 3vw), 132px);
+  text-wrap:nowrap;
+}
+
+.logo-smallest {
+  font-family: 'Eracake', 'Trebuchet MS', sans-serif;
+  color: #c8a3ea;
+  width: 95%; /* Set width */
+  max-width: 95%;
+  margin:auto;
+  margin-bottom: clamp(-48px, -1vw, -2px);
+  font-size: clamp(16px, calc(12px + 2vw), 92px);
+  text-wrap:nowrap;
+  display: inline-block;
+}
+
+.subheading{
+  font-family: 'Eracake', 'Trebuchet MS', sans-serif;
+  letter-spacing: clamp(0px, 0.5vw, 12px);
+  padding: 12px;
+  padding-bottom: 12px;
+  margin: auto;
+  font-size: clamp(36px, 10vw, 128px);
+  font-weight: 900;
+}
+
+/* reformat for mobile */
+@media (width < 720px) {
+
+  h2 {
+    font-size: clamp(1em, 9vw, 2em);
+    margin: 10px auto;
+  }
+
+  .instruction {
+    font-size: clamp(19px, 6vw, 80px);
+  }
+
+  .two-three-container {
+    justify-content: center;
+    display:block;
+    max-width: none;
+    width: 100%;
+  }
+  
+  .two-three-container > .container {
+    margin: auto;
+    width: 90%;
+    max-width: none;
+  }
+  
+  .expand-to-fit {
+    width: 100%;
+    max-width: none;
+  }
+    
+    .qr-code {          
+      max-width: 600px;
+    }
+  }
+
+  @media (width < 450px) {
+    .container {
+      max-width: none;
+    }
+  }
+  
+  /* reformat for hdtv  */
+  /* @media (width > 3000px) {
+  
+    .two-three-container {
+      margin: auto;
+      display: flex;
+      gap: 40px;
+    }
+    .qr-container {
+      font-size: 3em;
+    }
+    .qr-container h2 {
+      margin: 24px;
+    }
+    .instruction.small {
+      margin-top: 24px;
+      font-size: 100px;
+    }
+    .qr-code {
+      width: 100%;            
+      max-width: max(1000px, 32vw);
+      height: auto;
+    }
+
+    .container {
+      max-width: 3000px;
+    }
+
+    p.description {
+      margin-top: 0;
+      font-size: 100px;
+      text-align: center;
+      margin-bottom: 0;
+    }
+
+    h3 {
+      font-size: 4em;
+    }
+  
+  } */

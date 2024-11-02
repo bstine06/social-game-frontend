@@ -12,19 +12,19 @@ const ChooseRole: React.FC<ChooseRoleProps> = ({ onChooseHost, onChooseJoin }) =
 
   return (
     <div className="container">
-      <h3>LET'S PLAY!</h3>
+      <p className="subheading">LET'S PLAY!</p>
       <p className="description">choose an option:</p>
       <div className="options-container">
         <div className="option btn" onClick={onChooseJoin}>
           <p className="option-name">JOIN</p>
           <p className="description">
-            Join a game created by a host device.
+            join a game created by a host device
           </p>
         </div>
         <div className="option btn" onClick={onChooseHost}>
           <p className="option-name">HOST</p>
           <p className="description">
-            Host a game for players to join.
+            host a game for other players to join
           </p>
         </div>
       </div>

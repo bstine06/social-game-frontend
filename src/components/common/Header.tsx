@@ -21,13 +21,16 @@ const Header: React.FC<HeaderProps> = ({
     role,
     playerName,
     confirmModalContent,
-    color
+    color,
 }) => {
     const [isBackModalOpen, setIsBackModalOpen] = useState<boolean>(false);
-    const [colors, setColors] = useState<ColorMapping>(getColorScheme("DEFAULT"));
+    const [colors, setColors] = useState<ColorMapping>(
+        getColorScheme("DEFAULT")
+    );
+    const [isHovered, setIsHovered] = useState<boolean>(false);
 
     useEffect(() => {
-      setColors(getColorScheme(color));
+        setColors(getColorScheme(color));
     }, [color]);
 
     const handleBackSubmit = async () => {
@@ -43,17 +46,56 @@ const Header: React.FC<HeaderProps> = ({
         setIsBackModalOpen(false);
     };
 
+    const handleMouseEnter = () => setIsHovered(true);
+    const handleMouseLeave = () => setIsHovered(false);
+
     return (
         <>
-            <div className="header" style={{ backgroundColor: colors.bg, color: colors.text }}>
-                <button onClick={handleBackSubmit} style={{ backgroundColor: colors.bg, color: colors.text }}>EXIT</button>
-                {role === "PLAYER" && playerName && (
-                    <h2>{he.decode(playerName)}</h2>
+            <div className="header-wrapper">
+                {playerName && (
+                    <div
+                        className={`name-reveal-div ${
+                            isHovered ? "visible" : ""
+                        }`}
+                    >
+                        <div className="player-name-wrapper">
+                            <p>your name:</p>
+                            <p>{he.decode(playerName)}</p>
+                        </div>
+                    </div>
                 )}
-                {role === "HOST" && <h2>HOST</h2>}
-                {role === "PLAYER_CREATION" && <h2>JOIN GAME</h2>}
-                <p>{gameId}</p>
+                <div
+                    className="header"
+                    style={{ backgroundColor: colors.bg, color: colors.text }}
+                >
+                    <button
+                        onClick={handleBackSubmit}
+                        style={{
+                            backgroundColor: colors.bg,
+                            color: colors.text,
+                        }}
+                    >
+                        EXIT
+                    </button>
+                    <div className="text-shrinker">
+                        {role === "PLAYER" && (
+                            <h2
+                                className="header-main-text"
+                                onMouseEnter={handleMouseEnter}
+                                onMouseLeave={handleMouseLeave}
+                            >
+                                PLAYER
+                            </h2>
+                        )}
+                        {role === "HOST" && (
+                            <h2 className="header-main-text">HOST</h2>
+                        )}
+                        {role === "PLAYER_CREATION" && <h2>JOIN GAME</h2>}
+                    </div>
+                    <p>{gameId}</p>
+                </div>
             </div>
+
             {isBackModalOpen && (
                 <ConfirmModal
                     message="Are you sure want to exit?"

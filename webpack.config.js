@@ -55,7 +55,12 @@ module.exports = {
       {
         test: /\.svg$/,
         use: ['@svgr/webpack'],
-      }      
+      },
+      {
+        test: /\.otf$/i, // Add rule for .otf files
+        type: 'asset/resource',
+        dependency: { not: ['url'] },
+      }
     ],
   },
   plugins: [
