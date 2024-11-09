@@ -5,6 +5,7 @@
 
 .options-container {
     margin: clamp(24px, 5vw, 64px) clamp(24px, 5vw, 168px);
+    margin-top: clamp(12px, 3vw, 50px);
     max-width: 95%;
     width: 100%;
     display: grid;
@@ -20,10 +21,10 @@
 .option {
     background-color: hsl(275, 65%, 30%);
     border: #555 solid 1px;
-    padding: clamp(12px, 5vw, 128px) 12px;
+    padding: clamp(12px, 1.5vw, 128px) 12px;
     width: 100%;
     border-radius: 30px;
-    transition: 200ms ease-in-out;
+    transition: background-color 200ms ease-in-out, box-shadow 200ms ease-in-out;
     box-shadow: #000 0px 0px 5px 5px;
     -webkit-box-shadow: #000 0px 0px 5px 0px;
     -moz-box-shadow: #000 0px 0px 5px 5px;

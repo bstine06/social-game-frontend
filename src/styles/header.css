@@ -10,13 +10,14 @@
   align-items: center;
   width: 100%;
   background-color: #31065C;
-  height: 100px;
+  height: clamp(120px, 7vw, 240px);
   font-size: 20px;
   margin: 0;
   box-shadow: #000000 5px 0px 5px 5px;
   -webkit-box-shadow: #000000 5px 0px 25px 5px;
   -moz-box-shadow: #000 5px 0px 5px 5px;
   z-index: 10;
+  overflow: hidden;
 }
 
 .header>* {
@@ -104,6 +105,7 @@
   }
 }
 
-h2.header-main-text {
-  font-size: clamp(36px, 13vw, 56px);
+p.header-main-text {
+  font-size: clamp(36px, 4vw, 100px);
+    margin: clamp(10px, 1vw, 40px);
 }

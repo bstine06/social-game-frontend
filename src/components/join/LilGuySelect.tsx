@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import '../../styles/lil-guy.css';
+import '../../styles/player-select.css';
 import LilGuy1 from "../../resources/lil-guys/LilGuy1";
 import LilGuy from "./LilGuy";
 import ColorSelector from "./ColorSelector";
@@ -30,8 +30,8 @@ const LilGuySelect: React.FC<LilGuySelectProps> = ({
 
     return (
         <>
-            <h3>Choose {lilGuySelection===0 ? "lil guy" : "color"}</h3>
-            <div className={`lil-guy-${lilGuySelection===0 ? "selection" : "display" }-container`}>
+            <h2>Choose {lilGuySelection===0 ? "lil guy" : "color"}</h2>
+            <div className={`${lilGuySelection===0 ? "selection-container" : "lil-guy-display-container"}`}>
             
             {lilGuySelection > 0 && <button className="big-button width-4em-centered full-height" onClick={() => updateSelection(0)}>back</button>}
                 {(lilGuySelection===0 || lilGuySelection===1) && <LilGuy onSelect={updateSelection} lilGuyIndex={1} isSelected={lilGuySelection===1} fillColor={colorSelection}/>}

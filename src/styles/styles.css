@@ -1,11 +1,16 @@
 /* styles.css */
+* {
+  box-sizing: border-box;
+}
+
 html {
-  min-width: 320px;
-  max-width: 4000px;
   margin: auto;
   -webkit-user-select: none; /* Safari */
   -ms-user-select: none; /* IE 10 and IE 11 */
   user-select: none; /* Standard syntax */
+  background-color: #222;
+  display: flex;
+  flex-direction: column;
 }
 
 body {
@@ -13,15 +18,25 @@ body {
   color:white;
   font-family: Arial, sans-serif;
   position: relative;
-  margin: 0px;
+  margin: auto;
   padding: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  min-width: 320px;
+  max-width: 4000px;
+}
+
+#root {
+  margin: 0;
+  flex-direction: column;
   background-image: 
     radial-gradient(#c8a3ea 13.6%, transparent 3.6%),
     radial-gradient(#c8a3ea 13.6%, transparent 3.6%);
   background-position: 0px 0px, 5vw 5vw, -0.5vw 0.5vw, 50.4px 61.6px;
   background-size: 10vw 10vw;
   background-color: #31065b;
-  width: 100%;
+  min-height: 100vh;
 }
 
 #developer-info {
@@ -31,6 +46,7 @@ body {
 
 #app-container {
   padding: 10px;
+  
 }
 
 /* prevent text highlighting on buttons everywhere */
@@ -42,7 +58,7 @@ button, .btn {
 }
 
 .container {
-  padding: 12px;
+  padding: clamp(12px, 5vw, 48px);
   text-align: center;
   display: grid;
   place-items: center; /* Centers the child both horizontally and vertically */
@@ -57,8 +73,11 @@ button, .btn {
   box-shadow: 0px 20px 25px 5px rgb(0, 0, 0);
 }
 
-.no-top-margin {
-  margin-top: 0;
+.container.auto-width {
+  width:fit-content;
+  max-width: 100%;
+  padding-left: 12px clamp(12px, 5vw, 200px);
+  padding-right: 12px clamp(12px, 5vw, 200px)
 }
 
 @media (width < 700px) {
@@ -76,12 +95,12 @@ button, .btn {
 .big-input {
   margin: 10px;
   padding: 10px;
-  font-size: 32px;
-  max-width: 8em;
+  font-size: clamp(32px, 5vw, 128px);
   font-family: monospace;
   font-weight: 900;
   text-align: center;
   border-radius: clamp(15px, 2vw, 200px);
+  width: 80%;
   background-color: #8f54c5;
   border: white 5px solid;
   -webkit-box-shadow: inset 0px 0px 11px 5px rgba(0, 0, 0, 0.1);
@@ -92,7 +111,7 @@ button, .btn {
 .huge-input {
   margin: 10px;
   padding: 10px;
-  font-size: 72px;
+  font-size: clamp(72px, 5vw, 256px);
   font-family: monospace;
   font-weight: 900;
   text-align: center;
@@ -134,16 +153,16 @@ button, .btn {
 
 .big-button {
   margin: 10px;
-  padding: 10px 20px;
+  padding: clamp(10px, 2vw, 40px) clamp(20px, 2vw, 80px);
   border: none;
-  border-radius: clamp(4px, 2vw, 100px);
+  border-radius: clamp(4px, 2vw, 32px);
   cursor: pointer;
-  font-size: 32px;
+  font-size: clamp(32px, 2vw, 128px);
   font-family: monospace;
   font-weight: 900;
   background-color: #e0c0ff;
   color: black;
-  transition: 0.2s ease-in-out;
+  transition: background-color 200ms ease-in-out, box-shadow 200ms ease-in-out;
   box-shadow: #e0c0ff 0 0 0 0;
   -webkit-box-shadow: #e0c0ff 0 0 0 0;
   -moz-box-shadow: #e0c0ff 0 0 0 0;
@@ -178,7 +197,7 @@ button, .btn {
 }
 
 h2 {
-  font-size: clamp(20px, 3.5vw, 100px);
+  font-size: clamp(20px, 3.5vw, 200px);
   margin: clamp(10px, 2vh, 40px);
 }
 
@@ -262,7 +281,8 @@ p.description {
   margin: auto;
   display: grid;
   grid-template-columns: 2fr 3fr;
-  max-width: min(100%, 3840px);
+  max-width: 100%;
+  width: 100%;
 }
 .qr-code {
   width: 100%;            
@@ -279,7 +299,7 @@ p.description {
 
 
 .two-three-container > .container {
-  max-width: calc(100% - 80px);
+  max-width: 75%;
   margin-top: 12px;
 }
 
@@ -291,9 +311,10 @@ p.description {
 .logo {
   font-family: 'Eracake', 'Trebuchet MS', sans-serif;
   width: 95%; /* Set width */
+  letter-spacing: clamp(0.01rem, 0.9vw, 5rem);
   max-width: 95%;
   margin:auto;
-  font-size: clamp(48px, 14vw, 550px);
+  font-size: clamp(48px, 9vw, 500px);
   text-wrap:nowrap;
   display: inline-block;
   color: orange;
@@ -333,7 +354,7 @@ p.description {
   padding: 12px;
   padding-bottom: 12px;
   margin: auto;
-  font-size: clamp(36px, 10vw, 128px);
+  font-size: clamp(36px, 5vw, 128px);
   font-weight: 900;
 }
 
@@ -376,45 +397,5 @@ p.description {
     .container {
       max-width: none;
     }
+    
   }
-  
-  /* reformat for hdtv  */
-  /* @media (width > 3000px) {
-  
-    .two-three-container {
-      margin: auto;
-      display: flex;
-      gap: 40px;
-    }
-    .qr-container {
-      font-size: 3em;
-    }
-    .qr-container h2 {
-      margin: 24px;
-    }
-    .instruction.small {
-      margin-top: 24px;
-      font-size: 100px;
-    }
-    .qr-code {
-      width: 100%;            
-      max-width: max(1000px, 32vw);
-      height: auto;
-    }
-
-    .container {
-      max-width: 3000px;
-    }
-
-    p.description {
-      margin-top: 0;
-      font-size: 100px;
-      text-align: center;
-      margin-bottom: 0;
-    }
-
-    h3 {
-      font-size: 4em;
-    }
-  
-  } */

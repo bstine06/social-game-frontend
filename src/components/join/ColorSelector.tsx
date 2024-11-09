@@ -15,7 +15,7 @@ const ColorSelector: React.FC<ColorSelectorProps> = ({ onChooseColor, selectedCo
 
     return (
         <>
-            <div className="color-selector-container">
+            <div className="selection-container">
                 {colorOptions.map((colorOption, index) => (
                     <ColorSwatch
                         key={index}

@@ -33,7 +33,7 @@ const PlayerCreation: React.FC<PlayerCreationProps> = ({ onCreatePlayer, gameId,
 
   return (
     <>
-    <div className="container">
+    <div className="container auto-width">
       {stage=="nameInput" && <NameInput onNext={advanceStage}/>}
       {stage=="lilGuySelect" && <LilGuySelect onColorSelect={onColorSelect} onSubmit={handleSubmit}/>}
     </div>

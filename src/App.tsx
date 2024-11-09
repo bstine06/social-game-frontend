@@ -26,7 +26,7 @@ const App = () => {
     const [loading, setLoading] = useState<boolean>(true);
     const [gameState, setGameState] = useState<string>("");
     const [gameId, setGameId] = useState<string>("");
-    const [role, setRole] = useState<Role | null>(null);
+    const [role, setRole] = useState<Role>("UNASSIGNED");
     const [connected, setConnected] = useState<boolean>(false);
     const [playerId, setPlayerId] = useState<string>("");
     const [playerName, setPlayerName] = useState<string>("");
@@ -46,12 +46,12 @@ const App = () => {
     // the user know that they must exit their current game before joining a new one
     useEffect(() => {
         setLoading(true);
-    
+
         if (devRoleDeclaration) {
             setRole(devRoleDeclaration);
             return;
         }
-    
+
         const initializeGame = async () => {
             try {
                 // Get the role directly from API
@@ -59,41 +59,46 @@ const App = () => {
                 console.log(newRole);
                 setRole(newRole);
                 setConnected(true);
-    
+
                 // Now, based on the role, decide game loading behavior
                 const match = location.pathname.match(/^\/game\/(.+)/);
                 if (match) {
                     const extractedGameId = match[1];
                     try {
                         await getGameByIdApi(extractedGameId);
-    
+
                         // Check role before assigning PLAYER_CREATION
                         if (newRole === "UNASSIGNED" || newRole === null) {
                             setRole("PLAYER_CREATION");
                             console.log("Assigned role: PLAYER_CREATION");
                         } else {
-                            setErrorMessage("You cannot join a new game until you leave your current game.");
+                            setErrorMessage(
+                                "You cannot join a new game until you leave your current game."
+                            );
                         }
                         setGameId(extractedGameId);
                     } catch (error) {
-                        setErrorMessage("The game you're trying to join does not exist");
+                        setErrorMessage(
+                            "The game you're trying to join does not exist"
+                        );
                     }
                 } else {
                     setGameId(""); // Reset if not on a game route
                 }
                 // Remove extra path from URL without reloading
-                window.history.replaceState(null, '', '/');
+                window.history.replaceState(null, "", "/");
             } catch (err: any) {
                 setConnected(false);
                 if (err instanceof Error && err.message === "Failed to fetch") {
-                    setErrorMessage("There was an error connecting to the game server.");
+                    setErrorMessage(
+                        "There was an error connecting to the game server."
+                    );
                 }
             }
         };
-    
+
         initializeGame();
     }, []);
-    
 
     // on page load, retrieve any game data related to any existing role
     useEffect(() => {
@@ -135,11 +140,14 @@ const App = () => {
     // effect to change app colors on update of "color" state variable
     useEffect(() => {
         const colorScheme = getColorScheme(color);
-        document.body.style.backgroundImage = `
-            radial-gradient(${colorScheme.text} 13.6%, transparent 3.6%),
-            radial-gradient(${colorScheme.text} 13.6%, transparent 3.6%)
-        `;
-        document.body.style.backgroundColor = colorScheme.bg;
+        const rootElement = document.getElementById("root");
+
+        if (rootElement) {
+            rootElement.style.backgroundImage = 
+                `radial-gradient(${colorScheme.text} 13.6%, transparent 3.6%),
+                 radial-gradient(${colorScheme.text} 13.6%, transparent 3.6%)`;
+            rootElement.style.backgroundColor = colorScheme.bg;
+        }
     }, [color]);
 
     const createAndHostGame = async () => {
@@ -217,23 +225,17 @@ const App = () => {
         loading: boolean
     ): JSX.Element | null => {
         if (loading) {
-            return (
-                <Waiting
-                    message={"LOADING"}
-                />
-            );
+            return <Waiting message={"LOADING"} />;
         } else if (role === "UNASSIGNED") {
             return (
                 <>
-                <div className="container no-top-margin">
-                    <p className="logo-small">WE ARE NOW IN</p>
-                    <p className="logo-smallest">THE</p>
-                    <p className="logo">JOKE ZONE</p>
-                </div>
-                <ChooseRole
-                    onChooseHost={createAndHostGame}
-                    onChooseJoin={joinGame}
-                />
+                    <div className="container no-top-margin">
+                        <p className="logo">JOKE ZONE</p>
+                    </div>
+                    <ChooseRole
+                        onChooseHost={createAndHostGame}
+                        onChooseJoin={joinGame}
+                    />
                 </>
             );
         } else if (role === "HOST" && gameId) {
@@ -274,7 +276,6 @@ const App = () => {
 
     return (
         <>
-            
             {errorMessage && (
                 <ErrorModal message={errorMessage} onClose={closeErrorModal} />
             )}
@@ -285,12 +286,12 @@ const App = () => {
                     gameId={gameId}
                 />
             )}
-            {/* <button onClick={toggleDevDisplay}>Toggle Developer Panel</button> */}
+            <button onClick={toggleDevDisplay}>Toggle Developer Panel</button>
             {devDisplayOpen && (
                 <DevDisplay
                     gameId={gameId}
                     gameState={gameState}
-                    role={role ? role : 'undefined'}
+                    role={role ? role : "undefined"}
                     hostId={hostId}
                     playerId={playerId}
                     loading={loading}
