@@ -58,7 +58,7 @@ button, .btn {
 }
 
 .container {
-  padding: clamp(12px, 5vw, 48px);
+  padding: clamp(12px, 4vw, 48px);
   text-align: center;
   display: grid;
   place-items: center; /* Centers the child both horizontally and vertically */
@@ -74,7 +74,6 @@ button, .btn {
 }
 
 .container.auto-width {
-  width:fit-content;
   max-width: 100%;
   padding-left: 12px clamp(12px, 5vw, 200px);
   padding-right: 12px clamp(12px, 5vw, 200px)
@@ -152,7 +151,7 @@ button, .btn {
 }
 
 .big-button {
-  margin: 10px;
+  margin: clamp(20px, 2vw, 40px) clamp(20px, 2vw, 80px);
   padding: clamp(10px, 2vw, 40px) clamp(20px, 2vw, 80px);
   border: none;
   border-radius: clamp(4px, 2vw, 32px);
@@ -197,8 +196,8 @@ button, .btn {
 }
 
 h2 {
-  font-size: clamp(20px, 3.5vw, 200px);
-  margin: clamp(10px, 2vh, 40px);
+  font-size: clamp(18px, 3vw, 200px);
+  margin: clamp(10px, 1.5vw, 40px);
 }
 
 h3 {
@@ -249,7 +248,7 @@ p.description {
   margin-top: 0;
   font-size: clamp(24px, 2.5vw, 72px);
   text-align: center;
-  margin-bottom: 0;
+  margin-bottom: 12px;
 }
 
 .instruction {
@@ -275,18 +274,20 @@ p.description {
 
 .expand-to-fit {
   width: 100%;
+  padding: clamp(12px, 2vw, 48px);
 }
 
 .two-three-container {
   margin: auto;
   display: grid;
   grid-template-columns: 2fr 3fr;
-  max-width: 100%;
-  width: 100%;
+  max-width: 98%;
+  width: 980%;
+  gap: 2%;
 }
 .qr-code {
   width: 100%;            
-  max-width: min(min(max(800px, 40vw), 48vh), 100%);
+  max-width: min(max(800px, 40vw), 80vh);
   height: auto;
 }
 .qr-container {
@@ -294,12 +295,12 @@ p.description {
   flex-direction: column;
   justify-content: center;  /* Center horizontally */
   align-items: center;      /* Center vertically */
-  width: 100%;              /* Full width container */
+  width: 84%;              /* Full width container */
 }
 
 
 .two-three-container > .container {
-  max-width: 75%;
+  max-width: 100%;
   margin-top: 12px;
 }
 
@@ -359,7 +360,7 @@ p.description {
 }
 
 /* reformat for mobile */
-@media (width < 720px) {
+@media (width < 700px) {
 
   h2 {
     font-size: clamp(1em, 9vw, 2em);

@@ -19,8 +19,7 @@ const PlayerDisplay: React.FC<PlayerDisplayProps> = ({
         <>
                     <div
                         className={`player-ready-element ${
-                            showStatus &&
-                            (player.ready ? "player-ready" : "player-wait")
+                            player.ready ? "player-ready" : ""
                         }`}
                     >
                         <LilGuy

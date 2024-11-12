@@ -7,10 +7,11 @@ interface DevDisplayProps {
     hostId?: string;
     playerId?: string;
     loading: boolean;
+    connected: boolean;
     color: string;
 }
 
-const DevDisplay: React.FC<DevDisplayProps> = ({gameId, gameState, role, hostId, playerId, loading, color}) => {
+const DevDisplay: React.FC<DevDisplayProps> = ({gameId, gameState, role, hostId, playerId, loading, connected, color}) => {
 
 
     return (
@@ -20,6 +21,7 @@ const DevDisplay: React.FC<DevDisplayProps> = ({gameId, gameState, role, hostId,
         <pre>gameState : {gameState || "none"}</pre>
         <pre>role: {role}</pre>
         <pre>id : {hostId ? hostId: playerId ? playerId : "none"}</pre>
+        <pre>connected: {connected ? "true" : "false"}</pre>
         <pre>loading: {loading ? 'true' : 'false'}</pre>
         <pre>color: {color}</pre>
       </div>

@@ -18,15 +18,16 @@ import Header from './components/common/Header';
 import LilGuySelect from './components/join/LilGuySelect';
 import Waiting from './components/common/Waiting';
 import './styles/fonts/Eracake.otf';
+import StaticNotification from './components/home/StaticNotification';
 
 // Define the role types
-type Role = 'HOST' | 'PLAYER' | 'PLAYER_CREATION' | 'UNASSIGNED';
+type Role = 'HOST' | 'PLAYER' | 'PLAYER_CREATION' | 'UNASSIGNED' | 'PENDING';
 
 const App = () => {
     const [loading, setLoading] = useState<boolean>(true);
     const [gameState, setGameState] = useState<string>("");
     const [gameId, setGameId] = useState<string>("");
-    const [role, setRole] = useState<Role>("UNASSIGNED");
+    const [role, setRole] = useState<Role>("PENDING");
     const [connected, setConnected] = useState<boolean>(false);
     const [playerId, setPlayerId] = useState<string>("");
     const [playerName, setPlayerName] = useState<string>("");
@@ -46,29 +47,36 @@ const App = () => {
     // the user know that they must exit their current game before joining a new one
     useEffect(() => {
         setLoading(true);
-
-        if (devRoleDeclaration) {
-            setRole(devRoleDeclaration);
-            return;
-        }
-
+    
         const initializeGame = async () => {
             try {
-                // Get the role directly from API
-                const newRole = await getSessionRole();
-                console.log(newRole);
-                setRole(newRole);
-                setConnected(true);
-
-                // Now, based on the role, decide game loading behavior
+                // Dev role check
+                if (devRoleDeclaration) {
+                    setRole(devRoleDeclaration);
+                    return;
+                }
+    
+                // Check if the URL includes a game to join
                 const match = location.pathname.match(/^\/game\/(.+)/);
+    
+                // Retrieve role from backend
+                const newRole = await getSessionRole();
+                console.log("ROLE FROM BACKEND: " + newRole);
+                setConnected(true);
+    
+                // If no game in URL, set the role directly
+                if (!match) {
+                    setRole(newRole);
+                }
+    
                 if (match) {
                     const extractedGameId = match[1];
                     try {
                         await getGameByIdApi(extractedGameId);
-
+                        setLoading(false);
+    
                         // Check role before assigning PLAYER_CREATION
-                        if (newRole === "UNASSIGNED" || newRole === null) {
+                        if (newRole === "UNASSIGNED") {
                             setRole("PLAYER_CREATION");
                             console.log("Assigned role: PLAYER_CREATION");
                         } else {
@@ -78,37 +86,31 @@ const App = () => {
                         }
                         setGameId(extractedGameId);
                     } catch (error) {
-                        setErrorMessage(
-                            "The game you're trying to join does not exist"
-                        );
+                        setErrorMessage("The game you're trying to join does not exist");
                     }
-                } else {
-                    setGameId(""); // Reset if not on a game route
                 }
-                // Remove extra path from URL without reloading
+    
+                // Clean up URL if there was an extra path
                 window.history.replaceState(null, "", "/");
+    
+                // Proceed with data retrieval based on the assigned role
+                if (newRole !== "UNASSIGNED") {
+                    await getDataById(newRole);
+                }
+    
             } catch (err: any) {
                 setConnected(false);
                 if (err instanceof Error && err.message === "Failed to fetch") {
-                    setErrorMessage(
-                        "There was an error connecting to the game server."
-                    );
+                    setErrorMessage("There was an error connecting to the game server.");
+                    setRole("UNASSIGNED");
                 }
+            } finally {
+                setLoading(false);
             }
         };
-
-        initializeGame();
-    }, []);
-
-    // on page load, retrieve any game data related to any existing role
-    useEffect(() => {
-        console.log(role);
-        if (role === "UNASSIGNED") {
-            setLoading(false);
-            return;
-        }
-
-        const getDataById = async (): Promise<void> => {
+    
+        // Function to retrieve data by role
+        const getDataById = async (role: string): Promise<void> => {
             try {
                 if (role === "HOST") {
                     const game = await getGameByHostIdApi();
@@ -127,28 +129,32 @@ const App = () => {
             } catch (err: any) {
                 setErrorMessage("There was an error loading your current game");
                 resetUserSession();
-            } finally {
-                setLoading(false);
             }
         };
-
-        if (role) {
-            getDataById();
-        }
-    }, [role]);
+    
+        initializeGame();
+    }, []);
+    
 
     // effect to change app colors on update of "color" state variable
     useEffect(() => {
         const colorScheme = getColorScheme(color);
         const rootElement = document.getElementById("root");
-
+        const bodyElement = document.body;
+    
         if (rootElement) {
             rootElement.style.backgroundImage = 
                 `radial-gradient(${colorScheme.text} 13.6%, transparent 3.6%),
                  radial-gradient(${colorScheme.text} 13.6%, transparent 3.6%)`;
             rootElement.style.backgroundColor = colorScheme.bg;
         }
+    
+        // Change the color of the html element
+        if (bodyElement) {
+            bodyElement.style.backgroundColor = colorScheme.bg; // example background color
+        }
     }, [color]);
+    
 
     const createAndHostGame = async () => {
         try {
@@ -220,6 +226,10 @@ const App = () => {
         setColor(color);
     };
 
+    const reloadPage = () => {
+        window.location.reload();
+    }
+
     const renderComponent = (
         role: Role,
         loading: boolean
@@ -232,7 +242,13 @@ const App = () => {
                     <div className="container no-top-margin">
                         <p className="logo">JOKE ZONE</p>
                     </div>
+                    {!connected && <StaticNotification 
+                        message={"We're having trouble connecting to the server. Reloading may help."} 
+                        onButtonPress={reloadPage}
+                        buttonText={"Reload"}
+                    />}
                     <ChooseRole
+                        isConnected = {connected}
                         onChooseHost={createAndHostGame}
                         onChooseJoin={joinGame}
                     />
@@ -295,6 +311,7 @@ const App = () => {
                     hostId={hostId}
                     playerId={playerId}
                     loading={loading}
+                    connected={connected}
                     color={color}
                 />
             )}

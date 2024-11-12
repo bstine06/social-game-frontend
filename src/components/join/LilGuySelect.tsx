@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import '../../styles/player-select.css';
+import '../../styles/player-display.css';
 import LilGuy1 from "../../resources/lil-guys/LilGuy1";
 import LilGuy from "./LilGuy";
 import ColorSelector from "./ColorSelector";

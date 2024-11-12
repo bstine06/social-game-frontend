@@ -24,7 +24,8 @@ const HostPlayersJoinedDisplay: React.FC<HostPlayersJoinedDisplayProps> = ({
 
     return (
         <>
-            <div className="lobby-players-joined">{playerDisplays}</div>
+            <p className="description">{`Players joined: ${playerData.length}/8`}</p>
+            <div className="players-list-container">{playerDisplays}</div>
         </>
     );
 };

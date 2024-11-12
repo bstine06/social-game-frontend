@@ -47,9 +47,29 @@
     font-weight: 900;
 }
 
+.greyed-out {
+    background-color: #555;
+}
+
+.greyed-out:hover {
+    background-color: #555;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+}
+
+.container.horizontal-flex {
+    display: flex;
+    gap: clamp(8px, 2vw, 48px);
+}
+
 @media (width < 700px) {
     .options-container {
         grid-template-columns: 1fr;
+    }
+    .container.horizontal-flex {
+        display: flex;
+        flex-direction: column;
     }
 }
 

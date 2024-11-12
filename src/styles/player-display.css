@@ -1,0 +1,136 @@
+.player-ready-display {
+    width: 95%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100%, 1fr)); /* Adjust 150px as needed */
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+.players-list-container {
+    max-width: clamp(100px, 60vw, 2000px);
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    min-height: 300px;
+}
+
+.player-ready-element {
+    font-size: 36px;
+    display: flex;
+    align-items: center;
+    padding: 0px;
+    font-family: monospace;
+    background-color: #444;
+    border: 1px white solid;
+    border-radius: clamp(20px, 9vw, 50px);
+    box-shadow: 0 0 2px 3px black;
+    flex-shrink: 1;
+    max-width: 100%;
+    width: 100%;
+}
+
+.player-ready-element > .lil-guy {
+    width: clamp(30px, 5vw, 100px);
+    min-width: clamp(30px, 4vw, 100px);
+}
+
+.player-name {
+    max-width: 18em;
+    margin: 0;
+    font-size: clamp(18px, 4.4vw, 128px);
+    padding-left: 1vw;
+    padding-right: 5vw;
+    font-weight: bold;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.player-ready-element .lil-guy {
+    margin: 0;
+}
+
+.player-status {
+    width: 30px;
+    height: 30px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 50%; /* Makes it a circle */
+}
+
+/* Player is ready - use a checkmark background image */
+.player-ready {
+    background: url("../resources/check-symbol-4794.png") no-repeat right 5px bottom 5px;
+    background-size: auto 80%;
+    background-color: #009000; /* Light green for ready */
+}
+
+.lil-guy {
+    max-width: 100%;
+    width: clamp(100px, 9vw, 900px);
+    border-radius: 15%;
+    display: flex; /* Use flexbox on the child elements */
+    flex-direction: column; /* Stack items vertically */
+    align-items: center; /* Center items horizontally */
+    justify-content: center; /* Center items vertically */
+    text-align: center; /* Center text inside the child */
+    margin: 0 auto; /* Center without affecting width */
+}
+
+.selection-container {
+    margin: auto;
+    max-width: max(800px, 40%); /* Keep the maximum limit */
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    align-items: center;
+    gap: clamp(0, 5vw, 10px);
+    justify-content: center; /* Center items */
+    padding: 0 12px; /* Add some padding to prevent edge touch */
+    box-sizing: border-box; /* Ensure padding is included in the width */
+}
+
+.selection-container > .lil-guy {
+    background-color: #fafafa;
+    box-shadow: 0 0 10px 5px rgba(0,0,0,0);
+    -webkit-box-shadow: 0 0 10px 5px rgba(0,0,0,0);
+    -moz-box-shadow: 0 0 10px 5px rgba(0,0,0,0);
+}
+
+.lil-guy-display-container {
+    display: flex; gap: 12px;
+}
+
+.color-swatch {
+    width: clamp(40px, 20vw, 500px);
+    height: clamp(40px, 20vw, 500px);
+    border: clamp(3px, 1vw, 24px) solid #444;
+    border-radius: 40%;
+    margin: auto;
+}
+
+.color-swatch.selected {
+    border: 3px solid #FFF;
+}
+
+@media (width < 700px) {
+    .selection-container {
+        max-width: 400px;
+    }
+    .players-list-container {
+        max-width: 100%;
+    }
+    .player-name {
+        font-size: clamp(18px, 8vw, 128px);
+    }
+    .player-ready-element > .lil-guy {
+        width: clamp(30px, 9vw, 100px);
+        min-width: clamp(30px, 9vw, 100px);
+    }
+
+}
+
+.lil-guy > svg {
+    width: 100%;
+    height: 100%;
+}
+

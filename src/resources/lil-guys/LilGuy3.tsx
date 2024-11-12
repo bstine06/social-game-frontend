@@ -6,7 +6,7 @@ interface LilGuy3Props {
 
 const LilGuy3: React.FC<LilGuy3Props> = ({ fillColor }) => {
     return (
-        <svg width="100" height="100" xmlns="http://www.w3.org/2000/svg">
+        <svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
             <g id="Layer_1">
                 <title>Layer 1</title>
                 <ellipse
@@ -50,3 +50,4 @@ const LilGuy3: React.FC<LilGuy3Props> = ({ fillColor }) => {
 };
 
 export default LilGuy3;
+

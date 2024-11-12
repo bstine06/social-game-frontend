@@ -12,9 +12,10 @@ const HostAnswer: React.FC<HostAnswerProps> = ({
   return (
     <>
       <div className="container">
-        <p>Enter answers to the questions from your friends</p>
-          <PlayerReadyDisplay players={players}/>
+        <h2 className="">Answer two questions from other players!</h2>
+          
       </div>
+      <PlayerReadyDisplay players={players} showStatus={true}/>
     </>
   );
 };
