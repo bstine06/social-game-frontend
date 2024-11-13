@@ -8,6 +8,7 @@ import WatchPlayers from "../websocket/WatchPlayers";
 import { PlayerData } from "../types/playerDataTypes";
 import PlayerReadyDisplay from "../common/PlayerReadyDisplay";
 import Waiting from "../common/Waiting";
+import StartGame from "../common/StartGame";
 
 interface PlayerProps {
     gameId: string;
@@ -27,6 +28,7 @@ const Player: React.FC<PlayerProps> = ({
     )
     const [players, setPlayers] = useState<PlayerData[]>([]);
     const [finished, setFinished] = useState<boolean>(false);
+    const [isLeader, setIsLeader] = useState<boolean>();
 
     useEffect(() => {
         setFinished(false);
@@ -47,19 +49,20 @@ const Player: React.FC<PlayerProps> = ({
         const localPlayer = newPlayersList.find(
             (p) => p.player.playerId === playerId
         );
-        console.log("LOCAL PLAYER READY?");
-        console.log("new players list:")
-        console.log(newPlayersList);
-        console.log("my player id");
-        console.log(playerId);
-        console.log(";Local player");
-        console.log(localPlayer);
 
         // If the local player is found and ready, set finished to true
         if (localPlayer && localPlayer.ready) {
             setFinished(true);
         } else {
             setFinished(false);
+        }
+        console.log(localPlayer);
+
+        // If the local player is the leader, set leader to true
+        if (localPlayer && localPlayer.leader) {
+            setIsLeader(true);
+        } else {
+            setIsLeader(false);
         }
     };
 
@@ -74,7 +77,6 @@ const Player: React.FC<PlayerProps> = ({
 
     const handleFinishSubmission = () => {
         const playersStillSubmitting = players.filter(p => !p.ready);
-        console.log(playersStillSubmitting);
         if (playersStillSubmitting.length > 1) {
             setFinished(true);
         } else if (playersStillSubmitting.length > 0 && playersStillSubmitting[0].player.playerId === playerId) {
@@ -83,14 +85,24 @@ const Player: React.FC<PlayerProps> = ({
     };
 
     const renderGameplayComponent = () => {
+        if (isLeader === null) {
+            // Render nothing or a loading indicator until isLeader is set
+            return <Waiting message={"LOADING"} description={""} />;
+        }
+
         switch (gameState) {
             case "LOBBY": {
-                return (
-                    <Waiting 
-                        message={"WAITING"}
-                        description={"for the game to start"}
-                    />
-                )
+                console.log(isLeader);
+                if (isLeader) {
+                    return <StartGame playerCount={players.length} gameId={gameId}/>
+                } else {
+                    return (
+                        <Waiting 
+                            message={"WAITING"}
+                            description={"for the game to start"}
+                        />
+                    )
+                }
             }
             case "QUESTION": {
                 return (

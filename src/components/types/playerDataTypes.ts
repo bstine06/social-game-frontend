@@ -8,6 +8,7 @@ export interface Player {
 export interface PlayerData {
     player: Player;
     ready: boolean;
+    leader: boolean;
 }
 
 export interface WatchPlayersData {

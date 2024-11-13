@@ -34,8 +34,6 @@ const App = () => {
 
     const { themeColor, setThemeColor } = useTheme();
 
-    const [devRoleDeclaration, setDevRoleDeclaration] = useState<Role>();
-
     // Hook to access the current route
     const location = useLocation();
 
@@ -75,11 +73,6 @@ const App = () => {
     
         const initializeGame = async () => {
             try {
-                // Dev role check
-                if (devRoleDeclaration) {
-                    setRole(devRoleDeclaration);
-                    return;
-                }
     
                 // Check if the URL includes a game to join
                 const match = location.pathname.match(/^\/game\/(.+)/);
