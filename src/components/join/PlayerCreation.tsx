@@ -8,10 +8,9 @@ import NameInput from './NameInput';
 interface PlayerCreationProps {
     onCreatePlayer: () => void; // Function to handle hosting
     gameId : string;
-    onColorSelect: (color: string) => void;
 }
 
-const PlayerCreation: React.FC<PlayerCreationProps> = ({ onCreatePlayer, gameId, onColorSelect }) => {
+const PlayerCreation: React.FC<PlayerCreationProps> = ({ onCreatePlayer, gameId }) => {
   const [stage, setStage] = useState<string>("nameInput");
   const [nameInput, setNameInput] = useState<string>("");
 
@@ -33,9 +32,9 @@ const PlayerCreation: React.FC<PlayerCreationProps> = ({ onCreatePlayer, gameId,
 
   return (
     <>
-    <div className="container auto-width">
+    <div className="container thinner-container">
       {stage=="nameInput" && <NameInput onNext={advanceStage}/>}
-      {stage=="lilGuySelect" && <LilGuySelect onColorSelect={onColorSelect} onSubmit={handleSubmit}/>}
+      {stage=="lilGuySelect" && <LilGuySelect onSubmit={handleSubmit}/>}
     </div>
     </>
   );

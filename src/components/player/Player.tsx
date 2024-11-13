@@ -13,18 +13,14 @@ interface PlayerProps {
     gameId: string;
     playerId: string;
     gameState: string;
-    playerName: string;
     onCancelPlayer: () => void;
-    color: string;
 }
 
 const Player: React.FC<PlayerProps> = ({
     gameId,
     playerId,
     gameState,
-    playerName,
-    onCancelPlayer,
-    color
+    onCancelPlayer
 }) => {
     const [deletePlayerConfirmMsg, setDeletePlayerConfirmMsg] = useState<string>(
         `This will remove you from the game (${gameId})`
@@ -36,8 +32,14 @@ const Player: React.FC<PlayerProps> = ({
         setFinished(false);
     }, [gameState]);
 
+    useEffect(() => {
+        updatePlayers(players);
+    }, [playerId]);
+
     const updatePlayers = (newPlayersList: PlayerData[]) => {
         setPlayers(newPlayersList);
+        // return early if playerId is not properly set yet.
+        if (!playerId) return;
         setDeletePlayerConfirmMsg(
             decideDeletePlayerConfirmMsg(newPlayersList.length, gameId)
         );
@@ -45,6 +47,13 @@ const Player: React.FC<PlayerProps> = ({
         const localPlayer = newPlayersList.find(
             (p) => p.player.playerId === playerId
         );
+        console.log("LOCAL PLAYER READY?");
+        console.log("new players list:")
+        console.log(newPlayersList);
+        console.log("my player id");
+        console.log(playerId);
+        console.log(";Local player");
+        console.log(localPlayer);
 
         // If the local player is found and ready, set finished to true
         if (localPlayer && localPlayer.ready) {
@@ -55,9 +64,12 @@ const Player: React.FC<PlayerProps> = ({
     };
 
     const decideDeletePlayerConfirmMsg = (playerCount: number, gameId: string) => {
-        return playerCount === 3
-            ? `Because there are only 3 players, this will delete the game (${gameId})`
-            : `This will remove you from the game (${gameId})`;
+        if (playerCount == 3 && gameState != "LOBBY") {
+            return `Because there are only 3 players, this will delete the game (${gameId})`;
+        }
+        else {
+            return `This will remove you from the game (${gameId})`;
+        }
     };
 
     const handleFinishSubmission = () => {
@@ -136,11 +148,9 @@ const Player: React.FC<PlayerProps> = ({
         <>
             <Header
                 gameId={gameId}
-                playerName={playerName}
                 role={"PLAYER"}
                 onCancel={deletePlayer}
                 confirmModalContent={deletePlayerConfirmMsg}
-                color={color}
             />
             <WatchPlayers gameId={gameId} onPlayersChanged={updatePlayers} />
             {finished ? renderWaitingComponent() : renderGameplayComponent()}

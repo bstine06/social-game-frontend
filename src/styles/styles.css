@@ -79,6 +79,10 @@ button, .btn {
   padding-right: 12px clamp(12px, 5vw, 200px)
 }
 
+.container.thinner-container {
+  max-width: clamp(820px, 40vw, 2000px);
+}
+
 @media (width < 700px) {
   .container {
       margin-top: 12px;
@@ -156,7 +160,7 @@ button, .btn {
   border: none;
   border-radius: clamp(4px, 2vw, 32px);
   cursor: pointer;
-  font-size: clamp(32px, 2vw, 128px);
+  font-size: clamp(20px, 2vw, 128px);
   font-family: monospace;
   font-weight: 900;
   background-color: #e0c0ff;
@@ -196,8 +200,12 @@ button, .btn {
 }
 
 h2 {
-  font-size: clamp(18px, 3vw, 200px);
+  font-size: clamp(80px, 4vw, 200px);
   margin: clamp(10px, 1.5vw, 40px);
+}
+
+h2.scan-to-join {
+  font-size: clamp(30px, 4vw, 200px);
 }
 
 h3 {
@@ -363,8 +371,12 @@ p.description {
 @media (width < 700px) {
 
   h2 {
-    font-size: clamp(1em, 9vw, 2em);
+    font-size: clamp(1em, 10vw, 3em);
     margin: 10px auto;
+  }
+
+  h2.scan-to-join {
+    font-size: clamp(18px, 12vw, 200px);
   }
 
   .instruction {
@@ -399,4 +411,13 @@ p.description {
       max-width: none;
     }
     
+  }
+
+  @media (width > 4000px) {
+    h2 {
+      font-size: 160px;
+    }
+    .big-button {
+      font-size: 80px;
+    }
   }

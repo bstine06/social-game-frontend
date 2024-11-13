@@ -1,6 +1,7 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter as Router } from "react-router-dom";
+import { ThemeProvider } from "./utils/ThemeContext";
 import App from "./App";
 
 // Get the root element from the DOM
@@ -11,7 +12,9 @@ if (container) {
   const root = createRoot(container);
   root.render(
     <Router>
-      <App />
+      <ThemeProvider>
+        <App />
+      </ThemeProvider>
     </Router>
   );
 } else {

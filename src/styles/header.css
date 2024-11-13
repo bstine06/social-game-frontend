@@ -6,17 +6,14 @@
   position: relative;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  /* Creates 3 equal columns */
   align-items: center;
   width: 100%;
   background-color: #31065C;
   height: clamp(120px, 7vw, 240px);
-  font-size: 20px;
   margin: 0;
   box-shadow: #000000 5px 0px 5px 5px;
   -webkit-box-shadow: #000000 5px 0px 25px 5px;
   -moz-box-shadow: #000 5px 0px 5px 5px;
-  z-index: 10;
   overflow: hidden;
 }
 
@@ -25,84 +22,21 @@
   font-family: monospace;
   text-align: center;
   margin: 0;
+  font-size: clamp(20px, 3vw, 80px);
   /* Remove default margins from the <p> tags */
 }
 
 .header button {
-  font-size: 20px;
   border-radius: 0px;
   background-color: #31065C;
   color: #c8a3ea;
   height: 100%;
   border: none;
-  transition: font-size 0.2s ease;
+  transition: letter-spacing 0.2s ease;
 }
 
 .header button:hover {
-  font-size: clamp(32px, 5vw, 48px);
-}
-
-.name-reveal-div {
-  position: absolute;
-  top: -150px;
-  left: 0;
-  width: 100%;
-  text-align: center;
-  font-size: clamp(24px, 5vw, 60px);
-  opacity: 80%;
-  transition: opacity 300ms ease-in-out, transform 300ms ease-in-out;
-  z-index: 9;
-}
-
-.player-name-wrapper {
-  margin:auto;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  padding: 0 clamp(0px, 30vw, 6em);
-  font-family: monospace;
-  font-weight: 900;
-  background-color: #222;
-  border: white 2px solid;
-  border-top: none;
-  border-bottom-left-radius: 30px;
-  border-bottom-right-radius: 30px;
-  box-shadow: #000000 5px 0px 5px 5px;
-  -webkit-box-shadow: #000000 5px 0px 25px 5px;
-  -moz-box-shadow: #000 5px 0px 5px 5px;
-}
-
-.player-name-wrapper p:first-child {
-  margin-bottom: 0;
-  color: #aaa;
-  font-size: 0.8em;
-}
-
-.player-name-wrapper p:last-child {
-  margin-top: 0;
-}
-
-.visible {
-  opacity: 100%;
-  transform:translateY(250px);
-}
-
-/* reformat for hdtv  */
-@media (width > 3000px) {
-  .header {
-    height: 200px;
-    font-size: clamp(8px, 5vw, 50px);
-  }
-  .header button {
-    font-size: 1em;
-  }
-  .header button:hover {
-    font-size: 1.5em;
-  }
-  .visible {
-    opacity: 100%;
-    transform:translateY(350px);
-  }
+  letter-spacing: 0.2em;
 }
 
 p.header-main-text {

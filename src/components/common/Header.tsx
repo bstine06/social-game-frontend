@@ -5,33 +5,31 @@ import "../../styles/header.css";
 import he from "he";
 import { getColorScheme } from "../../utils/ColorUtils";
 import { ColorMapping } from "../types/ColorMappingType";
+import { useTheme } from "../../utils/ThemeContext";
 
 interface HeaderProps {
     onCancel: () => void;
     gameId: string;
     role: string;
-    playerName?: string;
     confirmModalContent: string;
-    color: string;
 }
 
 const Header: React.FC<HeaderProps> = ({
     onCancel,
     gameId,
     role,
-    playerName,
-    confirmModalContent,
-    color,
+    confirmModalContent
 }) => {
     const [isBackModalOpen, setIsBackModalOpen] = useState<boolean>(false);
     const [colors, setColors] = useState<ColorMapping>(
         getColorScheme("DEFAULT")
     );
     const [isHovered, setIsHovered] = useState<boolean>(false);
+    const { themeColor } = useTheme();
 
     useEffect(() => {
-        setColors(getColorScheme(color));
-    }, [color]);
+        setColors(getColorScheme(themeColor));
+    }, [themeColor]);
 
     const handleBackSubmit = async () => {
         setIsBackModalOpen(true);
@@ -52,18 +50,6 @@ const Header: React.FC<HeaderProps> = ({
     return (
         <>
             <div className="header-wrapper">
-                {playerName && (
-                    <div
-                        className={`name-reveal-div ${
-                            isHovered ? "visible" : ""
-                        }`}
-                    >
-                        <div className="player-name-wrapper">
-                            <p>your name:</p>
-                            <p>{he.decode(playerName)}</p>
-                        </div>
-                    </div>
-                )}
                 <div
                     className="header"
                     style={{ backgroundColor: colors.bg, color: colors.text }}

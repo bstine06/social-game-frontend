@@ -14,15 +14,13 @@ interface HostProps {
     gameState: string;
     onCancelHost: () => void;
     onStartGame: () => void;
-    color: string
 }
 
 const Host: React.FC<HostProps> = ({
     gameId,
     gameState,
     onCancelHost,
-    onStartGame,
-    color
+    onStartGame
 }) => {
     const [players, setPlayers] = useState<PlayerData[]>([]);
 
@@ -89,7 +87,6 @@ const Host: React.FC<HostProps> = ({
                 onCancel={deleteGame}
                 role={"HOST"}
                 confirmModalContent={`This will delete the game (${gameId})`}
-                color={color}
             />
             <WatchPlayers gameId={gameId} onPlayersChanged={updatePlayers} />
             {renderComponent()}

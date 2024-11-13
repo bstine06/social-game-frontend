@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import ReactDOM from 'react-dom/client';
 import { createGameApi, getGameByHostIdApi, getGameByIdApi, updateGameStateApi } from './api/gameApi';
 import { getSessionRole } from './api/sessionApi';
 import { getPlayerById } from './api/playerApi';
+import { useTheme } from './utils/ThemeContext';
 import ChooseRole from './components/home/ChooseRole';
 import JoinGame from './components/join/JoinGame';
 import Host from './components/host/Host';
@@ -13,9 +13,6 @@ import GameState from './components/websocket/GameState';
 import './styles/styles.css';
 import DevDisplay from './components/DevDisplay';
 import { getColorScheme } from './utils/ColorUtils';
-import { ColorMapping } from './components/types/ColorMappingType';
-import Header from './components/common/Header';
-import LilGuySelect from './components/join/LilGuySelect';
 import Waiting from './components/common/Waiting';
 import './styles/fonts/Eracake.otf';
 import StaticNotification from './components/home/StaticNotification';
@@ -34,12 +31,40 @@ const App = () => {
     const [hostId, setHostId] = useState<string>("");
     const [errorMessage, setErrorMessage] = useState<string>("");
     const [devDisplayOpen, setDevDisplayOpen] = useState<boolean>(false);
-    const [color, setColor] = useState<string>("PURPLE");
+
+    const { themeColor, setThemeColor } = useTheme();
 
     const [devRoleDeclaration, setDevRoleDeclaration] = useState<Role>();
 
     // Hook to access the current route
     const location = useLocation();
+
+    useEffect(()=> {
+        console.log("PLAYER ID: " + playerId);
+    }, [playerId]);
+
+    // Function to retrieve data by role
+    const getDataById = async (role: string): Promise<void> => {
+        try {
+            if (role === "HOST") {
+                const game = await getGameByHostIdApi();
+                setHostId(game.hostId);
+                setGameId(game.gameId);
+                setGameState(game.gameState);
+            } else if (role === "PLAYER") {
+                const player = await getPlayerById();
+                setPlayerId(player.playerId);
+                setPlayerName(player.name);
+                setThemeColor(player.color);
+                const game = await getGameByIdApi(player.gameId);
+                setGameId(game.gameId);
+                setGameState(game.gameState);
+            }
+        } catch (err: any) {
+            setErrorMessage("There was an error loading your current game");
+            resetUserSession();
+        }
+    };
 
     // on page load, retrieve any existing role from backend via session cookie
     // also, check if the route supplied included a game ID and if so, add to that game
@@ -78,10 +103,10 @@ const App = () => {
                         // Check role before assigning PLAYER_CREATION
                         if (newRole === "UNASSIGNED") {
                             setRole("PLAYER_CREATION");
-                            console.log("Assigned role: PLAYER_CREATION");
                         } else {
+                            setRole(newRole);
                             setErrorMessage(
-                                "You cannot join a new game until you leave your current game."
+                                "You're already in a game. Exit this game to join a new one."
                             );
                         }
                         setGameId(extractedGameId);
@@ -109,36 +134,17 @@ const App = () => {
             }
         };
     
-        // Function to retrieve data by role
-        const getDataById = async (role: string): Promise<void> => {
-            try {
-                if (role === "HOST") {
-                    const game = await getGameByHostIdApi();
-                    setHostId(game.hostId);
-                    setGameId(game.gameId);
-                    setGameState(game.gameState);
-                } else if (role === "PLAYER") {
-                    const player = await getPlayerById();
-                    setPlayerId(player.playerId);
-                    setPlayerName(player.name);
-                    setColor(player.color);
-                    const game = await getGameByIdApi(player.gameId);
-                    setGameId(game.gameId);
-                    setGameState(game.gameState);
-                }
-            } catch (err: any) {
-                setErrorMessage("There was an error loading your current game");
-                resetUserSession();
-            }
-        };
-    
         initializeGame();
     }, []);
+
+    useEffect(() => {
+        getDataById(role);
+    }, [role]),
     
 
     // effect to change app colors on update of "color" state variable
     useEffect(() => {
-        const colorScheme = getColorScheme(color);
+        const colorScheme = getColorScheme(themeColor);
         const rootElement = document.getElementById("root");
         const bodyElement = document.body;
     
@@ -153,7 +159,7 @@ const App = () => {
         if (bodyElement) {
             bodyElement.style.backgroundColor = colorScheme.bg; // example background color
         }
-    }, [color]);
+    }, [themeColor]);
     
 
     const createAndHostGame = async () => {
@@ -174,7 +180,7 @@ const App = () => {
         setRole("UNASSIGNED");
         setPlayerId("");
         setHostId("");
-        setColor("PURPLE");
+        setThemeColor("PURPLE");
     };
 
     const setRoleToPlayer = () => {
@@ -223,7 +229,7 @@ const App = () => {
     };
 
     const updateColor = (color: string) => {
-        setColor(color);
+        setThemeColor(color);
     };
 
     const reloadPage = () => {
@@ -261,7 +267,6 @@ const App = () => {
                     gameState={gameState}
                     onCancelHost={resetUserSession}
                     onStartGame={startGame}
-                    color={color}
                 />
             );
         } else if (role === "PLAYER_CREATION") {
@@ -269,9 +274,7 @@ const App = () => {
                 <JoinGame
                     onCreatePlayer={setRoleToPlayer}
                     onCancelJoin={resetUserSession}
-                    onColorSelect={updateColor}
                     gameId={gameId}
-                    color={color}
                 />
             );
         } else if (role === "PLAYER" && gameId) {
@@ -280,9 +283,7 @@ const App = () => {
                     gameId={gameId}
                     playerId={playerId}
                     gameState={gameState}
-                    playerName={playerName}
                     onCancelPlayer={resetUserSession}
-                    color={color}
                 />
             );
         }
@@ -312,7 +313,7 @@ const App = () => {
                     playerId={playerId}
                     loading={loading}
                     connected={connected}
-                    color={color}
+                    color={themeColor}
                 />
             )}
         </>
