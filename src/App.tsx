@@ -16,19 +16,17 @@ import { getColorScheme } from './utils/ColorUtils';
 import Waiting from './components/common/Waiting';
 import './styles/fonts/Eracake.otf';
 import StaticNotification from './components/home/StaticNotification';
+import { GameData } from './components/types/GameDataTypes';
 
 // Define the role types
-type Role = 'HOST' | 'PLAYER' | 'PLAYER_CREATION' | 'UNASSIGNED' | 'PENDING';
+type Role = 'HOST' | 'PLAYER' | 'HOSTPLAYER' | 'PLAYER_CREATION' | 'UNASSIGNED' | 'PENDING';
 
 const App = () => {
     const [loading, setLoading] = useState<boolean>(true);
-    const [gameState, setGameState] = useState<string>("");
-    const [gameId, setGameId] = useState<string>("");
+    const [gameData, setGameData] = useState<GameData>({gameId: "", gameState: "", timerEnd: null});
     const [role, setRole] = useState<Role>("PENDING");
+    const [id, setId] = useState<string>("");
     const [connected, setConnected] = useState<boolean>(false);
-    const [playerId, setPlayerId] = useState<string>("");
-    const [playerName, setPlayerName] = useState<string>("");
-    const [hostId, setHostId] = useState<string>("");
     const [errorMessage, setErrorMessage] = useState<string>("");
     const [devDisplayOpen, setDevDisplayOpen] = useState<boolean>(false);
 
@@ -37,26 +35,29 @@ const App = () => {
     // Hook to access the current route
     const location = useLocation();
 
-    useEffect(()=> {
-        console.log("PLAYER ID: " + playerId);
-    }, [playerId]);
-
     // Function to retrieve data by role
     const getDataById = async (role: string): Promise<void> => {
         try {
             if (role === "HOST") {
                 const game = await getGameByHostIdApi();
-                setHostId(game.hostId);
-                setGameId(game.gameId);
-                setGameState(game.gameState);
+                setId(game.hostId);
+                const newGameData : GameData = {
+                    gameId: game.gameId,
+                    gameState: game.gameState,
+                    timerEnd: null
+                }
+                setGameData(newGameData);
             } else if (role === "PLAYER") {
                 const player = await getPlayerById();
-                setPlayerId(player.playerId);
-                setPlayerName(player.name);
+                setId(player.playerId);
                 setThemeColor(player.color);
                 const game = await getGameByIdApi(player.gameId);
-                setGameId(game.gameId);
-                setGameState(game.gameState);
+                const newGameData : GameData = {
+                    gameId: game.gameId,
+                    gameState: game.gameState,
+                    timerEnd: null
+                }
+                setGameData(newGameData);
             }
         } catch (err: any) {
             setErrorMessage("There was an error loading your current game");
@@ -102,7 +103,10 @@ const App = () => {
                                 "You're already in a game. Exit this game to join a new one."
                             );
                         }
-                        setGameId(extractedGameId);
+                        setGameData((prevGameData: GameData) => ({
+                            ...prevGameData,
+                            gameId: extractedGameId
+                          }));
                     } catch (error) {
                         setErrorMessage("The game you're trying to join does not exist");
                     }
@@ -158,21 +162,27 @@ const App = () => {
     const createAndHostGame = async () => {
         try {
             const game = await createGameApi(); // Call API to create a new game
-            setGameId(game.gameId); // Set gameId returned from backend
-            setGameState(game.gameState); // Set gameState returned from backend
+            const newGameData : GameData = {
+                gameId: game.gameId,
+                gameState: game.gameState,
+                timerEnd: null
+            }
+            setGameData(newGameData);
             setRole("HOST"); // Update role to 'HOST' after game creation
         } catch (error) {
-            console.error("Error creating and hosting game:", error);
+            setErrorMessage("There was an error creating the game.");
         }
     };
 
     const resetUserSession = () => {
-        console.log("RESET USER SESSION");
-        setGameId("");
-        setGameState("");
+        const newGameData : GameData = {
+            gameId: "",
+            gameState: "",
+            timerEnd: null
+        }
+        setGameData(newGameData);
         setRole("UNASSIGNED");
-        setPlayerId("");
-        setHostId("");
+        setId("");
         setThemeColor("PURPLE");
     };
 
@@ -185,31 +195,31 @@ const App = () => {
     };
 
     const startGame = (): void => {
-        updateGameStateApi(gameId);
+        updateGameStateApi(gameData.gameId);
     };
 
-    const updateLocalState = (state: string): void => {
-        if (state.includes("DELETED_BY")) {
-            switch (state) {
+    const updateLocalGameData = (newGameData: GameData): void => {
+        if (newGameData.gameState.includes("DELETED_BY")) {
+            switch (newGameData.gameState) {
                 case "DELETED_BY_INSUFFICIENT_PLAYERS":
                     setErrorMessage(
-                        `Game ${gameId} was deleted because there were insufficient players remaining.`
+                        `Game ${newGameData.gameId} was deleted because there were insufficient players remaining.`
                     );
                     resetUserSession();
                     break;
                 case "DELETED_BY_HOST":
-                    setErrorMessage(`Game ${gameId} was deleted by the host.`);
+                    setErrorMessage(`Game ${newGameData.gameId} was deleted by the host.`);
                     resetUserSession();
                     break;
                 case "DELETED_BY_CLEAN_UP":
                     setErrorMessage(
-                        `Game ${gameId} reached its time limit and was deleted automatically.`
+                        `Game ${newGameData.gameId} reached its time limit and was deleted automatically.`
                     );
                     resetUserSession();
                     break;
             }
         } else {
-            setGameState(state);
+            setGameData(newGameData);
         }
     };
 
@@ -253,11 +263,10 @@ const App = () => {
                     />
                 </>
             );
-        } else if (role === "HOST" && gameId) {
+        } else if (role === "HOST" && gameData.gameId) {
             return (
                 <Host
-                    gameId={gameId}
-                    gameState={gameState}
+                    gameData={gameData}
                     onCancelHost={resetUserSession}
                     onStartGame={startGame}
                 />
@@ -267,15 +276,14 @@ const App = () => {
                 <JoinGame
                     onCreatePlayer={setRoleToPlayer}
                     onCancelJoin={resetUserSession}
-                    gameId={gameId}
+                    gameData={gameData}
                 />
             );
-        } else if (role === "PLAYER" && gameId) {
+        } else if (role === "PLAYER" && gameData.gameId) {
             return (
                 <Player
-                    gameId={gameId}
-                    playerId={playerId}
-                    gameState={gameState}
+                    gameData={gameData}
+                    playerId={id}
                     onCancelPlayer={resetUserSession}
                 />
             );
@@ -290,20 +298,19 @@ const App = () => {
                 <ErrorModal message={errorMessage} onClose={closeErrorModal} />
             )}
             {role && renderComponent(role, loading)}
-            {gameId && (
+            {gameData.gameId && (
                 <GameState
-                    onGameStateUpdate={updateLocalState}
-                    gameId={gameId}
+                    onGameDataUpdate={updateLocalGameData}
+                    gameId={gameData.gameId}
                 />
             )}
             <button onClick={toggleDevDisplay}>Toggle Developer Panel</button>
             {devDisplayOpen && (
                 <DevDisplay
-                    gameId={gameId}
-                    gameState={gameState}
+                    gameId={gameData.gameId}
+                    gameState={gameData.gameState}
                     role={role ? role : "undefined"}
-                    hostId={hostId}
-                    playerId={playerId}
+                    id={id}
                     loading={loading}
                     connected={connected}
                     color={themeColor}

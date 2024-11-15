@@ -2,18 +2,19 @@ import React, { useState, useEffect } from 'react';
 import PlayerCreation from './PlayerCreation';
 import { getGameByIdApi } from '../../api/gameApi';
 import Header from '../common/Header';
+import { GameData } from '../types/GameDataTypes';
 
 // Define the type for the props
 interface JoinGameProps {
     onCreatePlayer: () => void; // Function to handle hosting
     onCancelJoin: () => void;
-    gameId: string;
+    gameData: GameData;
 }
 
 const JoinGame: React.FC<JoinGameProps> = ({
   onCreatePlayer,
   onCancelJoin,
-  gameId
+  gameData
 }) => {
   const [gameIdInput, setGameIdInput] = useState<string>("");
   const [isValidInput, setIsValidInput] = useState<boolean>(false);
@@ -48,9 +49,9 @@ const JoinGame: React.FC<JoinGameProps> = ({
       return (
         <PlayerCreation onCreatePlayer={onCreatePlayer} gameId={gameIdInput} />
       );
-    } else if (gameId) {
+    } else if (gameData.gameId) {
       return (
-        <PlayerCreation onCreatePlayer={onCreatePlayer} gameId={gameId} />
+        <PlayerCreation onCreatePlayer={onCreatePlayer} gameId={gameData.gameId} />
       );
     } else {
       return (
@@ -78,7 +79,7 @@ const JoinGame: React.FC<JoinGameProps> = ({
     <>
       <Header
         onCancel={handleBackSubmit}
-        gameId={gameId ? gameId : ""}
+        gameData={gameData}
         role={"PLAYER_CREATION"}
         confirmModalContent={""}
       />

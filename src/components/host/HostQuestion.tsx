@@ -10,9 +10,9 @@ const HostQuestion: React.FC<HostQuestionProps> = ({ players }) => {
   return (
     <>
       <div className="container">
-        <p>Enter a question on your device for your friends to answer</p>
-        <PlayerReadyDisplay players={players} />
+        <h2>Enter a question on your device for your friends to answer</h2>
       </div>
+      <PlayerReadyDisplay players={players} />
     </>
   );
 };

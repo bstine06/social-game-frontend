@@ -8,17 +8,16 @@ import HostScore from "./HostScore";
 import WatchPlayers from "../websocket/WatchPlayers";
 import { deleteGameApi } from "../../api/gameApi";
 import { PlayerData } from "../types/playerDataTypes";
+import { GameData } from "../types/GameDataTypes";
 
 interface HostProps {
-    gameId: string;
-    gameState: string;
+    gameData: GameData;
     onCancelHost: () => void;
     onStartGame: () => void;
 }
 
 const Host: React.FC<HostProps> = ({
-    gameId,
-    gameState,
+    gameData,
     onCancelHost,
     onStartGame
 }) => {
@@ -34,11 +33,11 @@ const Host: React.FC<HostProps> = ({
     };
 
     const renderComponent = () => {
-        switch (gameState) {
+        switch (gameData.gameState) {
             case "LOBBY": {
                 return (
                     <HostLobby
-                        gameId={gameId}
+                        gameId={gameData.gameId}
                         onStartGame={handleStartGame}
                         players={players}
                     />
@@ -56,16 +55,16 @@ const Host: React.FC<HostProps> = ({
             case "VOTE":
                 return (
                     <HostDisplayBallot
-                        gameId={gameId}
+                        gameId={gameData.gameId}
                         displayingVotes={false}
                     />
                 );
             case "DISPLAY_VOTES":
                 return (
-                    <HostDisplayBallot gameId={gameId} displayingVotes={true} />
+                    <HostDisplayBallot gameId={gameData.gameId} displayingVotes={true} />
                 );
             case "SCORE":
-                return <HostScore gameId={gameId} />;
+                return <HostScore gameId={gameData.gameId} />;
             default: {
             }
         }
@@ -73,7 +72,7 @@ const Host: React.FC<HostProps> = ({
 
     const deleteGame = async () => {
         try {
-            await deleteGameApi(gameId);
+            await deleteGameApi(gameData.gameId);
             onCancelHost(); //Notify parent that the host is cancelled
         } catch (error) {
             console.error("Error deleting game", error);
@@ -83,12 +82,12 @@ const Host: React.FC<HostProps> = ({
     return (
         <>
             <Header
-                gameId={gameId}
+                gameData={gameData}
                 onCancel={deleteGame}
                 role={"HOST"}
-                confirmModalContent={`This will delete the game (${gameId})`}
+                confirmModalContent={`This will delete the game (${gameData.gameId})`}
             />
-            <WatchPlayers gameId={gameId} onPlayersChanged={updatePlayers} />
+            <WatchPlayers gameId={gameData.gameId} onPlayersChanged={updatePlayers} />
             {renderComponent()}
         </>
     );

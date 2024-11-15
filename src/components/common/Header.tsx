@@ -6,17 +6,19 @@ import he from "he";
 import { getColorScheme } from "../../utils/ColorUtils";
 import { ColorMapping } from "../types/ColorMappingType";
 import { useTheme } from "../../utils/ThemeContext";
+import { GameData } from "../types/GameDataTypes";
+import Timer from "./Timer";
 
 interface HeaderProps {
     onCancel: () => void;
-    gameId: string;
+    gameData: GameData;
     role: string;
     confirmModalContent: string;
 }
 
 const Header: React.FC<HeaderProps> = ({
     onCancel,
-    gameId,
+    gameData,
     role,
     confirmModalContent
 }) => {
@@ -24,11 +26,11 @@ const Header: React.FC<HeaderProps> = ({
     const [colors, setColors] = useState<ColorMapping>(
         getColorScheme("DEFAULT")
     );
-    const [isHovered, setIsHovered] = useState<boolean>(false);
     const { themeColor } = useTheme();
 
     useEffect(() => {
         setColors(getColorScheme(themeColor));
+        console.log(gameData);
     }, [themeColor]);
 
     const handleBackSubmit = async () => {
@@ -43,9 +45,6 @@ const Header: React.FC<HeaderProps> = ({
         // Close the modal without submitting
         setIsBackModalOpen(false);
     };
-
-    const handleMouseEnter = () => setIsHovered(true);
-    const handleMouseLeave = () => setIsHovered(false);
 
     return (
         <>
@@ -64,21 +63,12 @@ const Header: React.FC<HeaderProps> = ({
                         EXIT
                     </button>
                     <div className="text-shrinker">
-                        {role === "PLAYER" && (
-                            <p
-                                className="header-main-text"
-                                onMouseEnter={handleMouseEnter}
-                                onMouseLeave={handleMouseLeave}
-                            >
-                                PLAYER
-                            </p>
-                        )}
-                        {role === "HOST" && (
-                            <p className="header-main-text">HOST</p>
+                        {(role === "PLAYER" || role==="HOST") && (
+                            <Timer gameData={gameData}/>
                         )}
                         {role === "PLAYER_CREATION" && <p className="header-main-text">JOIN GAME</p>}
                     </div>
-                    <p>{gameId}</p>
+                    <p>{gameData.gameId}</p>
                 </div>
             </div>
 

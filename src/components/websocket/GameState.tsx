@@ -1,13 +1,14 @@
 import React, { useEffect, useRef } from 'react';
+import { GameData } from '../types/GameDataTypes';
 
 const websocketUrl = process.env.REACT_APP_WEBSOCKET_URL;
 
 interface GameStateProps {
-    onGameStateUpdate: (gameState: string) => void;
+    onGameDataUpdate: (gameStateData: GameData) => void;
     gameId: string;
 }
 
-const GameState: React.FC<GameStateProps> = ({ onGameStateUpdate, gameId }) => {
+const GameState: React.FC<GameStateProps> = ({ onGameDataUpdate, gameId }) => {
     const socketRef = useRef<WebSocket | null>(null);
     const reconnectTimeout = useRef<NodeJS.Timeout | null>(null);
 
@@ -24,7 +25,13 @@ const GameState: React.FC<GameStateProps> = ({ onGameStateUpdate, gameId }) => {
         // Listen for messages from the WebSocket and update the parent component
         socket.onmessage = (event) => {
             console.log(event.data);
-            onGameStateUpdate(event.data);  // Invoke the callback passed via props
+            try {
+                const parsedData: GameData = JSON.parse(event.data);
+                onGameDataUpdate(parsedData);
+            } catch (error) {
+                console.error("ERROR GAMESTATE WEBSOCKET:", error);
+                console.error("Failed to parse WebSocket message data:", event.data);
+            }
         };
 
         // Listen for the close event and handle it
