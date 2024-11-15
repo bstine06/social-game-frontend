@@ -8,12 +8,14 @@ import { GameData } from '../types/GameDataTypes';
 interface JoinGameProps {
     onCreatePlayer: () => void; // Function to handle hosting
     onCancelJoin: () => void;
+    updateGameId: (newGameId: string) => void;
     gameData: GameData;
 }
 
 const JoinGame: React.FC<JoinGameProps> = ({
   onCreatePlayer,
   onCancelJoin,
+  updateGameId,
   gameData
 }) => {
   const [gameIdInput, setGameIdInput] = useState<string>("");
@@ -38,6 +40,7 @@ const JoinGame: React.FC<JoinGameProps> = ({
       const game = await getGameByIdApi(gameIdInput);
       setIsValidInput(true); // React schedules this update, but it's not immediate
       setErrorMessage(""); // Clear the error message if valid
+      updateGameId(gameIdInput);
     } catch (error) {
       setErrorMessage("Please enter a valid game ID.");
       setGameIdInput("");

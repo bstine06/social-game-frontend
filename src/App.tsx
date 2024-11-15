@@ -200,24 +200,19 @@ const App = () => {
 
     const updateLocalGameData = (newGameData: GameData): void => {
         if (newGameData.gameState.includes("DELETED_BY")) {
+            const msgStart = `Game ${newGameData.gameId} was deleted`;
             switch (newGameData.gameState) {
                 case "DELETED_BY_INSUFFICIENT_PLAYERS":
-                    setErrorMessage(
-                        `Game ${newGameData.gameId} was deleted because there were insufficient players remaining.`
-                    );
-                    resetUserSession();
+                    setErrorMessage(`${msgStart} because there were insufficient players remaining.`);
                     break;
                 case "DELETED_BY_HOST":
-                    setErrorMessage(`Game ${newGameData.gameId} was deleted by the host.`);
-                    resetUserSession();
+                    setErrorMessage(`${msgStart} by the host.`);
                     break;
                 case "DELETED_BY_CLEAN_UP":
-                    setErrorMessage(
-                        `Game ${newGameData.gameId} reached its time limit and was deleted automatically.`
-                    );
-                    resetUserSession();
+                    setErrorMessage(`${msgStart} automatically after reaching its time limit.`);
                     break;
             }
+            resetUserSession();
         } else {
             setGameData(newGameData);
         }
@@ -234,6 +229,13 @@ const App = () => {
     const updateColor = (color: string) => {
         setThemeColor(color);
     };
+
+    const updateGameId = (newGameId: string) => {
+        setGameData((prevGameData: GameData) => ({
+            ...prevGameData,
+            gameId: newGameId
+        }));
+    }
 
     const reloadPage = () => {
         window.location.reload();
@@ -276,6 +278,7 @@ const App = () => {
                 <JoinGame
                     onCreatePlayer={setRoleToPlayer}
                     onCancelJoin={resetUserSession}
+                    updateGameId={updateGameId}
                     gameData={gameData}
                 />
             );
