@@ -13,8 +13,6 @@ const WatchPlayers: React.FC<WatchPlayersProps> = ({
     gameId,
     onPlayersChanged,
 }) => {
-    const [players, setPlayers] = useState<PlayerData[]>([]);
-    const [errorMessage, setErrorMessage] = useState<string>("");
     const socketRef = useRef<WebSocket | null>(null);
     const reconnectTimeout = useRef<NodeJS.Timeout | null>(null);
 
@@ -33,10 +31,9 @@ const WatchPlayers: React.FC<WatchPlayersProps> = ({
             console.log(event.data);
             try {
                 const parsedData: WatchPlayersData = JSON.parse(event.data);
-                setPlayers(parsedData.players);
                 onPlayersChanged(parsedData.players);
             } catch (error) {
-                setErrorMessage("There was an error communicating with the server.");
+                console.error("there was an error connecting to the server.");
             }
         };
 
@@ -49,14 +46,13 @@ const WatchPlayers: React.FC<WatchPlayersProps> = ({
                     connectWebSocket();
                 }, 3000); // 3-second delay before reconnecting
             } else {
-                setErrorMessage("Connection closed. Please refresh the page.");
+                console.error("Connection closed. Please refresh the page.");
             }
         };
 
         // Handle connection errors
         socket.onerror = (error) => {
             console.error("WebSocket error:", error);
-            setErrorMessage("WebSocket error occurred.");
         };
     };
 
@@ -74,10 +70,6 @@ const WatchPlayers: React.FC<WatchPlayersProps> = ({
             }
         };
     }, [gameId]);
-
-    const closeErrorModal = () => {
-        setErrorMessage("");
-    };
 
     return null;
 };

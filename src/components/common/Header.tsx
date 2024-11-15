@@ -30,7 +30,6 @@ const Header: React.FC<HeaderProps> = ({
 
     useEffect(() => {
         setColors(getColorScheme(themeColor));
-        console.log(gameData);
     }, [themeColor]);
 
     const handleBackSubmit = async () => {

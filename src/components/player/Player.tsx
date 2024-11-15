@@ -35,7 +35,7 @@ const Player: React.FC<PlayerProps> = ({
 
     useEffect(() => {
         updatePlayers(players);
-    }, [playerId]);
+    }, [playerId, players]);
 
     const updatePlayers = (newPlayersList: PlayerData[]) => {
         setPlayers(newPlayersList);
@@ -55,7 +55,6 @@ const Player: React.FC<PlayerProps> = ({
         } else {
             setFinished(false);
         }
-        console.log(localPlayer);
 
         // If the local player is the leader, set leader to true
         if (localPlayer && localPlayer.leader) {
@@ -91,7 +90,6 @@ const Player: React.FC<PlayerProps> = ({
 
         switch (gameData.gameState) {
             case "LOBBY": {
-                console.log(isLeader);
                 if (isLeader) {
                     return <StartGame playerCount={players.length} gameId={gameData.gameId}/>
                 } else {
