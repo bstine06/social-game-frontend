@@ -105,6 +105,7 @@ const Player: React.FC<PlayerProps> = ({
                 return (
                     <PlayerQuestion
                         gameId={gameData.gameId}
+                        gameData={gameData}
                         onFinishSubmission={handleFinishSubmission}
                     />
                 );
@@ -113,6 +114,7 @@ const Player: React.FC<PlayerProps> = ({
                 return (
                     <PlayerAnswer
                         gameId={gameData.gameId}
+                        gameData={gameData}
                         onFinishSubmission={handleFinishSubmission}
                     />
                 );

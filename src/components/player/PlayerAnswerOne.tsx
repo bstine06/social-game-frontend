@@ -4,10 +4,12 @@ import ConfirmModal from "../common/ConfirmModal";
 import validator from "validator";
 import he from 'he';
 import PlayerConversationInput from "./PlayerConversationInput";
+import { GameData } from "../types/GameDataTypes";
 
 interface PlayerAnswerOneProps {
   gameId: string;
   question: Question;
+  gameData: GameData;
   onAnswerSubmit: () => void;
 }
 
@@ -19,6 +21,7 @@ interface Question {
 const PlayerAnswerOne: React.FC<PlayerAnswerOneProps> = ({
   gameId,
   question,
+  gameData,
   onAnswerSubmit,
 }) => {
 
@@ -37,6 +40,7 @@ const PlayerAnswerOne: React.FC<PlayerAnswerOneProps> = ({
         <PlayerConversationInput 
           instructions={"Enter an answer to your friend's question."}
           prompt={question.content}
+          gameData={gameData}
           onSubmit={handleSubmit}
         />
     </>

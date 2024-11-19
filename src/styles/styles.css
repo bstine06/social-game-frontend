@@ -367,6 +367,31 @@ p.description {
   font-weight: 900;
 }
 
+.flex-split {
+  display: flex;
+}
+
+.timer {
+  font-family: monospace;
+  margin: clamp(20px, 2vw, 40px) clamp(20px, 2vw, 80px);
+  padding: clamp(10px, 2vw, 40px) clamp(20px, 2vw, 80px);
+  aspect-ratio: 1 / 1;
+  border: clamp(2px, 0.5vw, 5px) solid white;
+  border-radius: 50%;
+  font-size: clamp(20px, 2vw, 128px);
+  font-family: monospace;
+  font-weight: 900;
+  display: flex;
+  justify-content: center;  /* Horizontally center */
+  align-items: center;      /* Vertically center */
+}
+
+.timer p {
+  margin: 0;  /* Remove default margin from <p> */
+  transform: scale(1.5); /* Scale the text to make it larger */
+  transform-origin: center; /* Ensure scaling happens from the center */
+}
+
 /* reformat for mobile */
 @media (width < 700px) {
 

@@ -9,13 +9,11 @@ import HostPlayersJoinedDisplay from "./HostPlayersJoinedDisplay";
 interface HostLobbyProps {
   gameId: string;
   players: PlayerData[];
-  onStartGame: () => void;
 }
 
 const HostLobby: React.FC<HostLobbyProps> = ({
     gameId,
-    players,
-    onStartGame,
+    players
 }) => {
     return (
         <>

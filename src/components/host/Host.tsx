@@ -13,23 +13,16 @@ import { GameData } from "../types/GameDataTypes";
 interface HostProps {
     gameData: GameData;
     onCancelHost: () => void;
-    onStartGame: () => void;
 }
 
 const Host: React.FC<HostProps> = ({
     gameData,
-    onCancelHost,
-    onStartGame
+    onCancelHost
 }) => {
     const [players, setPlayers] = useState<PlayerData[]>([]);
 
     const updatePlayers = (newPlayersList: PlayerData[]) => {
         setPlayers(newPlayersList);
-    };
-
-    const handleStartGame = () => {
-        if (players.length < 3) return;
-        onStartGame();
     };
 
     const renderComponent = () => {
@@ -38,13 +31,12 @@ const Host: React.FC<HostProps> = ({
                 return (
                     <HostLobby
                         gameId={gameData.gameId}
-                        onStartGame={handleStartGame}
                         players={players}
                     />
                 );
             }
             case "QUESTION":
-                return <HostQuestion players={players} />;
+                return <HostQuestion players={players} gameData={gameData}/>;
             case "ASSIGN":
                 return <p>Loading...</p>;
             case "ANSWER":

@@ -62,9 +62,8 @@ const Header: React.FC<HeaderProps> = ({
                         EXIT
                     </button>
                     <div className="text-shrinker">
-                        {(role === "PLAYER" || role==="HOST") && (
-                            <Timer gameData={gameData}/>
-                        )}
+                        {role === "PLAYER" && <p className="header-main-text">PLAYER</p>}
+                        {role==="HOST" && <p className="header-main-text">HOST</p>}
                         {role === "PLAYER_CREATION" && <p className="header-main-text">JOIN GAME</p>}
                     </div>
                     <p>{gameData.gameId}</p>

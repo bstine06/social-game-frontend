@@ -194,10 +194,6 @@ const App = () => {
         setRole("PLAYER_CREATION");
     };
 
-    const startGame = (): void => {
-        updateGameStateApi(gameData.gameId);
-    };
-
     const updateLocalGameData = (newGameData: GameData): void => {
         if (newGameData.gameState.includes("DELETED_BY")) {
             const msgStart = `Game ${newGameData.gameId} was deleted`;
@@ -270,7 +266,6 @@ const App = () => {
                 <Host
                     gameData={gameData}
                     onCancelHost={resetUserSession}
-                    onStartGame={startGame}
                 />
             );
         } else if (role === "PLAYER_CREATION") {

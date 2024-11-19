@@ -1,14 +1,18 @@
 import React, {useState} from "react";
 import he from 'he';
+import Timer from "../common/Timer";
+import { GameData } from "../types/GameDataTypes";
 
 interface PlayerConversationInputProps {
     instructions: string;
+    gameData: GameData;
     prompt?: string;
     onSubmit: (content: string) => void;
 }
 
 const PlayerConversationInput: React.FC<PlayerConversationInputProps> = ({
     instructions,
+    gameData,
     prompt,
     onSubmit
 }) => {
@@ -29,7 +33,10 @@ const PlayerConversationInput: React.FC<PlayerConversationInputProps> = ({
             <p>{instructions}</p>
             {prompt && <p><strong>{he.decode(prompt)}</strong></p>}
             <textarea className="conversation-input" value={input} onChange={handleInputChange} />
-            <button className="big-button" disabled={!input} onClick={handleSubmit}>Submit</button>
+            <div className="flex-split">
+                <button className="big-button" disabled={!input} onClick={handleSubmit}>Submit</button>
+                <Timer gameData={gameData}/>
+            </div>
         </>
     )
 

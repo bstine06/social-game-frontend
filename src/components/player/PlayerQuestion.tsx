@@ -3,14 +3,17 @@ import validator from "validator";
 import ConfirmModal from '../common/ConfirmModal';
 import { submitQuestionApi } from '../../api/questionApi';
 import PlayerConversationInput from "./PlayerConversationInput";
+import { GameData } from "../types/GameDataTypes";
 
 interface PlayerQuestionProps {
   gameId: string;
+  gameData: GameData;
   onFinishSubmission: () => void;
 }
 
 const PlayerQuestion: React.FC<PlayerQuestionProps> = ({
   gameId,
+  gameData,
   onFinishSubmission
 }) => {
 
@@ -29,6 +32,7 @@ const PlayerQuestion: React.FC<PlayerQuestionProps> = ({
       <div className="container">
         <PlayerConversationInput 
           instructions={"Enter a question for your friends to answer!"}
+          gameData={gameData}
           onSubmit={handleSubmit}
         />
       </div>
