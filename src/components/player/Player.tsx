@@ -10,11 +10,12 @@ import PlayerReadyDisplay from "../common/PlayerReadyDisplay";
 import Waiting from "../common/Waiting";
 import StartGame from "../common/StartGame";
 import { GameData } from "../types/GameDataTypes";
+import PlayersJoinedDisplay from "../common/PlayersJoinedDisplay";
 
 interface PlayerProps {
     gameData: GameData;
     playerId: string;
-    onCancelPlayer: () => void;
+    onCancelPlayer: (message?: string) => void;
 }
 
 const Player: React.FC<PlayerProps> = ({
@@ -39,15 +40,22 @@ const Player: React.FC<PlayerProps> = ({
 
     const updatePlayers = (newPlayersList: PlayerData[]) => {
         setPlayers(newPlayersList);
-        // return early if playerId is not properly set yet.
-        if (!playerId) return;
+        // return early if playerId or players array is not properly set yet.
+        if (!playerId || players.length === 0) return;
         setDeletePlayerConfirmMsg(
             decideDeletePlayerConfirmMsg(newPlayersList.length, gameData.gameId)
         );
+        console.log(playerId);
+        console.log(newPlayersList);
         // Find the local player in the updated players list
         const localPlayer = newPlayersList.find(
             (p) => p.player.playerId === playerId
         );
+
+        // if the local player is not found in the players list, youve been deleted!!
+        if (!localPlayer) {
+            onCancelPlayer("You were removed from the game");
+        }
 
         // If the local player is found and ready, set finished to true
         if (localPlayer && localPlayer.ready) {
@@ -91,13 +99,25 @@ const Player: React.FC<PlayerProps> = ({
         switch (gameData.gameState) {
             case "LOBBY": {
                 if (isLeader) {
-                    return <StartGame playerCount={players.length} gameId={gameData.gameId}/>
+                    return (
+                        <>
+                            <StartGame playerCount={players.length} gameId={gameData.gameId}/>
+                            <div className="container">
+                                <PlayersJoinedDisplay playerData={players} hostPrivileges={true}/>
+                            </div>
+                        </>
+                    )
                 } else {
                     return (
-                        <Waiting 
-                            message={"WAITING"}
-                            description={"for the game to start"}
-                        />
+                        <>
+                            <Waiting 
+                                message={"WAITING"}
+                                description={"for the game to start"}
+                            />
+                            <div className="container">
+                                <PlayersJoinedDisplay playerData={players}/>
+                            </div>
+                        </>
                     )
                 }
             }

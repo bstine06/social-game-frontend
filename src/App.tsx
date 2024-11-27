@@ -175,7 +175,7 @@ const App = () => {
         }
     };
 
-    const resetUserSession = () => {
+    const resetUserSession = (message?: string) => {
         const newGameData : GameData = {
             gameId: "",
             gameState: "",
@@ -185,6 +185,7 @@ const App = () => {
         setRole("UNASSIGNED");
         setId("");
         setThemeColor("PURPLE");
+        if (message) setErrorMessage(message);
     };
 
     const setRoleToPlayer = () => {

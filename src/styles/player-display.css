@@ -118,6 +118,15 @@
     border: 3px solid #FFF;
 }
 
+.remove-player-btn {
+    color: red;
+    font-family: monospace;
+    font-size: clamp(16px, 5vw, 32px);
+    margin: auto;
+    border-radius: clamp(4px, 5vw, 48px);
+    background-color: #000;
+}
+
 /* @media (width < 700px) {
     .selection-container {
         max-width: 300px;
