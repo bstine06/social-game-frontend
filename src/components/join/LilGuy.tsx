@@ -3,6 +3,8 @@ import { getHex } from "../../utils/ColorUtils";
 import LilGuy1 from "../../resources/lil-guys/LilGuy1";
 import LilGuy2 from "../../resources/lil-guys/LilGuy2";
 import LilGuy3 from "../../resources/lil-guys/LilGuy3";
+import PlusCircleSVG from "../../resources/PlusCircleSVG";
+import QuestionMarkSVG from "../../resources/QuestionMarkSVG";
 
 interface LilGuyProps {
     onSelect?: (selection: number) => void;
@@ -29,6 +31,10 @@ const LilGuy: React.FC<LilGuyProps> = ({
                 return <LilGuy2 fillColor={getHex(fillColor)} />
             case 3:
                 return <LilGuy3 fillColor={getHex(fillColor)} />
+            case 99:
+                return <QuestionMarkSVG />
+            case 98:
+                return <PlusCircleSVG />
         }
     }
 

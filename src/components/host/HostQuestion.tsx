@@ -14,9 +14,10 @@ const HostQuestion: React.FC<HostQuestionProps> = ({ players, gameData }) => {
     <>
       <div className="container">
         <h2>Enter a question on your device for your friends to answer</h2>
+        <Timer gameData={gameData}/>
       </div>
       <PlayerReadyDisplay players={players} />
-      <Timer gameData={gameData}/>
+      
     </>
   );
 };

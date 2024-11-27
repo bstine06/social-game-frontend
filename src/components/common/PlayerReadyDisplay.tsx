@@ -19,8 +19,8 @@ const PlayerReadyDisplay: React.FC<PlayerReadyDisplayProps> = ({
         playerSlots.push(
             <PlayerDisplay
                 key={players[i].player.playerId}
-                player={players[i]}
-                showStatus={showStatus}
+                player={players[i].player}
+                isReady={showStatus && players[i].ready}
             />
         );
     }

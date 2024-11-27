@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { getCurrentBallotApi, submitVoteApi } from "../../api/voteApi";
 import ConfirmModal from "../common/ConfirmModal";
 import he from 'he';
+import { Player } from "../types/playerDataTypes";
 
 interface PlayerVoteProps {
   gameId: string;
@@ -11,14 +12,13 @@ interface PlayerVoteProps {
 interface AnswerDisplay {
   content: string;
   answerId: string;
-  playerId: string;
-  playerName: string;
+  player: Player;
 }
   
 interface QuestionDisplay {
   content: string;
   questionId: string;
-  playerName: string;
+  player: Player;
 }
 
 const PlayerVote: React.FC<PlayerVoteProps> = ({ gameId, playerId }) => {
@@ -32,7 +32,7 @@ const PlayerVote: React.FC<PlayerVoteProps> = ({ gameId, playerId }) => {
     const getCurrentBallot = async (gameId: string) => {
       const currentBallot = await getCurrentBallotApi(gameId);
       currentBallot.answers.forEach((answer: AnswerDisplay) => {
-        if (answer.playerId === playerId) {
+        if (answer.player.playerId === playerId) {
           setCanVote(false);
           return;
         }

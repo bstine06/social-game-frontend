@@ -108,6 +108,7 @@ const App = () => {
                             gameId: extractedGameId
                           }));
                     } catch (error) {
+                        setRole("UNASSIGNED");
                         setErrorMessage("The game you're trying to join does not exist");
                     }
                 }

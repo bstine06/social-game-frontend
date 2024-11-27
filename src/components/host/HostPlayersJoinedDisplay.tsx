@@ -16,8 +16,7 @@ const HostPlayersJoinedDisplay: React.FC<HostPlayersJoinedDisplayProps> = ({
         playerDisplays.push(
             <PlayerDisplay
                 key={playerData[i].player.playerId}
-                player={playerData[i]}
-                showStatus={false}
+                player={playerData[i].player}
             />
         );
     }

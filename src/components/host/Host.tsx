@@ -40,7 +40,7 @@ const Host: React.FC<HostProps> = ({
             case "ASSIGN":
                 return <p>Loading...</p>;
             case "ANSWER":
-                return <HostAnswer players={players} />;
+                return <HostAnswer players={players} gameData={gameData}/>;
             case "FIND_BALLOT":
                 return <p>Loading...</p>;
             case "DISPLAY_BALLOT":
@@ -53,7 +53,7 @@ const Host: React.FC<HostProps> = ({
                 );
             case "DISPLAY_VOTES":
                 return (
-                    <HostDisplayBallot gameId={gameData.gameId} displayingVotes={true} />
+                    <HostDisplayBallot gameId={gameData.gameId} displayingVotes={true}/>
                 );
             case "SCORE":
                 return <HostScore gameId={gameData.gameId} />;

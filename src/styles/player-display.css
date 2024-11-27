@@ -22,7 +22,7 @@
     padding: 0px;
     font-family: monospace;
     background-color: #444;
-    border: 1px white solid;
+    border: 3px white solid;
     border-radius: clamp(20px, 9vw, 50px);
     box-shadow: 0 0 2px 3px black;
     flex-shrink: 1;
@@ -44,6 +44,7 @@
     font-weight: bold;
     overflow: hidden;
     white-space: nowrap;
+    color: white;
 }
 
 .player-ready-element .lil-guy {
@@ -117,7 +118,7 @@
     border: 3px solid #FFF;
 }
 
-@media (width < 700px) {
+/* @media (width < 700px) {
     .selection-container {
         max-width: 300px;
         width: 100%;
@@ -133,7 +134,7 @@
         min-width: clamp(30px, 9vw, 100px);
     }
 
-}
+} */
 
 .lil-guy > svg {
     width: 100%;

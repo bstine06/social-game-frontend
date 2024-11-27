@@ -218,14 +218,30 @@ h3 {
   font-size: 20px;
 }
 
-
-
-
 .answer-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr); /* 2 columns with equal width */
   gap: 10px;
+  margin-top: clamp(12px, 2vw, 48px);
   align-items: stretch; /* Ensures all items in the row stretch to the same height */
+  width: 100%;
+}
+
+.conversation-card {
+  background-color: black;
+  color: white;
+  border: 2px white solid;
+  border-radius: clamp(5px, 2vw, 50px);
+  border-top-left-radius: clamp(20px, 9vw, 50px);
+  border-top-right-radius: clamp(20px, 9vw, 50px);
+}
+
+.conversation-card h2 {
+  font-size: clamp(18px, 4.4vw, 128px);
+}
+
+.conversation-card.failure {
+  opacity: 50%;
 }
 
 .question-display {
@@ -243,7 +259,6 @@ h3 {
 }
 
 .answer-display {
-  background-color: #222;
   padding: 12px;
 }
 

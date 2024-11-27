@@ -68,11 +68,10 @@ const JoinGame: React.FC<JoinGameProps> = ({
             value={gameIdInput}
             onChange={handleInputChange}
           />
-          <br></br>
           <button className="big-button" onClick={handleSubmit}>
             Submit
           </button>
-          <p className="error">{errorMessage}</p>
+          {errorMessage && <p className="error">{errorMessage}</p>}
         </div>
       );
     }
