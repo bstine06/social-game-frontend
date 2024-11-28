@@ -54,7 +54,7 @@ const Player: React.FC<PlayerProps> = ({
 
         // if the local player is not found in the players list, youve been deleted!!
         if (!localPlayer) {
-            onCancelPlayer("You were removed from the game");
+            onCancelPlayer(`You were removed from the game (${gameData.gameId})`);
         }
 
         // If the local player is found and ready, set finished to true
@@ -102,9 +102,9 @@ const Player: React.FC<PlayerProps> = ({
                     return (
                         <>
                             <StartGame playerCount={players.length} gameId={gameData.gameId}/>
-                            <div className="container">
+                            {players.length !== 0 && <div className="container">
                                 <PlayersJoinedDisplay playerData={players} hostPrivileges={true}/>
-                            </div>
+                            </div>}
                         </>
                     )
                 } else {
@@ -114,9 +114,9 @@ const Player: React.FC<PlayerProps> = ({
                                 message={"WAITING"}
                                 description={"for the game to start"}
                             />
-                            <div className="container">
+                            {players.length !== 0 && <div className="container">
                                 <PlayersJoinedDisplay playerData={players}/>
-                            </div>
+                            </div>}
                         </>
                     )
                 }

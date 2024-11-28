@@ -16,6 +16,11 @@ const GameState: React.FC<GameStateProps> = ({ onGameDataUpdate, gameId }) => {
     const limit_retries = 5;
 
     const connectWebSocket = () => {
+        if (!gameId) {
+            //return if gameId is not set.
+            return;
+        }
+
         // If the number of retries exceeds the limit, do not attempt to reconnect
         if (retries >= limit_retries) {
             console.error(`Max retries reached: ${limit_retries}. No more reconnections.`);
@@ -66,12 +71,17 @@ const GameState: React.FC<GameStateProps> = ({ onGameDataUpdate, gameId }) => {
     };
 
     useEffect(() => {
-        // Establish initial WebSocket connection
-        connectWebSocket();
-
-        // Cleanup WebSocket connection and reconnect timeout on component unmount
-        return () => {
+        if (!gameId) {
             if (socketRef.current) {
+                socketRef.current.close();
+            }
+            return;
+        }
+    
+        connectWebSocket();
+    
+        return () => {
+            if (socketRef.current && socketRef.current.readyState !== WebSocket.CLOSED) {
                 socketRef.current.close();
             }
             if (reconnectTimeout.current) {

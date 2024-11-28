@@ -70,7 +70,14 @@ const App = () => {
     // if theres a conflict between a pre-existing role and the the game ID supplied in the QR code, let
     // the user know that they must exit their current game before joining a new one
     useEffect(() => {
+
         setLoading(true);
+
+        const reloadMessage = sessionStorage.getItem("reloadMessage");
+        if (reloadMessage) {
+            setErrorMessage(reloadMessage); // Show the message
+            sessionStorage.removeItem("reloadMessage"); // Clear it after use
+        }
     
         const initializeGame = async () => {
             try {
@@ -185,7 +192,7 @@ const App = () => {
         setRole("UNASSIGNED");
         setId("");
         setThemeColor("PURPLE");
-        if (message) setErrorMessage(message);
+        reloadPage(message);
     };
 
     const setRoleToPlayer = () => {
@@ -235,7 +242,10 @@ const App = () => {
         }));
     }
 
-    const reloadPage = () => {
+    const reloadPage = (message?: string) => {
+        if (message) {
+            sessionStorage.setItem("reloadMessage", message); // Save the message
+        }
         window.location.reload();
     }
 
@@ -298,7 +308,7 @@ const App = () => {
                 <ErrorModal message={errorMessage} onClose={closeErrorModal} />
             )}
             {role && renderComponent(role, loading)}
-            {gameData.gameId && (
+            {gameData.gameId && gameData.gameId !== "" && (
                 <GameState
                     onGameDataUpdate={updateLocalGameData}
                     gameId={gameData.gameId}
