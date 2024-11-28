@@ -58,7 +58,7 @@ const JoinGame: React.FC<JoinGameProps> = ({
       );
     } else {
       return (
-        <div className="container">
+        <div className="container thinner-container">
           <h2>game ID:</h2>
           <input
             id="game-id-input"

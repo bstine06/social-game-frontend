@@ -9,7 +9,7 @@
   align-items: center;
   width: 100%;
   background-color: #31065C;
-  height: clamp(120px, 7vw, 240px);
+  height: clamp(70px, 7vw, 240px);
   margin: 0;
   box-shadow: #000000 5px 0px 5px 5px;
   -webkit-box-shadow: #000000 5px 0px 25px 5px;
@@ -40,6 +40,6 @@
 }
 
 p.header-main-text {
-  font-size: clamp(36px, 4vw, 100px);
-    margin: clamp(10px, 1vw, 40px);
+  font-size: clamp(24px, 4vw, 100px);
+    margin: clamp(0px, 1vw, 40px);
 }

@@ -58,7 +58,7 @@ button, .btn {
 }
 
 .container {
-  padding: clamp(12px, 4vw, 48px);
+  padding: clamp(12px, 1vw, 32px);
   text-align: center;
   display: grid;
   place-items: center; /* Centers the child both horizontally and vertically */
@@ -411,8 +411,8 @@ p.description {
 @media (width < 700px) {
 
   h2 {
-    font-size: clamp(1em, 10vw, 3em);
-    margin: 10px auto;
+    font-size: clamp(18px, 9vw, 3em);
+    margin: 0px auto;
   }
 
   h2.scan-to-join {
