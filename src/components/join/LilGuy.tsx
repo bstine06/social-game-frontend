@@ -3,6 +3,8 @@ import { getHex } from "../../utils/ColorUtils";
 import LilGuy1 from "../../resources/lil-guys/LilGuy1";
 import LilGuy2 from "../../resources/lil-guys/LilGuy2";
 import LilGuy3 from "../../resources/lil-guys/LilGuy3";
+import LilGuy4 from "../../resources/lil-guys/LilGuy4";
+import LilGuy5 from "../../resources/lil-guys/LilGuy5";
 import PlusCircleSVG from "../../resources/PlusCircleSVG";
 import QuestionMarkSVG from "../../resources/QuestionMarkSVG";
 
@@ -31,6 +33,10 @@ const LilGuy: React.FC<LilGuyProps> = ({
                 return <LilGuy2 fillColor={getHex(fillColor)} />
             case 3:
                 return <LilGuy3 fillColor={getHex(fillColor)} />
+            case 4:
+                return <LilGuy4 fillColor={getHex(fillColor)} />
+            case 5:
+                return <LilGuy5 fillColor={getHex(fillColor)} />
             case 99:
                 return <QuestionMarkSVG />
             case 98:

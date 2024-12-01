@@ -25,11 +25,12 @@ const HostScore: React.FC<HostScoreProps> = ({gameId}) => {
 
     return (
         <>
-        <div className="score-players">
+        <div className="container">
+            <h2>Final Scores:</h2>
             {players.map((player) => (
                 <div className="score-row" key={player.playerId}>
-                    <p>{player.name}</p>
-                    <p>{player.score}</p>
+                    <h2>{player.name}</h2>
+                    <h2>{player.score}</h2>
                 </div>
             ))}
         </div>

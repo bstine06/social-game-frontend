@@ -62,7 +62,7 @@ button, .btn {
   text-align: center;
   display: grid;
   place-items: center; /* Centers the child both horizontally and vertically */
-  font-size: 32px;
+  font-size: clamp(32px, 5vw, 72px);
   max-width: min(min(calc(100% - 80px), 80%), 3840px); /* Adjust for padding */
   background-color: rgba(34, 34, 34, 0.98);
   border: 2px solid white;

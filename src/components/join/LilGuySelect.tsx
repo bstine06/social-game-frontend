@@ -31,9 +31,17 @@ const LilGuySelect: React.FC<LilGuySelectProps> = ({
             <div className={`${lilGuySelection===0 ? "selection-container" : "lil-guy-display-container"}`}>
             
             {lilGuySelection > 0 && <button className="big-button width-4em-centered full-height" onClick={() => updateSelection(0)}>back</button>}
-                {(lilGuySelection===0 || lilGuySelection===1) && <LilGuy onSelect={updateSelection} lilGuyIndex={1} isSelected={lilGuySelection===1} fillColor={themeColor}/>}
-                {(lilGuySelection===0 || lilGuySelection===2) && <LilGuy onSelect={updateSelection} lilGuyIndex={2} isSelected={lilGuySelection===2} fillColor={themeColor}/>}
-                {(lilGuySelection===0 || lilGuySelection===3) && <LilGuy onSelect={updateSelection} lilGuyIndex={3} isSelected={lilGuySelection===3} fillColor={themeColor}/>}
+            {[1, 2, 3, 4, 5].map((index) =>
+                lilGuySelection === 0 || lilGuySelection === index ? (
+                    <LilGuy
+                        key={index} // Use a unique key for each item
+                        onSelect={updateSelection}
+                        lilGuyIndex={index}
+                        isSelected={lilGuySelection === index}
+                        fillColor={themeColor}
+                    />
+                ) : null
+            )}
             </div>
             {lilGuySelection > 0 && <ColorSelector onChooseColor={handleChooseColor} selectedColor={themeColor}/>}
             {lilGuySelection > 0 && <button onClick={() => onSubmit(lilGuySelection, themeColor)} className="big-button">submit</button>}

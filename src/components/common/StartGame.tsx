@@ -30,13 +30,12 @@ const StartGame: React.FC<StartGameProps> = ({ playerCount, gameId }) => {
 
     return (
         <>
-            <div className="container">
-                <p>You've been granted the power to start the game!</p>
-                <p className="description">At least 3 players are required</p>
-                <p>{`Player count: ${playerCount}/8`}</p>
+            <div className="container thinner-container">
                 <button disabled={playerCount < 3} className="big-button" onClick={handleSubmit}>
                     Start Game
                 </button>
+                <p className="description">At least 3 players are required</p>
+                
             </div>
             {isModalOpen && <ConfirmModal 
                 message={"Are you sure you want to start?"}

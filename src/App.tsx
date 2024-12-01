@@ -205,19 +205,20 @@ const App = () => {
 
     const updateLocalGameData = (newGameData: GameData): void => {
         if (newGameData.gameState.includes("DELETED_BY")) {
-            const msgStart = `Game ${newGameData.gameId} was deleted`;
+            let message = `Game ${newGameData.gameId} was deleted`;
+
             switch (newGameData.gameState) {
                 case "DELETED_BY_INSUFFICIENT_PLAYERS":
-                    setErrorMessage(`${msgStart} because there were insufficient players remaining.`);
+                    message += `because there were insufficient players remaining.`;
                     break;
                 case "DELETED_BY_HOST":
-                    setErrorMessage(`${msgStart} by the host.`);
+                    message += ` by the host.`;
                     break;
                 case "DELETED_BY_CLEAN_UP":
-                    setErrorMessage(`${msgStart} automatically after reaching its time limit.`);
+                    message += ` automatically after reaching its time limit.`;
                     break;
             }
-            resetUserSession();
+            resetUserSession(message);
         } else {
             setGameData(newGameData);
         }

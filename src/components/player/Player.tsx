@@ -35,16 +35,23 @@ const Player: React.FC<PlayerProps> = ({
     }, [gameData.gameState]);
 
     useEffect(() => {
-        updatePlayers(players);
+        if (playerId && players !== undefined) {
+            console.log("useEffect triggered:", { playerId, players });
+            updatePlayers(players);
+        }
     }, [playerId, players]);
 
     const updatePlayers = (newPlayersList: PlayerData[]) => {
         setPlayers(newPlayersList);
         // return early if playerId or players array is not properly set yet.
-        if (!playerId || players.length === 0) return;
+        console.log("new players.length: ", newPlayersList.length);
+        console.log("playerId: ", playerId);
+
+        if (!playerId || newPlayersList.length < 1) return;
         setDeletePlayerConfirmMsg(
             decideDeletePlayerConfirmMsg(newPlayersList.length, gameData.gameId)
         );
+        
         console.log(playerId);
         console.log(newPlayersList);
         // Find the local player in the updated players list
@@ -52,8 +59,10 @@ const Player: React.FC<PlayerProps> = ({
             (p) => p.player.playerId === playerId
         );
 
-        // if the local player is not found in the players list, youve been deleted!!
-        if (!localPlayer) {
+        // if the local player is not found 
+        // or there is no players array
+        // in the players list, youve been deleted!!
+        if (!localPlayer || newPlayersList.length < 1) {
             onCancelPlayer(`You were removed from the game (${gameData.gameId})`);
         }
 
@@ -102,8 +111,8 @@ const Player: React.FC<PlayerProps> = ({
                     return (
                         <>
                             <StartGame playerCount={players.length} gameId={gameData.gameId}/>
-                            {players.length !== 0 && <div className="container">
-                                <PlayersJoinedDisplay playerData={players} hostPrivileges={true}/>
+                            {players.length !== 0 && <div className="container thinner-container">
+                                <PlayersJoinedDisplay playerData={players} hostPrivileges={true} unremovablePlayerId={playerId}/>
                             </div>}
                         </>
                     )

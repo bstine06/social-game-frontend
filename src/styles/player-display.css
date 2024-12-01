@@ -12,7 +12,6 @@
     display: flex;
     flex-direction: column;
     gap: 5px;
-    min-height: 300px;
 }
 
 .player-ready-element {
@@ -119,12 +118,17 @@
 }
 
 .remove-player-btn {
-    color: red;
+    width: 5vw;
+    aspect-ratio: 1;
     font-family: monospace;
     font-size: clamp(16px, 5vw, 72px);
     margin: auto;
     border-radius: clamp(4px, 5vw, 48px);
-    background-color: #000;
+    background-color: #DDD;
+    background-image: url(../resources/trash_5000155.png);
+    background-repeat: no-repeat; /* Prevent tiling */
+    background-position: center; /* Center the image */
+    background-size: 70%; /* Scale the image to fit */
 }
 
 /* @media (width < 700px) {

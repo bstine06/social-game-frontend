@@ -6,11 +6,13 @@ import { deletePlayerByIdApi } from "../../api/playerApi";
 
 interface PlayersJoinedDisplayProps {
     playerData: PlayerData[];
+    unremovablePlayerId?: string;
     hostPrivileges?: boolean;
 }
 
 const PlayersJoinedDisplay: React.FC<PlayersJoinedDisplayProps> = ({
     playerData,
+    unremovablePlayerId,
     hostPrivileges = false
 }) => {
     const [selectedPlayer, setSelectedPlayer] = useState<Player>();
@@ -30,15 +32,18 @@ const PlayersJoinedDisplay: React.FC<PlayersJoinedDisplayProps> = ({
     };
 
     const playerDisplays = playerData.map((data) => (
-        <div style={{ display: "flex", flexDirection: "row" }}
-            key={data.player.playerId} // Add unique key
-            
-        >
+        <div style={{ display: "flex", flexDirection: "row" }} key={data.player.playerId}>
             <PlayerDisplay player={data.player} />
-            {hostPrivileges && <button 
-                onClick={hostPrivileges ? () => setSelectedPlayer(data.player) : () => null}
-                className={"remove-player-btn"}>x
-            </button>}
+            {hostPrivileges &&  playerData.length > 1 && (
+                <button
+                    onClick={() => setSelectedPlayer(data.player)}
+                    className="remove-player-btn"
+                    disabled={
+                        unremovablePlayerId === data.player.playerId
+                    }
+                >
+                </button>
+            )}
         </div>
     ));    
 
@@ -47,7 +52,7 @@ const PlayersJoinedDisplay: React.FC<PlayersJoinedDisplayProps> = ({
             <p className="description">{`Players joined: ${playerData.length}/8`}</p>
             <div className="players-list-container">{playerDisplays}</div>
             {hostPrivileges && selectedPlayer && <ConfirmModal 
-                message="Do you want to remove this player from the game?"
+                message="Do you want to throw this player in the trash?"
                 content={selectedPlayer.name}
                 confirmText="Yes"
                 cancelText="No"
