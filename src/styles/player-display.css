@@ -154,3 +154,8 @@
     height: 100%;
 }
 
+.score-row {
+    display: flex;
+    flex-direction: row;
+}
+

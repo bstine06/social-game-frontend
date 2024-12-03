@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { createGameApi, getGameByHostIdApi, getGameByIdApi, updateGameStateApi } from './api/gameApi';
+import { createCustomGameApi, createGameApi, getGameByHostIdApi, getGameByIdApi, updateGameStateApi } from './api/gameApi';
 import { getSessionRole } from './api/sessionApi';
 import { getPlayerById } from './api/playerApi';
 import { useTheme } from './utils/ThemeContext';
@@ -16,10 +16,18 @@ import { getColorScheme } from './utils/ColorUtils';
 import Waiting from './components/common/Waiting';
 import './styles/fonts/Eracake.otf';
 import StaticNotification from './components/home/StaticNotification';
-import { GameData } from './components/types/GameDataTypes';
+import { GameData, GameOptions } from './components/types/GameDataTypes';
+import HostOptions from './components/host/HostOptions';
 
 // Define the role types
-type Role = 'HOST' | 'PLAYER' | 'HOSTPLAYER' | 'PLAYER_CREATION' | 'UNASSIGNED' | 'PENDING';
+type Role =
+    | "HOST"
+    | "PLAYER"
+    | "HOSTPLAYER"
+    | "PLAYER_CREATION"
+    | "HOST_OPTIONS"
+    | "UNASSIGNED"
+    | "PENDING";
 
 const App = () => {
     const [loading, setLoading] = useState<boolean>(true);
@@ -164,12 +172,11 @@ const App = () => {
         if (bodyElement) {
             bodyElement.style.backgroundColor = colorScheme.bg; // example background color
         }
-    }, [themeColor]);
-    
+    }, [themeColor]);    
 
-    const createAndHostGame = async () => {
+    const createAndHostGame = async (gameOptions: GameOptions) => {
         try {
-            const game = await createGameApi(); // Call API to create a new game
+            const game = await createCustomGameApi(gameOptions); // Call API to create a new game
             const newGameData : GameData = {
                 gameId: game.gameId,
                 gameState: game.gameState,
@@ -183,6 +190,7 @@ const App = () => {
     };
 
     const resetUserSession = (message?: string) => {
+        setLoading(true);
         const newGameData : GameData = {
             gameId: "",
             gameState: "",
@@ -198,6 +206,10 @@ const App = () => {
     const setRoleToPlayer = () => {
         setRole("PLAYER");
     };
+
+    const beginGameCreation = (): void => {
+        setRole("HOST_OPTIONS");
+    }
 
     const joinGame = (): void => {
         setRole("PLAYER_CREATION");
@@ -230,10 +242,6 @@ const App = () => {
 
     const toggleDevDisplay = () => {
         setDevDisplayOpen(!devDisplayOpen);
-    };
-
-    const updateColor = (color: string) => {
-        setThemeColor(color);
     };
 
     const updateGameId = (newGameId: string) => {
@@ -269,11 +277,18 @@ const App = () => {
                     />}
                     <ChooseRole
                         isConnected = {connected}
-                        onChooseHost={createAndHostGame}
+                        onChooseHost={beginGameCreation}
                         onChooseJoin={joinGame}
                     />
                 </>
             );
+        } else if (role === "HOST_OPTIONS") {
+            return (
+                <HostOptions 
+                    onCreateGameAsHost={createAndHostGame}
+                    onCancelHost={resetUserSession}
+                />
+            )
         } else if (role === "HOST" && gameData.gameId) {
             return (
                 <Host

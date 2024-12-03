@@ -82,7 +82,7 @@ const JoinGame: React.FC<JoinGameProps> = ({
       <Header
         onCancel={handleBackSubmit}
         gameData={gameData}
-        role={"PLAYER_CREATION"}
+        role={"JOIN GAME"}
         confirmModalContent={""}
       />
       {renderComponent()}

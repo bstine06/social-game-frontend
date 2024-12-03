@@ -56,7 +56,7 @@ const Host: React.FC<HostProps> = ({
                     <HostDisplayBallot gameId={gameData.gameId} displayingVotes={true}/>
                 );
             case "SCORE":
-                return <HostScore gameId={gameData.gameId} />;
+                return <HostScore players={players} />;
             default: {
             }
         }

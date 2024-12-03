@@ -3,6 +3,7 @@ export interface Player {
     name: string;
     shape: number;
     color: string;
+    score: number;
 }
 
 export interface PlayerData {

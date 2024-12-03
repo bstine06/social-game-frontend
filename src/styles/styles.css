@@ -157,7 +157,7 @@ button, .btn {
 .big-button {
   margin: clamp(20px, 2vw, 40px) clamp(20px, 2vw, 80px);
   padding: clamp(10px, 2vw, 40px) clamp(20px, 2vw, 80px);
-  border: none;
+  border: white 2px solid;
   border-radius: clamp(4px, 2vw, 32px);
   cursor: pointer;
   font-size: clamp(20px, 2vw, 128px);
@@ -171,6 +171,12 @@ button, .btn {
   -moz-box-shadow: #e0c0ff 0 0 0 0;
 }
 
+.big-button.selected {
+  box-sizing: border-box;
+  border: white 2px solid;
+  background-color: white;
+}
+
 .width-4em-centered {
   max-width: 4em;
   margin: auto;
@@ -181,7 +187,7 @@ button, .btn {
 }
 
 .big-button:hover {
-  background-color: #f4eaff;
+  background-color: white;
   box-shadow: #e0c0ff 0px 0px 5px 5px;
   -webkit-box-shadow: #e0c0ff 0px 0px 5px 5px;
   -moz-box-shadow: #e0c0ff 0px 0px 5px 5px;
