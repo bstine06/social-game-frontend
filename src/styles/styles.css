@@ -280,6 +280,13 @@ p.description {
   margin-bottom: 12px;
 }
 
+p.character-count {
+  font-size: clamp(16px, 2vw, 48px);
+  font-family: monospace;
+  margin: 0;
+  color: #666;
+}
+
 .instruction {
   margin: 0;
   font-size: clamp(18px, 2.5vw, 80px);

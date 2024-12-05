@@ -18,9 +18,11 @@ const PlayerConversationInput: React.FC<PlayerConversationInputProps> = ({
 }) => {
     const [input, setInput] = useState<string>("");
 
+    const maxInputLength = 80;
+
     const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
         const newValue = event.target.value;
-        setInput(newValue);
+        if (newValue.length <= maxInputLength) setInput(newValue);
     };
 
     const handleSubmit = async () => {
@@ -33,6 +35,7 @@ const PlayerConversationInput: React.FC<PlayerConversationInputProps> = ({
             <p>{instructions}</p>
             {prompt && <p><strong>{he.decode(prompt)}</strong></p>}
             <textarea className="conversation-input" value={input} onChange={handleInputChange} />
+            <p className="character-count">{`${input.length}/${maxInputLength}`}</p>
             <div className="flex-split">
                 <button className="big-button" disabled={!input} onClick={handleSubmit}>Submit</button>
                 <Timer gameData={gameData}/>
