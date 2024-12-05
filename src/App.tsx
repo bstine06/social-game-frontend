@@ -233,7 +233,7 @@ const App = () => {
 
             switch (newGameData.gameState) {
                 case "DELETED_BY_INSUFFICIENT_PLAYERS":
-                    message += `because there were insufficient players remaining.`;
+                    message += ` because there were insufficient players remaining.`;
                     break;
                 case "DELETED_BY_HOST":
                     message += ` by the host.`;

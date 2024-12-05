@@ -2,7 +2,6 @@ import React from "react";
 import { GameData } from "../types/GameDataTypes";
 import Header from "../common/Header";
 import { deleteGameApi } from "../../api/gameApi";
-import WatchPlayers from "../websocket/WatchPlayers";
 import Player from "../player/Player";
 
 interface HostPlayerProps {

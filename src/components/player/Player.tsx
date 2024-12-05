@@ -11,6 +11,7 @@ import Waiting from "../common/Waiting";
 import StartGame from "../common/StartGame";
 import { GameData } from "../types/GameDataTypes";
 import PlayersJoinedDisplay from "../common/PlayersJoinedDisplay";
+import QRCodeGenerator from "../host/QRCodeGenerator";
 
 interface PlayerProps {
     gameData: GameData;
@@ -113,6 +114,11 @@ const Player: React.FC<PlayerProps> = ({
                 if (isLeader) {
                     return (
                         <>
+                            {isHostPlayer && <>
+                                <div className="container expand-to-fit">
+                                    <QRCodeGenerator gameId={gameData.gameId} />
+                                </div>
+                            </>}
                             <StartGame playerCount={players.length} gameId={gameData.gameId}/>
                             {players.length !== 0 && <div className="container thinner-container">
                                 <PlayersJoinedDisplay playerData={players} hostPrivileges={true} unremovablePlayerId={playerId}/>
