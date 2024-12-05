@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { createPlayerApi } from '../../api/playerApi';
-import validator from 'validator';
 import LilGuySelect from './LilGuySelect';
 import NameInput from './NameInput';
 
@@ -21,8 +20,7 @@ const PlayerCreation: React.FC<PlayerCreationProps> = ({ onCreatePlayer, gameId 
 
   const handleSubmit = async (shape: number, color: string) => {
     try {
-      const sanitizedInput = validator.escape(nameInput); // Escapes any potentially harmful characters
-      await createPlayerApi(gameId, sanitizedInput, shape, color);
+      await createPlayerApi(gameId, nameInput, shape, color);
       setNameInput(""); // Clear input field
       onCreatePlayer(); //Notify parent of player creation
     } catch (error) {

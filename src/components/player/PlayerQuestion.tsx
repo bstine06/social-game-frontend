@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import validator from "validator";
-import ConfirmModal from '../common/ConfirmModal';
 import { submitQuestionApi } from '../../api/questionApi';
 import PlayerConversationInput from "./PlayerConversationInput";
 import { GameData } from "../types/GameDataTypes";
@@ -19,8 +17,7 @@ const PlayerQuestion: React.FC<PlayerQuestionProps> = ({
 
   const handleSubmit = async (questionInput: string) => {
     try {
-      const sanitizedInput = validator.escape(questionInput); // Escapes any potentially harmful characters
-      await submitQuestionApi(gameId, sanitizedInput);
+      await submitQuestionApi(gameId, questionInput);
       onFinishSubmission();
     } catch (error) {
       console.error("Error submitting question:", error);
