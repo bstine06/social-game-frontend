@@ -16,12 +16,14 @@ interface PlayerProps {
     gameData: GameData;
     playerId: string;
     onCancelPlayer: (message?: string) => void;
+    isHostPlayer?: boolean;
 }
 
 const Player: React.FC<PlayerProps> = ({
     gameData,
     playerId,
-    onCancelPlayer
+    onCancelPlayer,
+    isHostPlayer
 }) => {
     const [deletePlayerConfirmMsg, setDeletePlayerConfirmMsg] = useState<string>(
         `This will remove you from the game (${gameData.gameId})`
@@ -82,6 +84,7 @@ const Player: React.FC<PlayerProps> = ({
     };
 
     const decideDeletePlayerConfirmMsg = (playerCount: number, gameId: string) => {
+        if (isHostPlayer) return `You're the host, this will delete the game (${gameData.gameId})`;
         if (playerCount == 3 && gameData.gameState != "LOBBY") {
             return `Because there are only 3 players, this will delete the game (${gameData.gameId})`;
         }
@@ -188,7 +191,7 @@ const Player: React.FC<PlayerProps> = ({
         <>
             <Header
                 gameData={gameData}
-                role={"PLAYER"}
+                role={isHostPlayer ? "HOST" : "PLAYER"}
                 onCancel={deletePlayer}
                 confirmModalContent={deletePlayerConfirmMsg}
             />

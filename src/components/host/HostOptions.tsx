@@ -21,6 +21,13 @@ const HostOptions: React.FC<HostOptionsProps> = ({onCreateGameAsHost, onCancelHo
         }));
     }
 
+    const toggleIsHostPlayer = () => {
+        setGameOptions((prevGameOptions: GameOptions) => ({
+            ...prevGameOptions,
+            isHostPlayer: !prevGameOptions.isHostPlayer
+        }))
+    }
+
     const onCreateGame = () => {
         onCreateGameAsHost(gameOptions);
     }
@@ -41,6 +48,11 @@ const HostOptions: React.FC<HostOptionsProps> = ({onCreateGameAsHost, onCancelHo
             />
             <div className="container">
                 <h2>Game Options</h2>
+                <p>how will you be using this device?</p>
+                <div className="flex-split">
+                    <button className={`big-button ${gameOptions.isHostPlayer ? "selected" : ""}`} onClick={toggleIsHostPlayer}>I'll be playing the game im hosting</button>
+                    <button className={`big-button ${!gameOptions.isHostPlayer ? "selected" : ""}`} onClick={toggleIsHostPlayer}>This is a common screen for all players</button>
+                </div>
                 <p>timer duration:</p>
                 <div className="flex-split">
                     <button className={`big-button ${gameOptions.timerDuration===30 ? "selected" : ""}`} onClick={()=> updateTimerDuration(30)}>30</button>

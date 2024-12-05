@@ -18,6 +18,7 @@ import './styles/fonts/Eracake.otf';
 import StaticNotification from './components/home/StaticNotification';
 import { GameData, GameOptions } from './components/types/GameDataTypes';
 import HostOptions from './components/host/HostOptions';
+import HostPlayer from './components/hostplayer/HostPlayer';
 
 // Define the role types
 type Role =
@@ -25,6 +26,7 @@ type Role =
     | "PLAYER"
     | "HOSTPLAYER"
     | "PLAYER_CREATION"
+    | "HOSTPLAYER_CREATION"
     | "HOST_OPTIONS"
     | "UNASSIGNED"
     | "PENDING";
@@ -33,7 +35,8 @@ const App = () => {
     const [loading, setLoading] = useState<boolean>(true);
     const [gameData, setGameData] = useState<GameData>({gameId: "", gameState: "", timerEnd: null});
     const [role, setRole] = useState<Role>("PENDING");
-    const [id, setId] = useState<string>("");
+    const [playerId, setPlayerId] = useState<string>("");
+    const [hostId, setHostId] = useState<string>("");
     const [connected, setConnected] = useState<boolean>(false);
     const [errorMessage, setErrorMessage] = useState<string>("");
     const [devDisplayOpen, setDevDisplayOpen] = useState<boolean>(false);
@@ -46,18 +49,18 @@ const App = () => {
     // Function to retrieve data by role
     const getDataById = async (role: string): Promise<void> => {
         try {
-            if (role === "HOST") {
+            if (role === "HOST" || role === "HOSTPLAYER_CREATION") {
                 const game = await getGameByHostIdApi();
-                setId(game.hostId);
+                setHostId(game.hostId);
                 const newGameData : GameData = {
                     gameId: game.gameId,
                     gameState: game.gameState,
                     timerEnd: null
                 }
                 setGameData(newGameData);
-            } else if (role === "PLAYER") {
+            } else if (role === "PLAYER" || role === "HOSTPLAYER") {
                 const player = await getPlayerById();
-                setId(player.playerId);
+                setPlayerId(player.playerId);
                 setThemeColor(player.color);
                 const game = await getGameByIdApi(player.gameId);
                 const newGameData : GameData = {
@@ -183,7 +186,11 @@ const App = () => {
                 timerEnd: null
             }
             setGameData(newGameData);
-            setRole("HOST"); // Update role to 'HOST' after game creation
+            if (gameOptions.isHostPlayer) {
+                setRole("HOSTPLAYER_CREATION");
+            } else {
+                setRole("HOST"); // Update role to 'HOST' after game creation
+            }
         } catch (error) {
             setErrorMessage("There was an error creating the game.");
         }
@@ -198,13 +205,18 @@ const App = () => {
         }
         setGameData(newGameData);
         setRole("UNASSIGNED");
-        setId("");
+        setPlayerId("");
+        setHostId("");
         setThemeColor("PURPLE");
         reloadPage(message);
     };
 
-    const setRoleToPlayer = () => {
-        setRole("PLAYER");
+    const updateRoleAfterPlayerCreation = () => {
+        if (role === "HOSTPLAYER_CREATION") {
+            setRole("HOSTPLAYER")
+        } else {
+            setRole("PLAYER");
+        }
     };
 
     const beginGameCreation = (): void => {
@@ -296,10 +308,10 @@ const App = () => {
                     onCancelHost={resetUserSession}
                 />
             );
-        } else if (role === "PLAYER_CREATION") {
+        } else if (role === "PLAYER_CREATION" || role === "HOSTPLAYER_CREATION") {
             return (
                 <JoinGame
-                    onCreatePlayer={setRoleToPlayer}
+                    onCreatePlayer={updateRoleAfterPlayerCreation}
                     onCancelJoin={resetUserSession}
                     updateGameId={updateGameId}
                     gameData={gameData}
@@ -309,10 +321,18 @@ const App = () => {
             return (
                 <Player
                     gameData={gameData}
-                    playerId={id}
+                    playerId={playerId}
                     onCancelPlayer={resetUserSession}
                 />
             );
+        } else if (role === "HOSTPLAYER" && gameData.gameId) {
+            return (
+                <HostPlayer 
+                    gameData={gameData}
+                    playerId={playerId}
+                    onCancelHostPlayer={resetUserSession}
+                />
+            )
         }
 
         return null;
@@ -336,7 +356,8 @@ const App = () => {
                     gameId={gameData.gameId}
                     gameState={gameData.gameState}
                     role={role ? role : "undefined"}
-                    id={id}
+                    playerId={playerId}
+                    hostId={hostId}
                     loading={loading}
                     connected={connected}
                     color={themeColor}
