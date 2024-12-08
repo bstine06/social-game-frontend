@@ -10,13 +10,15 @@ interface JoinGameProps {
     onCancelJoin: () => void;
     updateGameId: (newGameId: string) => void;
     gameData: GameData;
+    isHostPlayer?: boolean;
 }
 
 const JoinGame: React.FC<JoinGameProps> = ({
   onCreatePlayer,
   onCancelJoin,
   updateGameId,
-  gameData
+  gameData,
+  isHostPlayer = false
 }) => {
   const [gameIdInput, setGameIdInput] = useState<string>("");
   const [isValidInput, setIsValidInput] = useState<boolean>(false);
@@ -83,7 +85,11 @@ const JoinGame: React.FC<JoinGameProps> = ({
         onCancel={handleBackSubmit}
         gameData={gameData}
         role={"JOIN GAME"}
-        confirmModalContent={""}
+        confirmModalContent={
+          isHostPlayer ?
+          `You're the host, this will delete the game (${gameData.gameId})` :
+          "Your changes will not be saved"
+        }
       />
       {renderComponent()}
     </>

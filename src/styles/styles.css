@@ -60,14 +60,14 @@ button, .btn {
 .container {
   padding: clamp(12px, 1vw, 32px);
   text-align: center;
-  display: grid;
+  /* display: grid; */
   place-items: center; /* Centers the child both horizontally and vertically */
   font-size: clamp(32px, 5vw, 72px);
   max-width: min(min(calc(100% - 80px), 80%), 3840px); /* Adjust for padding */
   background-color: rgba(34, 34, 34, 0.98);
   border: 2px solid white;
   border-radius: clamp(50px, 2vw, 400px);
-  margin: 48px auto 12px;
+  margin: 12px auto;
   -webkit-box-shadow: 0px 20px 25px 5px rgb(0, 0, 0);
   -moz-box-shadow: 0px 20px 25px 5px rgb(0, 0, 0);
   box-shadow: 0px 20px 25px 5px rgb(0, 0, 0);
@@ -81,6 +81,14 @@ button, .btn {
 
 .container.thinner-container {
   max-width: clamp(820px, 40vw, 2000px);
+}
+
+.container.invisible-container {
+  padding: 0;
+  margin: 0;
+  border: none;
+  background: none;
+  box-shadow: none;
 }
 
 @media (width < 700px) {
@@ -316,9 +324,9 @@ p.character-count {
 .two-three-container {
   margin: auto;
   display: grid;
-  grid-template-columns: 2fr 3fr;
+  grid-template-columns: 1fr 1fr;
   max-width: 98%;
-  width: 980%;
+  width: 98%;
   gap: 2%;
 }
 .qr-code {
@@ -445,7 +453,8 @@ p.character-count {
   
   .two-three-container > .container {
     margin: auto;
-    width: 90%;
+    margin-top: 12px;
+    width: 100%;
     max-width: none;
   }
   
@@ -461,6 +470,9 @@ p.character-count {
 
   @media (width < 450px) {
     .container {
+      max-width: none;
+    }
+    .two-three-container {
       max-width: none;
     }
     

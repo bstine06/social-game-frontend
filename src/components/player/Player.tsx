@@ -114,15 +114,22 @@ const Player: React.FC<PlayerProps> = ({
                 if (isLeader) {
                     return (
                         <>
+                            <div className={isHostPlayer ? "two-three-container" : ""}>
                             {isHostPlayer && <>
                                 <div className="container expand-to-fit">
                                     <QRCodeGenerator gameId={gameData.gameId} />
                                 </div>
                             </>}
+                            <div className="">
                             <StartGame playerCount={players.length} gameId={gameData.gameId}/>
-                            {players.length !== 0 && <div className="container thinner-container">
+                            {players.length !== 0 && 
+                                <div className="container thinner-container expand-to-fit">
                                 <PlayersJoinedDisplay playerData={players} hostPrivileges={true} unremovablePlayerId={playerId}/>
-                            </div>}
+                                </div>
+                            }
+                            </div>
+                            </div>
+                            
                         </>
                     )
                 } else {

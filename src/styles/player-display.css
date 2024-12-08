@@ -85,7 +85,7 @@
     grid-template-columns: repeat(3, 1fr); /* 3 rows of equal height */
     align-items: center;
     justify-content: center; /* Center items */
-    padding: 0 12px; /* Add some padding to prevent edge touch */
+    padding: 0 30%; /* Add some padding to prevent edge touch */
     box-sizing: border-box; /* Ensure padding is included in the width */
 }
 
@@ -109,8 +109,8 @@
     margin: auto;
     width: 20vw;
     height: 20vw;
-    max-width: 100px;
-    max-height: 100px;
+    max-width: 200px;
+    max-height: 200px;
 }
 
 .color-swatch.selected {

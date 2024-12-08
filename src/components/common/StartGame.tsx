@@ -34,7 +34,8 @@ const StartGame: React.FC<StartGameProps> = ({ playerCount, gameId }) => {
                 <button disabled={playerCount < 3} className="big-button" onClick={handleSubmit}>
                     Start Game
                 </button>
-                <p className="description">At least 3 players are required</p>
+                {(playerCount < 3) && <p className="description">At least 3 players are required</p>}
+                {(playerCount >=3) && <p className="description">Maximum 8 players are allowed</p>}
                 
             </div>
             {isModalOpen && <ConfirmModal 

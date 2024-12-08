@@ -19,6 +19,7 @@ import StaticNotification from './components/home/StaticNotification';
 import { GameData, GameOptions } from './components/types/GameDataTypes';
 import HostOptions from './components/host/HostOptions';
 import HostPlayer from './components/hostplayer/HostPlayer';
+import HostPlayerJoinGame from './components/hostplayer/HostPlayerJoinGame';
 
 // Define the role types
 type Role =
@@ -308,9 +309,18 @@ const App = () => {
                     onCancelHost={resetUserSession}
                 />
             );
-        } else if (role === "PLAYER_CREATION" || role === "HOSTPLAYER_CREATION") {
+        } else if (role === "PLAYER_CREATION") {
             return (
                 <JoinGame
+                    onCreatePlayer={updateRoleAfterPlayerCreation}
+                    onCancelJoin={resetUserSession}
+                    updateGameId={updateGameId}
+                    gameData={gameData}
+                />
+            );
+        } else if (role === "HOSTPLAYER_CREATION") {
+            return (
+                <HostPlayerJoinGame
                     onCreatePlayer={updateRoleAfterPlayerCreation}
                     onCancelJoin={resetUserSession}
                     updateGameId={updateGameId}
