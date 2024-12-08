@@ -120,7 +120,7 @@ const Player: React.FC<PlayerProps> = ({
                                     <QRCodeGenerator gameId={gameData.gameId} />
                                 </div>
                             </>}
-                            <div className="">
+                            <div className="vertical-flex">
                             <StartGame playerCount={players.length} gameId={gameData.gameId}/>
                             {players.length !== 0 && 
                                 <div className="container thinner-container expand-to-fit">

@@ -30,7 +30,7 @@ const StartGame: React.FC<StartGameProps> = ({ playerCount, gameId }) => {
 
     return (
         <>
-            <div className="container thinner-container">
+            <div className="container thinner-container expand-to-fit">
                 <button disabled={playerCount < 3} className="big-button" onClick={handleSubmit}>
                     Start Game
                 </button>

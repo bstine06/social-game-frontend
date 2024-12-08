@@ -38,6 +38,13 @@
     background-color: #7f38b2;
 }
 
+.option.selected {
+    box-shadow: #c8a3ea 0px 0px 5px 5px;
+    -webkit-box-shadow: #c8a3ea 0px 0px 5px 5px;
+    -moz-box-shadow: #c8a3ea 0px 0px 5px 5px;
+    background-color: #7f38b2;
+}
+
 .option-name{
     font-family: 'Eracake', 'Trebuchet MS', sans-serif;
     padding: 12px;

@@ -63,7 +63,8 @@ button, .btn {
   /* display: grid; */
   place-items: center; /* Centers the child both horizontally and vertically */
   font-size: clamp(32px, 5vw, 72px);
-  max-width: min(min(calc(100% - 80px), 80%), 3840px); /* Adjust for padding */
+  max-width: min(min(calc(100% - 80px), 80%), 3840px); /*Adjust for padding */
+  /* max-width: 3840px; */
   background-color: rgba(34, 34, 34, 0.98);
   border: 2px solid white;
   border-radius: clamp(50px, 2vw, 400px);
@@ -81,6 +82,20 @@ button, .btn {
 
 .container.thinner-container {
   max-width: clamp(820px, 40vw, 2000px);
+}
+
+.vertical-flex {
+  display: flex;
+  flex-direction: column;
+}
+
+.vertical-flex > .container {
+  max-width: none;
+  
+}
+
+.vertical-flex > .container:last-child {
+  flex-grow: 1;
 }
 
 .container.invisible-container {
@@ -186,7 +201,7 @@ button, .btn {
 }
 
 .width-4em-centered {
-  max-width: 4em;
+  max-width: 5em;
   margin: auto;
 }
 
@@ -285,7 +300,7 @@ p.description {
   margin-top: 0;
   font-size: clamp(24px, 2.5vw, 72px);
   text-align: center;
-  margin-bottom: 12px;
+  margin-bottom: 0px;
 }
 
 p.character-count {
@@ -306,7 +321,9 @@ p.character-count {
 }
 
 .reduced-margin-top {
-  margin-top: 12px;
+  margin-top: clamp(0px, 2vw, 12px);
+  font-size: clamp(72px, 8vw, 200px);
+  margin-bottom: 0;
 }
 
 .top-align {
@@ -325,13 +342,13 @@ p.character-count {
   margin: auto;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  max-width: 98%;
+  max-width: min(98%, 3840px);
   width: 98%;
   gap: 2%;
 }
 .qr-code {
   width: 100%;            
-  max-width: min(max(800px, 40vw), 80vh);
+  max-width: min(max(800px, 35vw), 80vh);
   height: auto;
 }
 .qr-container {
@@ -405,6 +422,15 @@ p.character-count {
 
 .flex-split {
   display: flex;
+  gap: clamp(20px, 2vw, 100px);
+  align-items: center;
+}
+
+.responsive-svg {
+  width: 50%; /* Takes up full width of the container */
+  height: auto; /* Maintains aspect ratio */
+  max-width: 500px; /* Optional: limit maximum size */
+  min-width: 40px;
 }
 
 .timer {
@@ -437,6 +463,8 @@ p.character-count {
   }
 
   h2.scan-to-join {
+    margin-top: 0;
+    margin-bottom: 0;
     font-size: clamp(18px, 12vw, 200px);
   }
 
