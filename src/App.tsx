@@ -264,8 +264,12 @@ const App = () => {
         }));
     }
 
+    const reloadPageWithoutMessage = () => {
+        reloadPage();
+    }
+
     const reloadPage = (message?: string) => {
-        if (message) {
+        if (message !== undefined && message !== null && message !== "") {
             sessionStorage.setItem("reloadMessage", message); // Save the message
         }
         window.location.reload();
@@ -285,7 +289,7 @@ const App = () => {
                     </div>
                     {!connected && <StaticNotification 
                         message={"We're having trouble connecting to the server. Reloading may help."} 
-                        onButtonPress={reloadPage}
+                        onButtonPress={reloadPageWithoutMessage}
                         buttonText={"Reload"}
                     />}
                     <ChooseRole
