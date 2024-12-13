@@ -12,6 +12,7 @@ import StartGame from "../common/StartGame";
 import { GameData } from "../types/GameDataTypes";
 import PlayersJoinedDisplay from "../common/PlayersJoinedDisplay";
 import QRCodeGenerator from "../host/QRCodeGenerator";
+import HostLobby from "../host/HostLobby";
 
 interface PlayerProps {
     gameData: GameData;
@@ -111,24 +112,18 @@ const Player: React.FC<PlayerProps> = ({
 
         switch (gameData.gameState) {
             case "LOBBY": {
+                if (isHostPlayer) {
+                    return (
+                        <HostLobby gameId={gameData.gameId} players={players}/>
+                    )
+                }
                 if (isLeader) {
                     return (
                         <>
-                            <div className={isHostPlayer ? "two-three-container" : ""}>
-                            {isHostPlayer && <>
-                                <div className="container expand-to-fit">
-                                    <QRCodeGenerator gameId={gameData.gameId} />
-                                </div>
-                            </>}
-                            <div className="vertical-flex">
                             <StartGame playerCount={players.length} gameId={gameData.gameId}/>
-                            {players.length !== 0 && 
-                                <div className="container thinner-container expand-to-fit">
-                                <PlayersJoinedDisplay playerData={players} hostPrivileges={true} unremovablePlayerId={playerId}/>
-                                </div>
-                            }
-                            </div>
-                            </div>
+                            {players.length !== 0 && <div className="container">
+                                <PlayersJoinedDisplay playerData={players}/>
+                            </div>}
                             
                         </>
                     )

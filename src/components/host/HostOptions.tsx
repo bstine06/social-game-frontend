@@ -24,10 +24,10 @@ const HostOptions: React.FC<HostOptionsProps> = ({onCreateGameAsHost, onCancelHo
         }));
     }
 
-    const toggleIsHostPlayer = () => {
+    const setIsHostPlayer = (newValue: boolean) => {
         setGameOptions((prevGameOptions: GameOptions) => ({
             ...prevGameOptions,
-            isHostPlayer: !prevGameOptions.isHostPlayer
+            isHostPlayer: newValue
         }))
     }
 
@@ -50,28 +50,36 @@ const HostOptions: React.FC<HostOptionsProps> = ({onCreateGameAsHost, onCancelHo
                 confirmModalContent="Your changes will not be saved"
             />
             <div className="container">
-                <p className="subheading">Game Options</p>
-                <p className="description">how will you be using this device?</p>
+                <p className="subheading">Host Options</p>
+                <p className="description">how will you use this device?</p>
                 <div className="options-container">
-                    <div className={`flex-split option btn ${!gameOptions.isHostPlayer ? "selected" : ""}`} onClick={toggleIsHostPlayer}>
+                    <div className={`option btn ${!gameOptions.isHostPlayer ? "selected" : ""}`} onClick={() => setIsHostPlayer(false)}>
+                    <p className="subheading view-option-name">
+                            Party View
+                        </p>
+                        <div className="flex-split">
+                        
+                        </div>
                         <TvWithPhonesSVG />
                         <div>
-                        <p className="subheading">
-                            Party Screen
-                        </p>
+                        
                         <p className="description">
-                            Classic party play. This will be a common screen for all players.
+                            Classic party play. This device will be a common screen for all players.
                         </p>
                         </div>
                     </div>
-                    <div className={` flex-split option btn ${gameOptions.isHostPlayer ? "selected" : ""}`} onClick={toggleIsHostPlayer}>
+                    <div className={`option btn ${gameOptions.isHostPlayer ? "selected" : ""}`} onClick={() => setIsHostPlayer(true)}>
+                    <p className="subheading view-option-name">
+                            Player View
+                        </p>
+                        <div className="flex-split">
+                        
+                        </div>
                         <PhonesSVG />
                         <div>
-                        <p className="subheading">
-                            Solo Screen
-                        </p>
+                        
                         <p className="description">
-                            I'll play on this device. We won't have a party screen for everyone.
+                            I'll play on this device. We won't have a shared party view.
                         </p>
                         </div>
                     </div>

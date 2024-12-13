@@ -11,6 +11,7 @@ html {
   background-color: #222;
   display: flex;
   flex-direction: column;
+  max-height: 50vh;
 }
 
 body {
@@ -87,14 +88,14 @@ button, .btn {
 .vertical-flex {
   display: flex;
   flex-direction: column;
+  gap: 12px;
 }
 
 .vertical-flex > .container {
   max-width: none;
-  
 }
 
-.vertical-flex > .container:last-child {
+.vertical-flex > .container:first-child {
   flex-grow: 1;
 }
 
@@ -106,6 +107,10 @@ button, .btn {
   box-shadow: none;
 }
 
+.container.clickable:hover {
+  box-shadow: 0px 20px 25px 5px rgb(0, 0, 0), inset 0px 0px 25px 5px rgb(0, 0, 0);
+}
+
 @media (width < 700px) {
   .container {
       margin-top: 12px;
@@ -115,6 +120,13 @@ button, .btn {
   }
   .container {
     max-width: calc(100% - 80px);
+  }
+
+  .vertical-flex > .container:first-child {
+    margin-bottom: 0px;
+  }
+  .vertical-flex > .container:last-child {
+    margin-top: 0px;
   }
 }
 
@@ -178,16 +190,17 @@ button, .btn {
 }
 
 .big-button {
+  font-family: 'Eracake', 'Trebuchet MS', sans-serif;
+  letter-spacing: clamp(0px, 0.2vw, 12px);
   margin: clamp(20px, 2vw, 40px) clamp(20px, 2vw, 80px);
-  padding: clamp(10px, 2vw, 40px) clamp(20px, 2vw, 80px);
+  padding: clamp(10px, 1.4vw, 40px) clamp(20px, 2vw, 80px);
   border: white 2px solid;
   border-radius: clamp(4px, 2vw, 32px);
   cursor: pointer;
-  font-size: clamp(20px, 2vw, 128px);
-  font-family: monospace;
+  font-size: clamp(20px, 2.5vw, 128px);
   font-weight: 900;
-  background-color: #e0c0ff;
-  color: black;
+  background-color: #fff;
+  color: #551b7e;
   transition: background-color 200ms ease-in-out, box-shadow 200ms ease-in-out;
   box-shadow: #e0c0ff 0 0 0 0;
   -webkit-box-shadow: #e0c0ff 0 0 0 0;
@@ -234,6 +247,8 @@ h2 {
 }
 
 h2.scan-to-join {
+  font-family: 'Eracake', 'Trebuchet MS', sans-serif;
+  margin-top: 0;
   font-size: clamp(30px, 4vw, 200px);
 }
 
@@ -245,6 +260,7 @@ h3 {
   margin-top: 0;
   color: #777;
   font-size: 20px;
+  margin-bottom: 0;
 }
 
 .answer-grid {
@@ -321,9 +337,10 @@ p.character-count {
 }
 
 .reduced-margin-top {
-  margin-top: clamp(0px, 2vw, 12px);
-  font-size: clamp(72px, 8vw, 200px);
-  margin-bottom: 0;
+  margin-top: 0px;
+  font-size: clamp(72px, 6vw, 150px);
+  margin-bottom: 0px;
+  font-family: monospace;
 }
 
 .top-align {
@@ -348,7 +365,7 @@ p.character-count {
 }
 .qr-code {
   width: 100%;            
-  max-width: min(max(800px, 35vw), 80vh);
+  max-width: min(max(800px, 32vw), 50vh);
   height: auto;
 }
 .qr-container {
@@ -356,7 +373,7 @@ p.character-count {
   flex-direction: column;
   justify-content: center;  /* Center horizontally */
   align-items: center;      /* Center vertically */
-  width: 84%;              /* Full width container */
+  width: 100%;              /* Full width container */
 }
 
 
@@ -420,6 +437,10 @@ p.character-count {
   font-weight: 900;
 }
 
+.subheading.view-option-name {
+  font-size: clamp(36px, 4vw, 128px);
+}
+
 .flex-split {
   display: flex;
   gap: clamp(20px, 2vw, 100px);
@@ -427,7 +448,7 @@ p.character-count {
 }
 
 .responsive-svg {
-  width: 50%; /* Takes up full width of the container */
+  width: 30%; /* Takes up full width of the container */
   height: auto; /* Maintains aspect ratio */
   max-width: 500px; /* Optional: limit maximum size */
   min-width: 40px;
@@ -463,8 +484,6 @@ p.character-count {
   }
 
   h2.scan-to-join {
-    margin-top: 0;
-    margin-bottom: 0;
     font-size: clamp(18px, 12vw, 200px);
   }
 

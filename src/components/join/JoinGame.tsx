@@ -70,6 +70,7 @@ const JoinGame: React.FC<JoinGameProps> = ({
             value={gameIdInput}
             onChange={handleInputChange}
           />
+          <br/>
           <button className="big-button" onClick={handleSubmit}>
             Submit
           </button>

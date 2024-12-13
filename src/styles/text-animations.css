@@ -1,5 +1,10 @@
+.animate-pulse {
+  margin: 0.4em;
+}
+
 .animate-pulse span {
-  margin: 0 -0.075em;
+  margin: -20px -0.075em;
+  padding: 0;
   display: inline-block;
   animation: animate-pulse 1.2s infinite alternate;
   padding: 10px;

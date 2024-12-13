@@ -4,8 +4,9 @@
 }
 
 .options-container {
-    margin: clamp(24px, 5vw, 64px) clamp(24px, 5vw, 168px);
+    margin: clamp(24px, 5vw, 64px) auto;
     margin-top: clamp(12px, 3vw, 50px);
+    margin-bottom: 0px;
     max-width: 95%;
     width: 100%;
     display: grid;
@@ -16,6 +17,20 @@
     align-items: stretch; /* Center content vertically */
     align-content: center;
     justify-content: center;
+}
+
+.option.selected .responsive-svg {
+    animation: wiggle 0.82s linear infinite;
+}
+
+
+/* Keyframe for scaling (pulsing) effect */
+@keyframes wiggle {
+    0% { transform: rotate(0deg); }
+    25% { transform: rotate(5deg); }
+    50% { transform: rotate(0deg); }
+    75% { transform: rotate(-5deg); }
+    100% { transform: rotate(0deg); }
 }
 
 .option {
@@ -32,10 +47,9 @@
 }
 
 .option:hover {
-    box-shadow: #c8a3ea 0px 0px 5px 5px;
-    -webkit-box-shadow: #c8a3ea 0px 0px 5px 5px;
-    -moz-box-shadow: #c8a3ea 0px 0px 5px 5px;
-    background-color: #7f38b2;
+    box-shadow: #c8a3ea 0px 0px 2px 2px;
+    -webkit-box-shadow: #c8a3ea 0px 0px 2px 2px;
+    -moz-box-shadow: #c8a3ea 0px 0px 2px 2px;
 }
 
 .option.selected {

@@ -30,12 +30,12 @@ const StartGame: React.FC<StartGameProps> = ({ playerCount, gameId }) => {
 
     return (
         <>
-            <div className="container thinner-container expand-to-fit">
-                <button disabled={playerCount < 3} className="big-button" onClick={handleSubmit}>
-                    Start Game
-                </button>
-                {(playerCount < 3) && <p className="description">At least 3 players are required</p>}
-                {(playerCount >=3) && <p className="description">Maximum 8 players are allowed</p>}
+            <div 
+                className={`container thinner-container expand-to-fit ${(playerCount >= 3) ? "clickable" : ""}`}
+                onClick={handleSubmit}
+            >
+                {(playerCount < 3) && <p className="description">At least 3 players must join before you can start the game</p>}
+                {(playerCount >=3) && <p className="subheading">START GAME</p>}
                 
             </div>
             {isModalOpen && <ConfirmModal 

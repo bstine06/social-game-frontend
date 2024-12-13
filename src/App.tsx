@@ -4,6 +4,7 @@ import { createCustomGameApi, createGameApi, getGameByHostIdApi, getGameByIdApi,
 import { getSessionRole } from './api/sessionApi';
 import { getPlayerById } from './api/playerApi';
 import { useTheme } from './utils/ThemeContext';
+import { getColorScheme } from './utils/ColorUtils';
 import ChooseRole from './components/home/ChooseRole';
 import JoinGame from './components/join/JoinGame';
 import Host from './components/host/Host';
@@ -12,7 +13,6 @@ import ErrorModal from './components/common/ErrorModal';
 import GameState from './components/websocket/GameState';
 import './styles/styles.css';
 import DevDisplay from './components/DevDisplay';
-import { getColorScheme } from './utils/ColorUtils';
 import Waiting from './components/common/Waiting';
 import './styles/fonts/Eracake.otf';
 import StaticNotification from './components/home/StaticNotification';
@@ -364,7 +364,7 @@ const App = () => {
                     gameId={gameData.gameId}
                 />
             )}
-            <button onClick={toggleDevDisplay}>Toggle Developer Panel</button>
+            {/* <button onClick={toggleDevDisplay}>Toggle Developer Panel</button>
             {devDisplayOpen && (
                 <DevDisplay
                     gameId={gameData.gameId}
@@ -376,7 +376,7 @@ const App = () => {
                     connected={connected}
                     color={themeColor}
                 />
-            )}
+            )} */}
         </>
     );
 }

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 interface NameInputProps {
     onNext: (name:string)=> void;
@@ -8,6 +8,10 @@ const NameInput: React.FC<NameInputProps> = ({
     onNext
 }) => {
     const [nameInput, setNameInput] = useState<string>("");
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
 
     const maxNameLength = 15;
 

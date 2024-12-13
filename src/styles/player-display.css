@@ -12,6 +12,7 @@
     display: flex;
     flex-direction: column;
     gap: 5px;
+    margin: auto;
 }
 
 .player-ready-element {
@@ -37,7 +38,7 @@
 .player-name {
     max-width: 18em;
     margin: 0;
-    font-size: clamp(18px, 4.4vw, 128px);
+    font-size: clamp(18px, 3vw, 128px);
     padding-left: 1vw;
     padding-right: 5vw;
     font-weight: bold;
@@ -66,6 +67,7 @@
 }
 
 .lil-guy {
+    max-height: 5vh;
     max-width: 100%;
     width: clamp(100px, 9vw, 900px);
     border-radius: 15%;
@@ -79,7 +81,7 @@
 
 .selection-container {
     margin: auto;
-    max-width: clamp(800px, 40vw, 1800px);
+    max-width: clamp(300px, 30vw, 800px);
     display: grid;
     width: auto;
     grid-template-columns: repeat(3, 1fr); /* 3 rows of equal height */
@@ -90,25 +92,31 @@
 }
 
 .selection-container > .lil-guy {
-    width: 90%;
     background-color: #fafafa;
     box-shadow: 0 0 10px 5px rgba(0,0,0,0);
     -webkit-box-shadow: 0 0 10px 5px rgba(0,0,0,0);
     -moz-box-shadow: 0 0 10px 5px rgba(0,0,0,0);
+    max-height: none;
+    margin: clamp(8px, 2vw, 16px);
 }
 
 .lil-guy-display-container {
     display: flex; gap: 12px;
-    width: 50%;
-    max-width: 720px;
+    width: 85%;
+    max-width: clamp(300px, 30vw, 800px);
+    margin: auto;
+}
+
+.lil-guy-display-container > .lil-guy {
+    max-height: none;
 }
 
 .color-swatch {
     border: 3px solid #444;
     border-radius: 40%;
     margin: auto;
-    width: 23vw;
-    height: 23vw;
+    width: 7vw;
+    height: 7vw;
     max-width: 200px;
     max-height: 200px;
     min-width: 100px;
@@ -161,8 +169,8 @@
 }
 
 .lil-guy-display-container > .lil-guy > svg {
-    min-width: 90px;
-    min-height: 90px;
+    min-width: 20px;
+    min-height: 20px;
 }
 
 .score-row {
