@@ -3,8 +3,6 @@ import { useLocation } from 'react-router-dom';
 import { createCustomGameApi, createGameApi, getGameByHostIdApi, getGameByIdApi, updateGameStateApi } from './api/gameApi';
 import { getSessionRole } from './api/sessionApi';
 import { getPlayerById } from './api/playerApi';
-import { useTheme } from './utils/ThemeContext';
-import { getColorScheme } from './utils/ColorUtils';
 import ChooseRole from './components/home/ChooseRole';
 import JoinGame from './components/join/JoinGame';
 import Host from './components/host/Host';
@@ -42,8 +40,6 @@ const App = () => {
     const [errorMessage, setErrorMessage] = useState<string>("");
     const [devDisplayOpen, setDevDisplayOpen] = useState<boolean>(false);
 
-    const { themeColor, setThemeColor } = useTheme();
-
     // Hook to access the current route
     const location = useLocation();
 
@@ -62,7 +58,7 @@ const App = () => {
             } else if (role === "PLAYER" || role === "HOSTPLAYER") {
                 const player = await getPlayerById();
                 setPlayerId(player.playerId);
-                setThemeColor(player.color);
+                changeThemeColor(player.color);
                 const game = await getGameByIdApi(player.gameId);
                 const newGameData : GameData = {
                     gameId: game.gameId,
@@ -156,27 +152,27 @@ const App = () => {
 
     useEffect(() => {
         getDataById(role);
-    }, [role]),
+    }, [role]);
     
 
-    // effect to change app colors on update of "color" state variable
-    useEffect(() => {
-        const colorScheme = getColorScheme(themeColor);
-        const rootElement = document.getElementById("root");
-        const bodyElement = document.body;
+    // // effect to change app colors on update of "color" state variable
+    // useEffect(() => {
+    //     const colorScheme = getColorScheme(themeColor);
+    //     const rootElement = document.getElementById("root");
+    //     const bodyElement = document.body;
     
-        if (rootElement) {
-            rootElement.style.backgroundImage = 
-                `radial-gradient(${colorScheme.text} 13.6%, transparent 3.6%),
-                 radial-gradient(${colorScheme.text} 13.6%, transparent 3.6%)`;
-            rootElement.style.backgroundColor = colorScheme.bg;
-        }
+    //     if (rootElement) {
+    //         rootElement.style.backgroundImage = 
+    //             `radial-gradient(${colorScheme.text} 13.6%, transparent 3.6%),
+    //              radial-gradient(${colorScheme.text} 13.6%, transparent 3.6%)`;
+    //         rootElement.style.backgroundColor = colorScheme.bg;
+    //     }
     
-        // Change the color of the html element
-        if (bodyElement) {
-            bodyElement.style.backgroundColor = colorScheme.bg; // example background color
-        }
-    }, [themeColor]);    
+    //     // Change the color of the html element
+    //     if (bodyElement) {
+    //         bodyElement.style.backgroundColor = colorScheme.bg; // example background color
+    //     }
+    // }, [themeColor]);    
 
     const createAndHostGame = async (gameOptions: GameOptions) => {
         try {
@@ -208,9 +204,14 @@ const App = () => {
         setRole("UNASSIGNED");
         setPlayerId("");
         setHostId("");
-        setThemeColor("PURPLE");
+        changeThemeColor("PURPLE");
         reloadPage(message);
     };
+
+    const changeThemeColor = (color: string) => {
+        document.querySelector('body')?.setAttribute('data-theme', color);
+        // setThemeColor(color);
+    }
 
     const updateRoleAfterPlayerCreation = () => {
         if (role === "HOSTPLAYER_CREATION") {

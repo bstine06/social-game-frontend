@@ -4,10 +4,9 @@ interface LilGuy1Props {
     fillColor: string;
 }
 
-const LilGuy1: React.FC<LilGuy1Props> = ({ fillColor }) => {
+const LilGuy1: React.FC<LilGuy1Props> = ({fillColor}) => {
     return (
         <svg
-            fill={fillColor}
             height="100px"
             width="100px"
             version="1.1"
@@ -16,6 +15,7 @@ const LilGuy1: React.FC<LilGuy1Props> = ({ fillColor }) => {
             xmlnsXlink="http://www.w3.org/1999/xlink"
             viewBox="0 0 512 512"
             xmlSpace="preserve"
+			fill={fillColor}
         >
             <g>
                 <g>

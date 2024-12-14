@@ -1,5 +1,5 @@
 // ThemeContext.tsx
-import React, { createContext, useContext, useState, ReactNode } from "react";
+import React, { createContext, useContext, useState, ReactNode, useEffect } from "react";
 
 // Type for the color (can be extended if needed)
 type ThemeColor = string;
@@ -13,9 +13,13 @@ interface ThemeContextType {
 // Create the context
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
-// Define the provider component
 export const ThemeProvider = ({ children }: { children: ReactNode }) => {
+    
     const [themeColor, setThemeColor] = useState<ThemeColor>("PURPLE"); // Default color
+    
+    useEffect(() => {
+        document.body.setAttribute("data-theme", themeColor);
+    }, [themeColor]);
 
     return (
         <ThemeContext.Provider value={{ themeColor, setThemeColor }}>

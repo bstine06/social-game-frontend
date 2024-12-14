@@ -8,7 +8,8 @@
   grid-template-columns: repeat(3, 1fr);
   align-items: center;
   width: 100%;
-  background-color: #31065C;
+  color: var(--text-color-primary);
+  background-color: var(--bg-color-primary);
   height: clamp(70px, 7vw, 240px);
   margin: 0;
   box-shadow: #000000 5px 0px 5px 5px;
@@ -28,8 +29,8 @@
 
 .header button {
   border-radius: 0px;
-  background-color: #31065C;
-  color: #c8a3ea;
+  background-color: var(--bg-color-primary);
+  color: var(--text-color-primary);
   height: 100%;
   border: none;
   transition: letter-spacing 0.2s ease;

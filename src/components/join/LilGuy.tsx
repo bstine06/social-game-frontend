@@ -1,5 +1,4 @@
 import React from "react";
-import { getHex } from "../../utils/ColorUtils";
 import LilGuy1 from "../../resources/lil-guys/LilGuy1";
 import LilGuy2 from "../../resources/lil-guys/LilGuy2";
 import LilGuy3 from "../../resources/lil-guys/LilGuy3";
@@ -7,6 +6,7 @@ import LilGuy4 from "../../resources/lil-guys/LilGuy4";
 import LilGuy5 from "../../resources/lil-guys/LilGuy5";
 import PlusCircleSVG from "../../resources/PlusCircleSVG";
 import QuestionMarkSVG from "../../resources/QuestionMarkSVG";
+import { getHex } from "../../utils/ColorUtils";
 
 interface LilGuyProps {
     onSelect?: (selection: number) => void;
@@ -17,8 +17,8 @@ interface LilGuyProps {
 
 const LilGuy: React.FC<LilGuyProps> = ({
     onSelect,
-    fillColor,
     lilGuyIndex,
+    fillColor,
     isSelected,
 }) => {
     const handleSelect = () => {
@@ -28,7 +28,7 @@ const LilGuy: React.FC<LilGuyProps> = ({
     const renderLilGuy = () => {
         switch (lilGuyIndex) {
             case 1:
-                return <LilGuy1 fillColor={getHex(fillColor)} />
+                return <LilGuy1 fillColor={getHex(fillColor)}/>
             case 2:
                 return <LilGuy2 fillColor={getHex(fillColor)} />
             case 3:
@@ -45,7 +45,11 @@ const LilGuy: React.FC<LilGuyProps> = ({
     }
 
     return (
-        <div onClick={handleSelect} className={`lil-guy ${isSelected ? 'selected' : ''}`}>
+        <div onClick={handleSelect} className=
+            {
+                `lil-guy ${isSelected ? 'selected' : ''}`
+            }
+        >
             {renderLilGuy()}
         </div>
     );

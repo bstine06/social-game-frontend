@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { GameData } from "../types/GameDataTypes";
-import { useTheme } from "../../utils/ThemeContext";
-import { ColorMapping } from "../types/ColorMappingType";
-import { getColorScheme } from "../../utils/ColorUtils";
 
 interface TimerProps {
     gameData: GameData;
@@ -12,13 +9,6 @@ interface TimerProps {
 const Timer: React.FC<TimerProps> = ({ gameData, isVisible=true }) => {
     const [timeRemaining, setTimeRemaining] = useState<number | null>(null);
     const [isTimeExpired, setIsTimeExpired] = useState<boolean>(false);
-    const [colors, setColors] = useState<ColorMapping>(getColorScheme("DEFAULT"));
-
-    const { themeColor } = useTheme();
-
-    useEffect(() => {
-        setColors(getColorScheme(themeColor));
-    }, [themeColor]);
 
     useEffect(() => {
         const timerEnd = gameData.timerEnd;
@@ -71,7 +61,7 @@ const Timer: React.FC<TimerProps> = ({ gameData, isVisible=true }) => {
     return (
         <>
         {isVisible && 
-            <div className="timer" style={{ backgroundColor: colors.bg, color: colors.text }}>
+            <div className="timer">
                 <p>{formattedTime}</p>
             </div>
         }

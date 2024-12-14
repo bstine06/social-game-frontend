@@ -1,4 +1,123 @@
 /* styles.css */
+:root {
+  --bg-color-primary: #31065b;
+  --bg-color-secondary: #c8a3ea;
+  --text-color-primary: #c8a3ea;
+  --text-color-dark: #31065b;
+  --input-color: #8f54c5;
+  --character-color: #a65bdc;
+  --modal-bg-color: #31065b;
+  --modal-border-color: #c8a3ea;
+
+  /* Apply transitions to all variables */
+  transition: 
+    --bg-color-primary 0.2s ease,
+    --bg-color-secondary 0.2s ease,
+    --text-color-primary 0.2s ease,
+    --text-color-dark 0.2s ease,
+    --input-color 0.2s ease,
+    --character-color 0.2s ease;
+}
+
+[data-theme="PURPLE"] {
+  --bg-color-primary: #31065b;
+  --bg-color-secondary: #c8a3ea;
+  --text-color-primary: #c8a3ea;
+  --text-color-dark: #31065b;
+  --input-color: #8f54c5;
+  --character-color: #a65bdc;
+  --modal-bg-color: #31065b;
+  --modal-border-color: #c8a3ea;
+}
+
+[data-theme="RED"] {
+  --bg-color-primary: #9a0000;
+  --bg-color-secondary: #FFCCCC;
+  --text-color-primary: #FFCCCC;
+  --text-color-dark: #770000;
+  --input-color: #FFCCCC;
+  --character-color: #FF0000;
+  --modal-bg-color: #5b0606;
+  --modal-border-color: #eaa3a3;
+}
+
+[data-theme="YELLOW"] {
+  --bg-color-primary: #d7d614;
+  --bg-color-secondary: #000000;
+  --text-color-primary: #000000;
+  --text-color-dark: #000000;
+  --input-color: #ffff90;
+  --character-color: #ffff00;
+  --modal-bg-color: #000000;
+  --modal-border-color: hsl(60, 63%, 78%);
+}
+
+[data-theme="GREEN"] {
+  --bg-color-primary: #00AA00;
+  --bg-color-secondary: #d4ffc7;
+  --text-color-primary: #d4ffc7;
+  --text-color-dark: #008000;
+  --input-color: #d4ffc7;
+  --character-color: #00FF00;
+  --modal-bg-color: hsl(120, 88%, 19%);
+  --modal-border-color: hsl(120, 63%, 78%);
+}
+
+[data-theme="CYAN"] {
+  --bg-color-primary: #66FFFF;
+  --bg-color-secondary: #003399;
+  --text-color-primary: #003399;
+  --text-color-dark: #003399;
+  --input-color: #b8ffff;
+  --character-color: #66ffff;
+  --modal-bg-color: hsl(180, 88%, 19%);
+  --modal-border-color: hsl(180, 63%, 78%);
+}
+
+[data-theme="MAGENTA"] {
+  --bg-color-primary: #c300c3;
+  --bg-color-secondary: #ffeeff;
+  --text-color-primary: #ffeeff;
+  --text-color-dark: #c300c3;
+  --input-color: #ffeeff;
+  --character-color: hsl(300, 100%, 50%);
+  --modal-bg-color: hsl(300, 88%, 19%);
+  --modal-border-color: hsl(300, 63%, 78%);
+}
+
+[data-theme="ORANGE"] {
+  --bg-color-primary: #e77000;
+  --bg-color-secondary: #FFFFFF;
+  --text-color-primary: #FFFFFF;
+  --text-color-dark: #be5c00;
+  --input-color: #ffcb9b;
+  --character-color: #ff7b00;
+  --modal-bg-color: hsl(29, 88%, 19%);
+  --modal-border-color: hsl(29, 77%, 54%);
+}
+
+[data-theme="DARK_GREEN"] {
+  --bg-color-primary: #008000;
+  --bg-color-secondary: #DDFFAA;
+  --text-color-primary: #DDFFAA;
+  --text-color-dark: #005000;
+  --input-color: #DDFFAA;
+  --character-color: #008000;
+  --modal-bg-color: hsl(120, 88%, 19%);
+  --modal-border-color: hsl(120, 63%, 78%);
+}
+
+[data-theme="BLUE"] {
+  --bg-color-primary: #1667ff;
+  --bg-color-secondary: #EEFFFF;
+  --text-color-primary: #EEFFFF;
+  --text-color-dark: #0000FF;
+  --input-color: #bbd0ff;
+  --character-color: #1667ff;
+  --modal-bg-color: hsl(219, 88%, 19%);
+  --modal-border-color: hsl(219, 63%, 78%);
+}
+
 * {
   box-sizing: border-box;
 }
@@ -32,11 +151,11 @@ body {
   margin: 0;
   flex-direction: column;
   background-image: 
-    radial-gradient(#c8a3ea 13.6%, transparent 3.6%),
-    radial-gradient(#c8a3ea 13.6%, transparent 3.6%);
+    radial-gradient(var(--bg-color-secondary) 13.6%, transparent 3.6%),
+    radial-gradient(var(--bg-color-secondary) 13.6%, transparent 3.6%);
   background-position: 0px 0px, 5vw 5vw, -0.5vw 0.5vw, 50.4px 61.6px;
   background-size: 10vw 10vw;
-  background-color: #31065b;
+  background-color: var(--bg-color-primary);
   min-height: 100vh;
 }
 
@@ -107,8 +226,30 @@ button, .btn {
   box-shadow: none;
 }
 
+.container.clickable {
+  background-color: #fff;
+  color: var(--text-color-dark);
+  transition: box-shadow 0.3s ease-in-out;
+  animation: glow-shadow 1.4s cubic-bezier(0.47, 0, 0.745, 0.715) infinite;
+}
+
+@keyframes glow-shadow {
+  0% {
+    box-shadow: 0px 20px 25px 5px rgb(0, 0, 0), inset 0px 0px 25px 5px white;
+  }
+
+  50% {
+    box-shadow: 0px 20px 25px 5px rgb(0, 0, 0), inset 0px 0px 55px 5px var(--bg-color-primary);
+  }
+
+  100% {
+    box-shadow: 0px 20px 25px 5px rgb(0, 0, 0), inset 0px 0px 25px 5px white;
+  }
+}
+
 .container.clickable:hover {
-  box-shadow: 0px 20px 25px 5px rgb(0, 0, 0), inset 0px 0px 25px 5px rgb(0, 0, 0);
+  animation: none;
+  box-shadow: 0px 20px 25px 5px rgb(0, 0, 0), inset 0px 0px 55px 5px var(--bg-color-primary);
 }
 
 @media (width < 700px) {
@@ -139,7 +280,7 @@ button, .btn {
   text-align: center;
   border-radius: clamp(15px, 2vw, 200px);
   width: 80%;
-  background-color: #8f54c5;
+  background-color: var(--input-color);
   border: white 5px solid;
   -webkit-box-shadow: inset 0px 0px 11px 5px rgba(0, 0, 0, 0.1);
   -moz-box-shadow: inset 0px 0px 11px 5px rgba(0, 0, 0, 0.1);
@@ -154,7 +295,7 @@ button, .btn {
   font-weight: 900;
   text-align: center;
   border-radius: clamp(15px, 2vw, 200px);
-  background-color: #8f54c5;
+  background-color: var(--input-color);
   border: white 5px solid;
   -webkit-box-shadow: inset 0px 0px 11px 5px rgba(0, 0, 0, 0.1);
   -moz-box-shadow: inset 0px 0px 11px 5px rgba(0, 0, 0, 0.1);
@@ -174,14 +315,15 @@ button, .btn {
 
 .conversation-input {
   resize: none;
-  font-size: 28px;
-  font-family: monospace;
+  font-size: clamp(28px, 5vw, 48px);
+  font-weight: 600;
+  font-family: Arial, sans-serif;
   margin: 10px;
   height: 4em;
-  width: 70%;
+  /* width: 70%; */
   padding: 10px;
   border-radius: clamp(15px, 2vw, 200px);
-  background-color: #e0c0ff;
+  background-color: var(--input-color);
   text-align: center;
   border: white 5px solid;
   -webkit-box-shadow: inset 0px 0px 11px 5px rgba(0, 0, 0, 0.1);
@@ -199,12 +341,12 @@ button, .btn {
   cursor: pointer;
   font-size: clamp(20px, 2.5vw, 128px);
   font-weight: 900;
-  background-color: #fff;
-  color: #551b7e;
+  background-color: var(--character-color);
+  color: var(--text-color-dark);
   transition: background-color 200ms ease-in-out, box-shadow 200ms ease-in-out;
-  box-shadow: #e0c0ff 0 0 0 0;
-  -webkit-box-shadow: #e0c0ff 0 0 0 0;
-  -moz-box-shadow: #e0c0ff 0 0 0 0;
+  box-shadow: var(--modal-border-color) 0 0 0 0;
+  -webkit-box-shadow: var(--modal-border-color) 0 0 0 0;
+  -moz-box-shadow: var(--modal-border-color) 0 0 0 0;
 }
 
 .big-button.selected {
@@ -224,9 +366,9 @@ button, .btn {
 
 .big-button:hover {
   background-color: white;
-  box-shadow: #e0c0ff 0px 0px 5px 5px;
-  -webkit-box-shadow: #e0c0ff 0px 0px 5px 5px;
-  -moz-box-shadow: #e0c0ff 0px 0px 5px 5px;
+  box-shadow: var(--modal-border-color) 0px 0px 5px 5px;
+  -webkit-box-shadow: var(--modal-border-color) 0px 0px 5px 5px;
+  -moz-box-shadow: var(--modal-border-color) 0px 0px 5px 5px;
 }
 
 .big-button:disabled {
@@ -296,20 +438,8 @@ h3 {
   align-items: center; /* Centers vertically */
 }
 
-.question-player-name {
-  max-width: 50px;
-  background-color: rgb(130, 44, 210);
-  padding: 8px;
-  margin: 0;
-}
-
 .answer-display {
   padding: 12px;
-}
-
-.vote {
-  background-color: rgb(130, 44, 210);
-  padding: 8px;
 }
 
 p.description {
@@ -407,7 +537,7 @@ p.character-count {
 
 .logo-small {
   font-family: 'Eracake', 'Trebuchet MS', sans-serif;
-  color: #c8a3ea;
+  color: var(--bg-color-secondary);
   width: 95%; /* Set width */
   max-width: 95%;
   margin:auto;
@@ -417,7 +547,7 @@ p.character-count {
 
 .logo-smallest {
   font-family: 'Eracake', 'Trebuchet MS', sans-serif;
-  color: #c8a3ea;
+  color: var(--bg-color-secondary);
   width: 95%; /* Set width */
   max-width: 95%;
   margin:auto;
@@ -467,6 +597,8 @@ p.character-count {
   display: flex;
   justify-content: center;  /* Horizontally center */
   align-items: center;      /* Vertically center */
+  background-color: var(--bg-color-primary);
+  color: var(--text-color-primary);
 }
 
 .timer p {

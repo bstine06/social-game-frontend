@@ -1,10 +1,10 @@
 import React from "react";
 
 interface LilGuy4Props {
-    fillColor: string;
+	fillColor: string;
 }
 
-const LilGuy4: React.FC<LilGuy4Props> = ({ fillColor }) => {
+const LilGuy4: React.FC<LilGuy4Props> = ({fillColor}) => {
     return (
         <svg
             version="1.1"
@@ -61,7 +61,7 @@ const LilGuy4: React.FC<LilGuy4Props> = ({ fillColor }) => {
 		C38.974,52.915,33.727,55.281,28.684,55.136z"
                 />
                 <path
-                    fill={fillColor}
+					fill={fillColor}
                     d="M49.293,37.766c-4.587-8.302-2.968-12.782-1.319-14.887c-1.377-0.582-2.395-1.426-2.88-2.192
 		c-0.621-0.96-0.601-3.297,6.061-8.088c-0.175-1.319-0.921-4.956-3.889-7.584c-2.638-2.337-6.381-3.346-11.124-3.007
 		c-5.596,0.398-10.193,3.511-12.278,8.341c-2.269,5.227-1.096,11.463,3.142,16.681c2.813,3.472,2.609,5.809,1.93,7.157

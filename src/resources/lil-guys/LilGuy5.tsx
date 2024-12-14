@@ -4,7 +4,7 @@ interface LilGuy5Props {
     fillColor: string;
 }
 
-const LilGuy5: React.FC<LilGuy5Props> = ({ fillColor }) => {
+const LilGuy5: React.FC<LilGuy5Props> = ({fillColor}) => {
     return (
         <svg
             version="1.1"
