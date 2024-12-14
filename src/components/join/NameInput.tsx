@@ -23,7 +23,7 @@ const NameInput: React.FC<NameInputProps> = ({
 
     return (
         <>
-            <h2>Enter name:</h2>
+            <h2 className="fun">enter your name:</h2>
             <input type="text" className="big-input" value={nameInput} onChange={handleInputChange} />
             <p className="character-count">{`${nameInput.length}/${maxNameLength}`}</p>
             <button className="big-button" onClick={() => onNext(nameInput)}>Next Step</button>

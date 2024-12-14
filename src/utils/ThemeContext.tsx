@@ -1,5 +1,6 @@
 // ThemeContext.tsx
 import React, { createContext, useContext, useState, ReactNode, useEffect } from "react";
+import { getHex } from "./ColorUtils";
 
 // Type for the color (can be extended if needed)
 type ThemeColor = string;

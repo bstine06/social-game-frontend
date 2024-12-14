@@ -10,7 +10,7 @@
   width: 100%;
   color: var(--text-color-primary);
   background-color: var(--bg-color-primary);
-  height: clamp(70px, 7vw, 240px);
+  height: clamp(50px, 4vw, 140px);
   margin: 0;
   box-shadow: #000000 5px 0px 5px 5px;
   -webkit-box-shadow: #000000 5px 0px 25px 5px;
@@ -25,6 +25,11 @@
   margin: 0;
   font-size: clamp(20px, 3vw, 80px);
   /* Remove default margins from the <p> tags */
+}
+
+.text-shrinker h2 {
+  font-size: clamp(24px, 4vw, 120px);
+  margin: 0;
 }
 
 .header button {

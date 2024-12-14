@@ -34,7 +34,7 @@ const StartGame: React.FC<StartGameProps> = ({ playerCount, gameId }) => {
                 className={`container thinner-container expand-to-fit ${(playerCount >= 3) ? "clickable" : ""}`}
                 onClick={handleSubmit}
             >
-                {(playerCount < 3) && <p className="description">At least 3 players must join before you can start the game</p>}
+                {(playerCount < 3) && <p className="description">At least 3 players must join to begin the game</p>}
                 {(playerCount >=3) && <p className="subheading">START GAME</p>}
                 
             </div>

@@ -8,7 +8,7 @@
 }
 
 .players-list-container {
-    max-width: clamp(100px, 60vw, 2000px);
+    max-width: clamp(300px, 60vw, 2000px);
     display: flex;
     flex-direction: column;
     gap: 5px;
@@ -67,9 +67,9 @@
 }
 
 .lil-guy {
-    max-height: 5vh;
+    max-height: max(5vh, 100px);
     max-width: 100%;
-    width: clamp(100px, 9vw, 900px);
+    width: clamp(80px, 10vw, 400px);
     border-radius: 15%;
     display: flex; /* Use flexbox on the child elements */
     flex-direction: column; /* Stack items vertically */
@@ -143,6 +143,12 @@
 
 .remove-player-btn:disabled {
     opacity: 0%;
+}
+
+@media (width < 600px) {
+    .remove-player-btn {
+        height: 30px;
+    }
 }
 
 /* @media (width < 700px) {

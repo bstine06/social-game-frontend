@@ -43,7 +43,9 @@ const Header: React.FC<HeaderProps> = ({
                         EXIT
                     </button>
                     <div className="text-shrinker">
-                        {role}
+                        <h2 className="fun">
+                        JOKE ZONE
+                        </h2>
                     </div>
                     <p>{gameData.gameId}</p>
                 </div>
