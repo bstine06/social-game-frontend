@@ -18,6 +18,7 @@ import { GameData, GameOptions } from './components/types/GameDataTypes';
 import HostOptions from './components/host/HostOptions';
 import HostPlayer from './components/hostplayer/HostPlayer';
 import HostPlayerJoinGame from './components/hostplayer/HostPlayerJoinGame';
+import SpeakerSVG from './resources/SpeakerSVG';
 
 // Define the role types
 type Role =
@@ -365,6 +366,7 @@ const App = () => {
                     gameId={gameData.gameId}
                 />
             )}
+            <SpeakerSVG active={true}/>
             {/* <button onClick={toggleDevDisplay}>Toggle Developer Panel</button>
             {devDisplayOpen && (
                 <DevDisplay

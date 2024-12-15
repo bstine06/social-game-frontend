@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import ConfirmModal from "../common/ConfirmModal";
 import "../../styles/header.css";
 import { GameData } from "../types/GameDataTypes";
+import MusicPlayer from "../../utils/MusicPlayer";
 
 interface HeaderProps {
     onCancel: () => void;
@@ -47,7 +48,10 @@ const Header: React.FC<HeaderProps> = ({
                         JOKE ZONE
                         </h2>
                     </div>
-                    <p>{gameData.gameId}</p>
+                    <div className="flex">
+                        <p style={{margin: 0}}>{gameData.gameId}</p>
+                        <MusicPlayer />
+                    </div>
                 </div>
             </div>
 

@@ -469,7 +469,21 @@ p.character-count {
 
 .instruction.small {
   margin-top: 12px;
+  margin-bottom: -8px;
   /* font-size: 30px; */
+}
+
+.flex {
+  display: flex;
+  margin: 0;
+  justify-content:space-evenly;
+  align-items: center;
+}
+
+.music-btn {
+  display: flex;
+  align-items: center;
+  margin: auto;
 }
 
 .reduced-margin-top {
@@ -501,7 +515,7 @@ p.character-count {
 }
 .qr-code {
   width: 100%;            
-  max-width: max(min(max(800px, 32vw), 50vh), 400px);
+  max-width: max(min(max(800px, 32vw), 50vh), 30px);
   height: auto;
 }
 .qr-container {
@@ -590,6 +604,13 @@ p.character-count {
   min-width: 40px;
 }
 
+.icon-svg {
+  min-width: 0px;
+  width: clamp(25px, 3vw, 100px);
+  fill: var(--text-color-primary);
+  stroke: var(--text-color-primary);
+}
+
 .timer {
   font-family: monospace;
   margin: clamp(20px, 2vw, 40px) clamp(20px, 2vw, 80px);
@@ -621,9 +642,6 @@ p.character-count {
     margin: 0px auto;
   } */
 
-  .subheading {
-    font-size: clamp(30px, 12vw, 128px);
-  }
 
   h2.scan-to-join {
     font-size: clamp(18px, 12vw, 200px);

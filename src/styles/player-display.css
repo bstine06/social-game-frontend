@@ -33,6 +33,7 @@
 .player-ready-element > .lil-guy {
     width: clamp(30px, 5vw, 100px);
     min-width: clamp(30px, 4vw, 100px);
+    animation: wiggle 1s linear infinite;
 }
 
 .player-name {

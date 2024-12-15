@@ -60,6 +60,17 @@ module.exports = {
         test: /\.otf$/i, // Add rule for .otf files
         type: 'asset/resource',
         dependency: { not: ['url'] },
+      },
+      {
+        test: /\.mp3$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: 'assets/audio/[name].[hash].[ext]', // Output path
+            },
+          },
+        ],
       }
     ],
   },
