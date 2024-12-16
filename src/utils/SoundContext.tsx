@@ -1,7 +1,8 @@
-import React, { createContext, useContext, useEffect, useRef, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import clickSound from '../resources/audio/demo-track.mp3';
 import successSound from '../resources/audio/demo-track.mp3';
 import demoTrack from '../resources/audio/demo-track.mp3';
+import demoTrack2 from '../resources/audio/demo-track-2.mp3';
 
 type SoundName = 'click' | 'success';
 type SongName = 'lobby' | 'game';
@@ -18,8 +19,8 @@ type SoundContextType = {
 const SoundContext = createContext<SoundContextType | undefined>(undefined);
 
 export const SoundProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [isSoundEnabled, setIsSoundEnabled] = useState(true);
-  const [song, setSong] = useState<SongName>("lobby");
+  const [isSoundEnabled, setIsSoundEnabled] = useState(false);
+  const [song, setSong] = useState<SongName | null>(null);
 
   // Centralized sound registry
   const sounds: Record<SoundName, HTMLAudioElement> = {
@@ -29,7 +30,7 @@ export const SoundProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   const songs: Record<SongName, HTMLAudioElement> = {
     lobby: new Audio(demoTrack),
-    game: new Audio(demoTrack)
+    game: new Audio(demoTrack2)
   }
 
   const toggleSound = () => setIsSoundEnabled((prev) => !prev);
@@ -42,21 +43,16 @@ export const SoundProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   };
 
   useEffect(() => {
+    console.log(song);
     // Initialize currentSong directly, assuming song is always valid
-    const currentSong = songs[song];
+    const currentSong = song ? songs[song] : null;
   
-    // Keep track of the previously playing song using useRef
-    const prevSong = useRef<SongName>(song);
-  
-    // If the song changes, reset all tracks and play the new song
-    if (prevSong.current !== song) {
+    
       // Pause and reset all tracks when the song changes
       Object.values(songs).forEach((track) => {
         track.pause();
         track.currentTime = 0; // Reset to the beginning on song change
       });
-      prevSong.current = song; // Update the previously played song
-    }
   
     if (currentSong) {
       // If the current song is available and sound is enabled, play the song
@@ -68,6 +64,13 @@ export const SoundProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       // Pause all music if no valid song is selected
       Object.values(songs).forEach((track) => track.pause());
     }
+
+    // Cleanup function to stop all music when component unmounts
+    return () => {
+      Object.values(songs).forEach((track) => {
+        track.pause();
+      });
+    };
   
   }, [song, isSoundEnabled]);
   

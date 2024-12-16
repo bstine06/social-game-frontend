@@ -11,7 +11,6 @@ import Waiting from "../common/Waiting";
 import StartGame from "../common/StartGame";
 import { GameData } from "../types/GameDataTypes";
 import PlayersJoinedDisplay from "../common/PlayersJoinedDisplay";
-import QRCodeGenerator from "../host/QRCodeGenerator";
 import HostLobby from "../host/HostLobby";
 
 interface PlayerProps {
@@ -199,7 +198,7 @@ const Player: React.FC<PlayerProps> = ({
         <>
             <Header
                 gameData={gameData}
-                role={isHostPlayer ? "HOST" : "PLAYER"}
+                role={isHostPlayer ? "HOSTPLAYER" : "PLAYER"}
                 onCancel={deletePlayer}
                 confirmModalContent={deletePlayerConfirmMsg}
             />

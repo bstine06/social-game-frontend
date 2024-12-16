@@ -9,7 +9,7 @@ import WatchPlayers from "../websocket/WatchPlayers";
 import { deleteGameApi } from "../../api/gameApi";
 import { PlayerData } from "../types/playerDataTypes";
 import { GameData } from "../types/GameDataTypes";
-import MusicPlayer from "../../utils/MusicPlayer";
+import { useSound } from "../../utils/SoundContext"
 
 interface HostProps {
     gameData: GameData;
@@ -21,10 +21,20 @@ const Host: React.FC<HostProps> = ({
     onCancelHost
 }) => {
     const [players, setPlayers] = useState<PlayerData[]>([]);
+    const { isSoundEnabled, setSong, playSound } = useSound();
 
     const updatePlayers = (newPlayersList: PlayerData[]) => {
         setPlayers(newPlayersList);
     };
+
+    useEffect(() => {
+        if (isSoundEnabled) {
+            switch (gameData.gameState) {
+                case "LOBBY": setSong('lobby'); break;
+                case "QUESTION": setSong('game'); break;
+            }
+        }
+    }, [gameData, isSoundEnabled]);
 
     const renderComponent = () => {
         switch (gameData.gameState) {

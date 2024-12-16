@@ -366,7 +366,6 @@ const App = () => {
                     gameId={gameData.gameId}
                 />
             )}
-            <SpeakerSVG active={true}/>
             {/* <button onClick={toggleDevDisplay}>Toggle Developer Panel</button>
             {devDisplayOpen && (
                 <DevDisplay

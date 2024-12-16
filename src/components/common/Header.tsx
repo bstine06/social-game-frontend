@@ -43,14 +43,14 @@ const Header: React.FC<HeaderProps> = ({
                     >
                         EXIT
                     </button>
-                    <div className="text-shrinker">
+                    {<div className="text-shrinker">
                         <h2 className="fun">
                         JOKE ZONE
                         </h2>
-                    </div>
+                    </div>}
                     <div className="flex">
                         <p style={{margin: 0}}>{gameData.gameId}</p>
-                        <MusicPlayer />
+                        {role==="HOST" && <MusicPlayer />}
                     </div>
                 </div>
             </div>
