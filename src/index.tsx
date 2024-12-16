@@ -3,6 +3,7 @@ import { createRoot } from "react-dom/client";
 import { BrowserRouter as Router } from "react-router-dom";
 import { ThemeProvider } from "./utils/ThemeContext";
 import App from "./App";
+import { SoundProvider } from "./utils/SoundContext";
 
 // Get the root element from the DOM
 const container = document.getElementById("root");
@@ -13,7 +14,9 @@ if (container) {
   root.render(
     <Router>
       <ThemeProvider>
-        <App />
+        <SoundProvider>
+          <App />
+        </SoundProvider>
       </ThemeProvider>
     </Router>
   );
