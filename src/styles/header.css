@@ -1,9 +1,8 @@
-.header-wrapper {
+/* .header-wrapper {
   position: relative;
-}
+} */
 
 .header {
-  position: relative;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   align-items: center;
@@ -15,7 +14,6 @@
   box-shadow: #000000 5px 0px 5px 5px;
   -webkit-box-shadow: #000000 5px 0px 25px 5px;
   -moz-box-shadow: #000 5px 0px 5px 5px;
-  overflow: hidden;
 }
 
 .header>* {
@@ -36,7 +34,7 @@
   border-radius: 0px;
   background-color: var(--bg-color-primary);
   color: var(--text-color-primary);
-  height: 100%;
+  height: calc(clamp(50px, 4vw, 140px) - 10px);
   border: none;
   transition: letter-spacing 0.2s ease;
 }

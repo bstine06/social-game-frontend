@@ -139,7 +139,7 @@
     background-image: url(../resources/trash_5000155.png);
     background-repeat: no-repeat; /* Prevent tiling */
     background-position: center; /* Center the image */
-    background-size: 70%; /* Scale the image to fit */
+    background-size: auto 70%; /* Scale the image to fit */
 }
 
 .remove-player-btn:disabled {

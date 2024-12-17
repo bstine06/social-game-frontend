@@ -36,6 +36,10 @@ const Host: React.FC<HostProps> = ({
         }
     }, [gameData, isSoundEnabled]);
 
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+
     const renderComponent = () => {
         switch (gameData.gameState) {
             case "LOBBY": {

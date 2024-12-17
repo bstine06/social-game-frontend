@@ -1,0 +1,30 @@
+.tooltip-container {
+    position: relative; /* Establishes a positioning context for the tooltip */
+}
+
+.tooltip-children {
+    display: flex; /* Ensures children can be positioned as needed */
+    position: relative;
+}
+
+.tooltip {
+    font-family: Arial, sans-serif;
+    position: absolute; /* Ensures the tooltip is not part of the document flow */
+    bottom: max(-200%, -140px); /* Position above the element */
+    left: 50%; /* Horizontally align to the center of the parent */
+    transform: translateX(-90%); /* Adjust to center-align */
+    background-color: white; /* Tooltip background */
+    color: #222; /* Tooltip text color */
+    font-size: clamp(16px, 4vw, 48px);
+    padding: clamp(5px, 1vw, 24px) clamp(10px, 2vw, 48px);
+    border-radius: clamp(5px, 3vw, 24px); /* Rounds the tooltip corners */
+    white-space: nowrap; /* Prevents tooltip text from wrapping */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* Adds a subtle shadow */
+    opacity: 0.9;
+    transition: opacity 1s ease;
+    z-index: 10; /* Ensures it appears above other elements */
+}
+
+.tooltip.invisible {
+    opacity: 0;
+}
