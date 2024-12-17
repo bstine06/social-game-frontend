@@ -13,7 +13,7 @@ import { useSound } from "../../utils/SoundContext"
 
 interface HostProps {
     gameData: GameData;
-    onCancelHost: () => void;
+    onCancelHost: (message?: string) => void;
 }
 
 const Host: React.FC<HostProps> = ({
@@ -94,7 +94,7 @@ const Host: React.FC<HostProps> = ({
                 role={"HOST"}
                 confirmModalContent={`This will delete the game (${gameData.gameId})`}
             />
-            <WatchPlayers gameId={gameData.gameId} onPlayersChanged={updatePlayers} />
+            <WatchPlayers gameId={gameData.gameId} onError={onCancelHost} onPlayersChanged={updatePlayers} />
             {renderComponent()}
         </>
     );

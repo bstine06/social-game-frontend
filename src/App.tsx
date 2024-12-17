@@ -33,7 +33,7 @@ type Role =
 
 const App = () => {
     const [loading, setLoading] = useState<boolean>(true);
-    const [gameData, setGameData] = useState<GameData>({gameId: "", gameState: "", timerEnd: null});
+    const [gameData, setGameData] = useState<GameData>({gameId: "", gameState: null, timerEnd: null});
     const [role, setRole] = useState<Role>("PENDING");
     const [playerId, setPlayerId] = useState<string>("");
     const [hostId, setHostId] = useState<string>("");
@@ -45,7 +45,7 @@ const App = () => {
     const location = useLocation();
 
     // Function to retrieve data by role
-    const getDataById = async (role: string): Promise<void> => {
+    const getDataById = async (role: Role): Promise<void> => {
         try {
             if (role === "HOST" || role === "HOSTPLAYER_CREATION") {
                 const game = await getGameByHostIdApi();
@@ -198,7 +198,7 @@ const App = () => {
         setLoading(true);
         const newGameData : GameData = {
             gameId: "",
-            gameState: "",
+            gameState: null,
             timerEnd: null
         }
         setGameData(newGameData);
@@ -231,7 +231,7 @@ const App = () => {
     };
 
     const updateLocalGameData = (newGameData: GameData): void => {
-        if (newGameData.gameState.includes("DELETED_BY")) {
+        if (newGameData.gameState && newGameData.gameState.includes("DELETED_BY")) {
             let message = `Game ${newGameData.gameId} was deleted`;
 
             switch (newGameData.gameState) {
@@ -363,6 +363,7 @@ const App = () => {
             {gameData.gameId && gameData.gameId !== "" && (
                 <GameState
                     onGameDataUpdate={updateLocalGameData}
+                    onError={resetUserSession}
                     gameId={gameData.gameId}
                 />
             )}

@@ -1,8 +1,9 @@
 import React from "react";
+import { GameState } from "./types/GameDataTypes";
 
 interface DevDisplayProps {
     gameId: string;
-    gameState: string;
+    gameState: GameState;
     role: string;
     playerId: string;
     hostId: string;

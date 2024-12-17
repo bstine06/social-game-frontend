@@ -1,5 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
-import ErrorModal from '../common/ErrorModal';
+import React, { useEffect, useRef } from 'react';
 import { WatchPlayersData, PlayerData } from '../types/playerDataTypes';
 
 const websocketUrl = process.env.REACT_APP_WEBSOCKET_URL;
@@ -7,62 +6,88 @@ const websocketUrl = process.env.REACT_APP_WEBSOCKET_URL;
 interface WatchPlayersProps {
     gameId: string;
     onPlayersChanged: (players: PlayerData[]) => void;
+    onError: (message: string) => void;
 }
 
 const WatchPlayers: React.FC<WatchPlayersProps> = ({
     gameId,
     onPlayersChanged,
+    onError,
 }) => {
     const socketRef = useRef<WebSocket | null>(null);
     const reconnectTimeout = useRef<NodeJS.Timeout | null>(null);
+    const retriesRef = useRef<number>(0); // Ref to track retry count
+
+    const limit_retries = 5;
 
     const connectWebSocket = () => {
-        // Clear any existing reconnect attempts
+        if (!gameId) {
+            return; // Return if gameId is not set
+        }
+
+        if (retriesRef.current >= limit_retries) {
+            onError(`Unable to connect to the server after multiple attempts.`);
+            return;
+        }
+
         if (reconnectTimeout.current) {
             clearTimeout(reconnectTimeout.current);
             reconnectTimeout.current = null;
         }
 
-        const socket = new WebSocket(`${websocketUrl}/watch-players?gameId=${gameId}`);
-        socketRef.current = socket;
+        try {
+            const socket = new WebSocket(`${websocketUrl}/watch-players?gameId=${gameId}`);
+            socketRef.current = socket;
 
-        // Listen for messages from the WebSocket and update accordingly
-        socket.onmessage = (event) => {
-            console.log(event.data);
-            try {
-                const parsedData: WatchPlayersData = JSON.parse(event.data);
-                onPlayersChanged(parsedData.players);
-            } catch (error) {
-                console.error("there was an error connecting to the server.");
-            }
-        };
+            socket.onopen = () => {
+                retriesRef.current = 0; // Reset retry count on successful connection
+            };
 
-        // Listen for the close event and handle it
-        socket.onclose = (event) => {
-            if (event.code >= 1002 && event.code <=2999) {
-                //console.log("WebSocket closed unexpectedly attempting to reconnect...");
-                // Attempt to reconnect after a delay
-                reconnectTimeout.current = setTimeout(() => {
-                    connectWebSocket();
-                }, 3000); // 3-second delay before reconnecting
-            } else {
-                console.error("Connection closed. Please refresh the page.");
-            }
-        };
+            socket.onmessage = (event) => {
+                try {
+                    const parsedData: WatchPlayersData = JSON.parse(event.data);
+                    onPlayersChanged(parsedData.players);
+                } catch (error) {
+                    onError(`There was an error receiving updates from the game server.`);
+                }
+            };
 
-        // Handle connection errors
-        socket.onerror = (error) => {
-            console.error("WebSocket error:", error);
-        };
+            socket.onclose = (event) => {
+                if (event.code >= 1002 && event.code <= 2999 && retriesRef.current < limit_retries) {
+                    reconnectTimeout.current = setTimeout(() => {
+                        retriesRef.current += 1; // Increment retries before reconnect
+                        connectWebSocket();
+                    }, 3000); // Retry after 3 seconds
+                } else if (retriesRef.current >= limit_retries) {
+                    onError(`There was an error receiving updates from the game server.`);
+                }
+            };
+
+            socket.onerror = () => {
+                // Handle connection errors silently to avoid duplicate error messages
+                // console.error('WebSocket encountered an error.');
+            };
+        } catch (error) {
+            onError(`Failed to establish a connection to the server.`);
+            reconnectTimeout.current = setTimeout(() => {
+                retriesRef.current += 1; // Increment retries before reconnect
+                connectWebSocket();
+            }, 3000); // Retry after 3 seconds
+        }
     };
 
     useEffect(() => {
-        // Establish initial WebSocket connection
+        if (!gameId) {
+            if (socketRef.current) {
+                socketRef.current.close();
+            }
+            return;
+        }
+
         connectWebSocket();
 
-        // Cleanup WebSocket connection and reconnect timeout on component unmount
         return () => {
-            if (socketRef.current) {
+            if (socketRef.current && socketRef.current.readyState !== WebSocket.CLOSED) {
                 socketRef.current.close();
             }
             if (reconnectTimeout.current) {
@@ -71,7 +96,7 @@ const WatchPlayers: React.FC<WatchPlayersProps> = ({
         };
     }, [gameId]);
 
-    return null;
+    return null; // No JSX rendering needed
 };
 
 export default WatchPlayers;
