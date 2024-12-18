@@ -33,7 +33,7 @@
 .player-ready-element > .lil-guy {
     width: clamp(30px, 5vw, 100px);
     min-width: clamp(30px, 4vw, 100px);
-    animation: wiggle 1s linear infinite;
+    animation: wiggle 4s ease-in-out infinite;
 }
 
 .player-name {
@@ -144,6 +144,11 @@
 
 .remove-player-btn:disabled {
     opacity: 0%;
+}
+
+.container.players-joined-container {
+    background: linear-gradient(to bottom, #222, transparent 3000%);
+    ;
 }
 
 @media (width < 600px) {

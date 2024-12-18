@@ -10,19 +10,32 @@
 .tooltip {
     font-family: Arial, sans-serif;
     position: absolute; /* Ensures the tooltip is not part of the document flow */
-    bottom: max(-200%, -140px); /* Position above the element */
+    top: calc(clamp(50px, 4vw, 140px) - 10px); /* Position above the element */
     left: 50%; /* Horizontally align to the center of the parent */
     transform: translateX(-90%); /* Adjust to center-align */
     background-color: white; /* Tooltip background */
     color: #222; /* Tooltip text color */
-    font-size: clamp(16px, 4vw, 48px);
-    padding: clamp(5px, 1vw, 24px) clamp(10px, 2vw, 48px);
+    font-size: clamp(16px, 2vw, 48px);
+    padding: clamp(12px, 1vw, 24px) clamp(10px, 2vw, 48px);
     border-radius: clamp(5px, 3vw, 24px); /* Rounds the tooltip corners */
     white-space: nowrap; /* Prevents tooltip text from wrapping */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* Adds a subtle shadow */
     opacity: 0.9;
     transition: opacity 1s ease;
     z-index: 10; /* Ensures it appears above other elements */
+}
+
+.tooltip:before {
+    content:"";
+  position: absolute;
+  top:clamp(-20px, -1vw, -10px);
+  right:min(calc(2vw + 10px), 90px);
+  margin:auto;
+  height: clamp(20px, 2vw, 50px);
+  width: clamp(20px, 2vw, 50px);
+  border:1px solid #fff;
+  transform:rotate(45deg);
+  background-color: #fff;
 }
 
 .tooltip.invisible {

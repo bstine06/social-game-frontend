@@ -27,7 +27,7 @@ const LilGuySelect: React.FC<LilGuySelectProps> = ({
 
     return (
         <>
-            <h2 className="fun">select {lilGuySelection===0 ? "avatar" : "color"}</h2>
+            <p className="subheading">select {lilGuySelection===0 ? "avatar" : "color"}</p>
             <div className={`${lilGuySelection===0 ? "selection-container" : "lil-guy-display-container"}`}>
             
             {lilGuySelection > 0 && <button className="big-button width-4em-centered full-height" onClick={() => updateSelection(0)}>back</button>}

@@ -1,10 +1,13 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import clickSound from '../resources/audio/demo-track.mp3';
-import successSound from '../resources/audio/demo-track.mp3';
-import demoTrack from '../resources/audio/demo-track.mp3';
-import demoTrack2 from '../resources/audio/demo-track-2.mp3';
 
-type SoundName = 'click' | 'success';
+import lobbySong from '../resources/audio/music/lobby-song.mp3';
+import demoTrack2 from '../resources/audio/music/demo-track-2.mp3';
+
+import playerJoined from '../resources/audio/sfx/player-joined.mp3';
+import playerJoined2 from '../resources/audio/sfx/player-joined-2.mp3';
+import playerLeft from '../resources/audio/sfx/player-left.mp3';
+
+type SoundName = 'playerJoined' | 'playerLeft';
 type SongName = 'lobby' | 'game';
 
 // Define context type
@@ -24,12 +27,12 @@ export const SoundProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   // Centralized sound registry
   const sounds: Record<SoundName, HTMLAudioElement> = {
-    click: new Audio(clickSound),
-    success: new Audio(successSound),
+    playerJoined: (Math.random() > 0.5) ? new Audio(playerJoined) : new Audio(playerJoined2),
+    playerLeft: new Audio(playerLeft),
   };
 
   const songs: Record<SongName, HTMLAudioElement> = {
-    lobby: new Audio(demoTrack),
+    lobby: new Audio(lobbySong),
     game: new Audio(demoTrack2)
   }
 

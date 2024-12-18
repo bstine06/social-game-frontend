@@ -113,13 +113,13 @@ const Player: React.FC<PlayerProps> = ({
             case "LOBBY": {
                 if (isHostPlayer) {
                     return (
-                        <HostLobby gameId={gameData.gameId} players={players}/>
+                        <HostLobby gameData={gameData} players={players}/>
                     )
                 }
                 if (isLeader) {
                     return (
                         <>
-                            <StartGame playerCount={players.length} gameId={gameData.gameId}/>
+                            <StartGame playerCount={players.length} gameData={gameData}/>
                             {players.length !== 0 && <div className="container">
                                 <PlayersJoinedDisplay playerData={players}/>
                             </div>}
@@ -202,7 +202,7 @@ const Player: React.FC<PlayerProps> = ({
                 onCancel={deletePlayer}
                 confirmModalContent={deletePlayerConfirmMsg}
             />
-            <WatchPlayers gameId={gameData.gameId} onPlayersChanged={updatePlayers} />
+            <WatchPlayers gameId={gameData.gameId} onPlayersChanged={updatePlayers} onError={onCancelPlayer}/>
             {finished ? renderWaitingComponent() : renderGameplayComponent()}
         </>
     );

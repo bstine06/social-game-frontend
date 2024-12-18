@@ -38,7 +38,8 @@ const HostOptions: React.FC<HostOptionsProps> = ({onCreateGameAsHost, onCancelHo
     const dummyGameData : GameData = {
         gameId: "",
         gameState: null,
-        timerEnd: null
+        timerEnd: null,
+        roundCount: 0
     }
 
     return (

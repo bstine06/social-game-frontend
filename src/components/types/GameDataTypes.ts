@@ -21,6 +21,7 @@ export type GameData = {
     gameId: string;
     gameState: GameState;
     timerEnd: string | null;
+    roundCount: number;
 };
 
 export type GameOptions = {

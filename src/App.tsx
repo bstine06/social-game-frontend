@@ -33,7 +33,7 @@ type Role =
 
 const App = () => {
     const [loading, setLoading] = useState<boolean>(true);
-    const [gameData, setGameData] = useState<GameData>({gameId: "", gameState: null, timerEnd: null});
+    const [gameData, setGameData] = useState<GameData>({gameId: "", gameState: null, timerEnd: null, roundCount: 0});
     const [role, setRole] = useState<Role>("PENDING");
     const [playerId, setPlayerId] = useState<string>("");
     const [hostId, setHostId] = useState<string>("");
@@ -53,7 +53,8 @@ const App = () => {
                 const newGameData : GameData = {
                     gameId: game.gameId,
                     gameState: game.gameState,
-                    timerEnd: null
+                    timerEnd: null,
+                    roundCount: 0
                 }
                 setGameData(newGameData);
             } else if (role === "PLAYER" || role === "HOSTPLAYER") {
@@ -64,7 +65,8 @@ const App = () => {
                 const newGameData : GameData = {
                     gameId: game.gameId,
                     gameState: game.gameState,
-                    timerEnd: null
+                    timerEnd: null,
+                    roundCount: 0
                 }
                 setGameData(newGameData);
             }
@@ -181,7 +183,8 @@ const App = () => {
             const newGameData : GameData = {
                 gameId: game.gameId,
                 gameState: game.gameState,
-                timerEnd: null
+                timerEnd: null,
+                roundCount: 0
             }
             setGameData(newGameData);
             if (gameOptions.isHostPlayer) {
@@ -199,7 +202,8 @@ const App = () => {
         const newGameData : GameData = {
             gameId: "",
             gameState: null,
-            timerEnd: null
+            timerEnd: null,
+            roundCount: 0
         }
         setGameData(newGameData);
         setRole("UNASSIGNED");

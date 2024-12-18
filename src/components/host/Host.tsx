@@ -45,7 +45,7 @@ const Host: React.FC<HostProps> = ({
             case "LOBBY": {
                 return (
                     <HostLobby
-                        gameId={gameData.gameId}
+                        gameData={gameData}
                         players={players}
                     />
                 );

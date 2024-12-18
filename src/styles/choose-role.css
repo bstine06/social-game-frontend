@@ -20,14 +20,14 @@
 }
 
 .option.selected .responsive-svg {
-    animation: wiggle 0.82s linear infinite;
+    animation: wiggle 1s linear infinite;
 }
 
 
 /* Keyframe for scaling (pulsing) effect */
 @keyframes wiggle {
     0% { transform: rotate(0deg); }
-    25% { transform: rotate(5deg); }
+    25% { transform: rotate(360deg); }
     50% { transform: rotate(0deg); }
     75% { transform: rotate(-5deg); }
     100% { transform: rotate(0deg); }
