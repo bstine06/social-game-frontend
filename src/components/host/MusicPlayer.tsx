@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
-import { useSound } from './SoundContext'; // Adjust the path as needed
-import SpeakerSVG from '../resources/SpeakerSVG';
-import Tooltip from '../components/common/Tooltip';
+import { useSound } from '../../contexts/SoundContext'; // Adjust the path as needed
+import SpeakerSVG from '../../resources/SpeakerSVG';
+import Tooltip from '../common/Tooltip';
 
 function MusicPlayer() {
   const { isSoundEnabled, toggleSound } = useSound();

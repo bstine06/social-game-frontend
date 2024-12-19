@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import ConfirmModal from "../common/ConfirmModal";
 import "../../styles/header.css";
 import { GameData } from "../types/GameDataTypes";
-import MusicPlayer from "../../utils/MusicPlayer";
+import MusicPlayer from "../host/MusicPlayer";
 
 interface HeaderProps {
     onCancel: () => void;

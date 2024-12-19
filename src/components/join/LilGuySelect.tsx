@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import '../../styles/player-display.css';
 import LilGuy from "./LilGuy";
 import ColorSelector from "./ColorSelector";
-import { useTheme } from "../../utils/ThemeContext";
+import { useTheme } from "../../contexts/ThemeContext";
 
 interface LilGuySelectProps {
     playerName?: string

@@ -9,7 +9,7 @@ import WatchPlayers from "../websocket/WatchPlayers";
 import { deleteGameApi } from "../../api/gameApi";
 import { PlayerData } from "../types/playerDataTypes";
 import { GameData } from "../types/GameDataTypes";
-import { useSound } from "../../utils/SoundContext"
+import { useSound } from "../../contexts/SoundContext"
 
 interface HostProps {
     gameData: GameData;

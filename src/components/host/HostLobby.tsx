@@ -5,7 +5,7 @@ import PlayerReadyDisplay from "../common/PlayerReadyDisplay";
 import QRCodeGenerator from "./QRCodeGenerator";
 import PlayersJoinedDisplay from "../common/PlayersJoinedDisplay";
 import StartGame from "../common/StartGame";
-import { useSound } from "../../utils/SoundContext";
+import { useSound } from "../../contexts/SoundContext";
 import { GameData } from "../types/GameDataTypes";
 
 // Define the type for the props
