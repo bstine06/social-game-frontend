@@ -113,7 +113,7 @@ const Player: React.FC<PlayerProps> = ({
             case "LOBBY": {
                 if (isHostPlayer) {
                     return (
-                        <HostLobby gameData={gameData} players={players}/>
+                        <HostLobby gameData={gameData} players={players} unremovablePlayerId={playerId}/>
                     )
                 }
                 if (isLeader) {
@@ -121,7 +121,7 @@ const Player: React.FC<PlayerProps> = ({
                         <>
                             <StartGame playerCount={players.length} gameData={gameData}/>
                             {players.length !== 0 && <div className="container">
-                                <PlayersJoinedDisplay playerData={players}/>
+                                <PlayersJoinedDisplay playerData={players} gameData={gameData} unremovablePlayerId={playerId}/>
                             </div>}
                             
                         </>
@@ -134,7 +134,7 @@ const Player: React.FC<PlayerProps> = ({
                                 description={"for the game to start"}
                             />
                             {players.length !== 0 && <div className="container">
-                                <PlayersJoinedDisplay playerData={players}/>
+                                <PlayersJoinedDisplay playerData={players} gameData={gameData}/>
                             </div>}
                         </>
                     )

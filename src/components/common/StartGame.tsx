@@ -44,7 +44,7 @@ const StartGame: React.FC<StartGameProps> = ({ playerCount, gameData }) => {
                 />
             )}
             <div
-                className={`container thinner-container expand-to-fit ${
+                className={`container ${
                     playerCount >= 3 ? "clickable" : ""
                 }`}
                 onClick={handleSubmit}

@@ -3,24 +3,33 @@ import { Player, PlayerData } from "../types/playerDataTypes";
 import PlayerDisplay from "./PlayerDisplay";
 import ConfirmModal from "./ConfirmModal";
 import { deletePlayerByIdApi } from "../../api/playerApi";
+import { GameData } from "../types/GameDataTypes";
 
 interface PlayersJoinedDisplayProps {
     playerData: PlayerData[];
+    gameData: GameData;
     unremovablePlayerId?: string;
     hostPrivileges?: boolean;
 }
 
+type PlayerToDelete = {
+    node: React.ReactNode;
+    playerId: string;
+}
+
 const PlayersJoinedDisplay: React.FC<PlayersJoinedDisplayProps> = ({
     playerData,
+    gameData,
     unremovablePlayerId,
     hostPrivileges = false
 }) => {
-    const [selectedPlayer, setSelectedPlayer] = useState<Player>();
+    const [playerToDelete, setPlayerToDelete] = useState<PlayerToDelete>();
 
-    const handleConfirm = async (playerId: string) => {
+    const handleConfirm = async () => {
         try {
-            await deletePlayerByIdApi(playerId);
-            setSelectedPlayer(undefined); // Close modal
+            if (!playerToDelete) throw new Error("playerToDelete was not set");
+            await deletePlayerByIdApi(playerToDelete.playerId);
+            setPlayerToDelete(undefined); // Close modal
         } catch (error) {
             console.error("Error starting game: ", error);
         }
@@ -28,15 +37,26 @@ const PlayersJoinedDisplay: React.FC<PlayersJoinedDisplayProps> = ({
 
     const handleCancel = () => {
         // Close the modal without submitting
-        setSelectedPlayer(undefined);
+        setPlayerToDelete(undefined);
     };
+
+    const handleDelete = (player: Player) => {
+        const newPlayerToDelete : PlayerToDelete = {
+            node: <PlayerDisplay player={player} />,
+            playerId: player.playerId
+        }
+        setPlayerToDelete(newPlayerToDelete);
+    }
 
     const playerDisplays = playerData.map((data) => (
         <div style={{ display: "flex", flexDirection: "row" }} key={data.player.playerId}>
             <PlayerDisplay player={data.player} />
+            {gameData.roundCount > 0 && (
+                <p>{data.player.score}</p>
+            )}
             {hostPrivileges &&  playerData.length > 1 && (
                 <button
-                    onClick={() => setSelectedPlayer(data.player)}
+                    onClick={() => handleDelete(data.player)}
                     className="remove-player-btn"
                     disabled={
                         unremovablePlayerId === data.player.playerId
@@ -51,12 +71,13 @@ const PlayersJoinedDisplay: React.FC<PlayersJoinedDisplayProps> = ({
         <>
             <p className="description">{`Players joined: ${playerData.length}/8`}</p>
             <div className="players-list-container">{playerDisplays}</div>
-            {hostPrivileges && selectedPlayer && <ConfirmModal 
+            {hostPrivileges && playerToDelete && <ConfirmModal 
                 message="Do you want to throw this player in the trash?"
-                content={selectedPlayer.name}
+                content="This action cannot be undone!"
+                element={playerToDelete.node}
                 confirmText="Yes"
                 cancelText="No"
-                onConfirm={() => handleConfirm(selectedPlayer.playerId)}
+                onConfirm={handleConfirm}
                 onCancel={handleCancel}
             />}
         </>

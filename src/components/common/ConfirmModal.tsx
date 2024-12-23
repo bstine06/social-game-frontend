@@ -4,6 +4,7 @@ import "../../styles/modal.css";
 interface ConfirmModalProps {
   message: string;
   content: string;
+  element?: React.ReactNode;
   confirmText: string;
   cancelText: string;
   onConfirm: () => void;
@@ -13,6 +14,7 @@ interface ConfirmModalProps {
 const ConfirmModal: React.FC<ConfirmModalProps> = ({
   message,
   content,
+  element = null,
   confirmText,
   cancelText,
   onConfirm,
@@ -23,6 +25,7 @@ const ConfirmModal: React.FC<ConfirmModalProps> = ({
     <div className="modal">
       <div className="modal-content">
         <p>{message}</p>
+        {element ? <div style={{display: "flex", justifySelf: "center", maxWidth:"1200px"}}>{element}</div> : null}
         <p>
           <strong>{content}</strong>
         </p>

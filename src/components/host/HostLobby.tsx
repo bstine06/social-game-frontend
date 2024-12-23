@@ -12,9 +12,10 @@ import { GameData } from "../types/GameDataTypes";
 interface HostLobbyProps {
     gameData: GameData;
     players: PlayerData[];
+    unremovablePlayerId?: string;
 }
 
-const HostLobby: React.FC<HostLobbyProps> = ({ gameData, players }) => {
+const HostLobby: React.FC<HostLobbyProps> = ({ gameData, players, unremovablePlayerId = null }) => {
 
     const playerCountRef = useRef<number>(0);
     const { playSound } = useSound();
@@ -39,7 +40,9 @@ const HostLobby: React.FC<HostLobbyProps> = ({ gameData, players }) => {
                     <div className="container thinner-container expand-to-fit players-joined-container">
                             <PlayersJoinedDisplay
                                 playerData={players}
+                                gameData={gameData}
                                 hostPrivileges={true}
+                                unremovablePlayerId={unremovablePlayerId ? unremovablePlayerId : ""}
                             />
                         </div>
                     <StartGame playerCount={players.length} gameData={gameData} />
