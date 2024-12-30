@@ -11,7 +11,7 @@
     font-family: Arial, sans-serif;
     position: absolute; /* Ensures the tooltip is not part of the document flow */
     top: calc(clamp(50px, 4vw, 140px) - 10px); /* Position above the element */
-    left: 50%; /* Horizontally align to the center of the parent */
+    left: 30%; /* Horizontally align to the center of the parent */
     transform: translateX(-90%); /* Adjust to center-align */
     background-color: white; /* Tooltip background */
     color: #222; /* Tooltip text color */

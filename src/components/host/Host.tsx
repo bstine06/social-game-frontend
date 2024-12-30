@@ -10,6 +10,7 @@ import { deleteGameApi } from "../../api/gameApi";
 import { PlayerData } from "../types/playerDataTypes";
 import { GameData } from "../types/GameDataTypes";
 import { useSound } from "../../contexts/SoundContext"
+import PreRoundInstructions from "../common/PreRoundInstructions";
 
 interface HostProps {
     gameData: GameData;
@@ -50,6 +51,8 @@ const Host: React.FC<HostProps> = ({
                     />
                 );
             }
+            case "PRE_QUESTION":
+                return <PreRoundInstructions gameData={gameData} />
             case "QUESTION":
                 return <HostQuestion players={players} gameData={gameData}/>;
             case "ASSIGN":

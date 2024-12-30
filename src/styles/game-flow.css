@@ -1,0 +1,68 @@
+.game-flow {
+    color: var(--text-color-high-contrast);
+    position: relative;
+    font-family: 'Eracake';
+    margin: clamp(24px, 2vw, 96px) auto;
+}
+
+h2.game-flow {
+    font-size: clamp(36px, 6vw, 240px);
+}
+
+h1.game-flow {
+    animation: text-glow 1s ease-in-out infinite, slide-in-from-left 200ms forwards 0.5s;
+    margin-top: 0;
+    font-size: clamp(56px, 10vw, 400px);
+    text-shadow: #FFF 1px 0 10px;
+}
+
+h3.game-flow {
+    font-size: clamp(36px, 5vw, 240px);
+    font-family: Arial, sans-serif;
+}
+
+h4.game-flow {
+    font-size: clamp(24px, 2.5vw, 100px);
+    font-weight: 100;
+    font-family: Arial, sans-serif;
+    margin: 0 auto;
+}
+
+h6.game-flow {
+    font-size: clamp(24px, 2.5vw, 100px);
+    margin-bottom: 0;
+}
+
+.slide-in-from-left {
+    left: -100%;
+    animation: slide-in-from-left 200ms ease-in-out forwards;
+    opacity: 0%;
+}
+
+@keyframes slide-in-from-left {
+    100% {
+        left: 0px;
+        opacity: 100%;
+    }
+}
+
+@keyframes text-glow {
+    0% {
+        text-shadow: #FFF 1px 0 10px;
+    }
+    50% {
+        text-shadow: #FFF 1px 0 0px;
+    }
+    100% {
+        text-shadow: #FFF 1px 0 10px;
+    }
+}
+
+@media (width > 700px) {
+    h3.game-flow {
+        text-align: left;
+    }
+    h4.game-flow {
+        text-align: right;
+    }
+}

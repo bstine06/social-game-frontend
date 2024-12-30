@@ -1,4 +1,4 @@
-import { GameOptions } from "../components/types/GameDataTypes";
+import { GameOptions, GameState } from "../components/types/GameDataTypes";
 
 const backendUrl = process.env.REACT_APP_BACKEND_URL;
 const requestMapping = "game";
@@ -84,7 +84,7 @@ export const getGameStateByGameIdApi = async (gameId: string) => {
     if (!response.ok) throw new Error('Network response was not ok');
     
     const data = await response.json(); // Parse the JSON response
-    return data.gameState; // Return only the "gameState" value
+    return data;
   } catch (error) {
     throw error;
   }

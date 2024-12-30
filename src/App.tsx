@@ -290,6 +290,7 @@ const App = () => {
         } else if (role === "UNASSIGNED") {
             return (
                 <>
+                    <div className="homepage-centered">
                     <div className="container no-top-margin">
                         <p className="logo">JOKE ZONE</p>
                     </div>
@@ -303,6 +304,7 @@ const App = () => {
                         onChooseHost={beginGameCreation}
                         onChooseJoin={joinGame}
                     />
+                    </div>
                 </>
             );
         } else if (role === "HOST_OPTIONS") {
@@ -371,7 +373,7 @@ const App = () => {
                     gameId={gameData.gameId}
                 />
             )}
-            {/* <button onClick={toggleDevDisplay}>Toggle Developer Panel</button>
+            <button onClick={toggleDevDisplay}>Toggle Developer Panel</button>
             {devDisplayOpen && (
                 <DevDisplay
                     gameId={gameData.gameId}
@@ -381,9 +383,8 @@ const App = () => {
                     hostId={hostId}
                     loading={loading}
                     connected={connected}
-                    color={themeColor}
                 />
-            )} */}
+            )}
         </>
     );
 }

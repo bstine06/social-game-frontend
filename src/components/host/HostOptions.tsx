@@ -10,8 +10,10 @@ interface HostOptionsProps {
     onCancelHost: ()=>void;
 }
 
-const HostOptions: React.FC<HostOptionsProps> = ({onCreateGameAsHost, onCancelHost}) => {
+type HostOption = 'NONE' | 'PARTY_VIEW' | 'PLAYER_VIEW'
 
+const HostOptions: React.FC<HostOptionsProps> = ({onCreateGameAsHost, onCancelHost}) => {
+    const [selection, setSelection] = useState<HostOption>("NONE");
     const [gameOptions, setGameOptions] = useState<GameOptions>({
         timerDuration: 90,
         isHostPlayer: false
@@ -28,7 +30,8 @@ const HostOptions: React.FC<HostOptionsProps> = ({onCreateGameAsHost, onCancelHo
         setGameOptions((prevGameOptions: GameOptions) => ({
             ...prevGameOptions,
             isHostPlayer: newValue
-        }))
+        }));
+        newValue ? setSelection("PLAYER_VIEW") : setSelection("PARTY_VIEW");
     }
 
     const onCreateGame = () => {
@@ -52,9 +55,8 @@ const HostOptions: React.FC<HostOptionsProps> = ({onCreateGameAsHost, onCancelHo
             />
             <div className="container">
                 <p className="subheading">Host Options</p>
-                <p className="description">how will you use this device?</p>
                 <div className="options-container">
-                    <div className={`option btn ${!gameOptions.isHostPlayer ? "selected" : ""}`} onClick={() => setIsHostPlayer(false)}>
+                    <div className={`option btn ${selection === "PARTY_VIEW" ? "selected" : ""}`} onClick={() => setIsHostPlayer(false)}>
                     <p className="subheading view-option-name">
                             Party View
                         </p>
@@ -69,7 +71,7 @@ const HostOptions: React.FC<HostOptionsProps> = ({onCreateGameAsHost, onCancelHo
                         </p>
                         </div>
                     </div>
-                    <div className={`option btn ${gameOptions.isHostPlayer ? "selected" : ""}`} onClick={() => setIsHostPlayer(true)}>
+                    <div className={`option btn ${selection === "PLAYER_VIEW" ? "selected" : ""}`} onClick={() => setIsHostPlayer(true)}>
                     <p className="subheading view-option-name">
                             Player View
                         </p>
@@ -85,14 +87,7 @@ const HostOptions: React.FC<HostOptionsProps> = ({onCreateGameAsHost, onCancelHo
                         </div>
                     </div>
                 </div>
-                {/* <p className="description">timer duration:</p>
-                <div className="flex-split">
-                    <button className={`big-button ${gameOptions.timerDuration===30 ? "selected" : ""}`} onClick={()=> updateTimerDuration(30)}>30</button>
-                    <button className={`big-button ${gameOptions.timerDuration===60 ? "selected" : ""}`} onClick={()=> updateTimerDuration(60)}>60</button>
-                    <button className={`big-button ${gameOptions.timerDuration===90 ? "selected" : ""}`} onClick={()=> updateTimerDuration(90)}>90</button>
-                </div> */}
-                
-                <button className="big-button" onClick={onCreateGame}>Create Game</button>
+                <button disabled={selection === "NONE"} className="big-button" onClick={onCreateGame}>Create Game</button>
             </div>
         </>
     )

@@ -12,6 +12,9 @@ import StartGame from "../common/StartGame";
 import { GameData } from "../types/GameDataTypes";
 import PlayersJoinedDisplay from "../common/PlayersJoinedDisplay";
 import HostLobby from "../host/HostLobby";
+import PreQuestion from "../common/PreRoundInstructions";
+import { getGameStateByGameIdApi } from "../../api/gameApi";
+import PreRoundInstructions from "../common/PreRoundInstructions";
 
 interface PlayerProps {
     gameData: GameData;
@@ -43,6 +46,17 @@ const Player: React.FC<PlayerProps> = ({
             updatePlayers(players);
         }
     }, [playerId, players]);
+
+    // this hook will serve as a failsafe for edge cases where players do not
+    // update past the finished/ waiting screen
+    // useEffect(() => {
+    //     const ensureMatchingGameState =  async () => {
+    //         const gameStateFromServer = await getGameStateByGameIdApi(gameData.gameId);
+    //         if (gameStateFromServer.gameState === gameData.gameState) return;
+    //     }
+
+    //     ensureMatchingGameState();
+    // }, [finished])
 
     const updatePlayers = (newPlayersList: PlayerData[]) => {
         setPlayers(newPlayersList);
@@ -96,10 +110,17 @@ const Player: React.FC<PlayerProps> = ({
 
     const handleFinishSubmission = () => {
         const playersStillSubmitting = players.filter(p => !p.ready);
+        if (playersStillSubmitting.length === players.length){
+            setFinished(false);
+            return;
+        }
         if (playersStillSubmitting.length > 1) {
             setFinished(true);
-        } else if (playersStillSubmitting.length > 0 && playersStillSubmitting[0].player.playerId === playerId) {
+            return;
+        }
+        if ((playersStillSubmitting.length > 0 && playersStillSubmitting[0].player.playerId === playerId) || playersStillSubmitting.length === players.length) {
             setFinished(false);
+            return;
         }
     };
 
@@ -121,7 +142,7 @@ const Player: React.FC<PlayerProps> = ({
                         <>
                             <StartGame playerCount={players.length} gameData={gameData}/>
                             {players.length !== 0 && <div className="container">
-                                <PlayersJoinedDisplay playerData={players} gameData={gameData} unremovablePlayerId={playerId}/>
+                                <PlayersJoinedDisplay playerData={players} gameData={gameData} unremovablePlayerId={playerId} hostPrivileges={true}/>
                             </div>}
                             
                         </>
@@ -139,6 +160,11 @@ const Player: React.FC<PlayerProps> = ({
                         </>
                     )
                 }
+            }
+            case "PRE_QUESTION": {
+                return (
+                    <PreRoundInstructions gameData={gameData}/>
+                )
             }
             case "QUESTION": {
                 return (

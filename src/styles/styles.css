@@ -4,6 +4,7 @@
   --bg-color-secondary: #c8a3ea;
   --text-color-primary: #c8a3ea;
   --text-color-dark: #31065b;
+  --text-color-high-contrast: white;
   --input-color: #8f54c5;
   --character-color: #a65bdc;
   --modal-bg-color: #31065b;
@@ -24,6 +25,7 @@
   --bg-color-secondary: #c8a3ea;
   --text-color-primary: #c8a3ea;
   --text-color-dark: #31065b;
+  --text-color-high-contrast: white;
   --input-color: #8f54c5;
   --character-color: #a65bdc;
   --modal-bg-color: #31065b;
@@ -35,6 +37,7 @@
   --bg-color-secondary: #FFCCCC;
   --text-color-primary: #FFCCCC;
   --text-color-dark: #770000;
+  --text-color-high-contrast: white;
   --input-color: #FFCCCC;
   --character-color: #FF0000;
   --modal-bg-color: #5b0606;
@@ -46,6 +49,7 @@
   --bg-color-secondary: #000000;
   --text-color-primary: #000000;
   --text-color-dark: #000000;
+  --text-color-high-contrast: black;
   --input-color: #ffff90;
   --character-color: #ffff00;
   --modal-bg-color: #000000;
@@ -57,6 +61,7 @@
   --bg-color-secondary: #d4ffc7;
   --text-color-primary: #d4ffc7;
   --text-color-dark: #008000;
+  --text-color-high-contrast: white;
   --input-color: #d4ffc7;
   --character-color: #00FF00;
   --modal-bg-color: hsl(120, 88%, 19%);
@@ -68,6 +73,7 @@
   --bg-color-secondary: #003399;
   --text-color-primary: #003399;
   --text-color-dark: #003399;
+  --text-color-high-contrast: black;
   --input-color: #b8ffff;
   --character-color: #66ffff;
   --modal-bg-color: hsl(180, 88%, 19%);
@@ -79,6 +85,7 @@
   --bg-color-secondary: #ffeeff;
   --text-color-primary: #ffeeff;
   --text-color-dark: #c300c3;
+  --text-color-high-contrast: white;
   --input-color: #ffeeff;
   --character-color: hsl(300, 100%, 50%);
   --modal-bg-color: hsl(300, 88%, 19%);
@@ -90,6 +97,7 @@
   --bg-color-secondary: #FFFFFF;
   --text-color-primary: #FFFFFF;
   --text-color-dark: #be5c00;
+  --text-color-high-contrast: white;
   --input-color: #ffcb9b;
   --character-color: #ff7b00;
   --modal-bg-color: hsl(29, 88%, 19%);
@@ -101,6 +109,7 @@
   --bg-color-secondary: #DDFFAA;
   --text-color-primary: #DDFFAA;
   --text-color-dark: #005000;
+  --text-color-high-contrast: white;
   --input-color: #DDFFAA;
   --character-color: #008000;
   --modal-bg-color: hsl(120, 88%, 19%);
@@ -112,6 +121,7 @@
   --bg-color-secondary: #EEFFFF;
   --text-color-primary: #EEFFFF;
   --text-color-dark: #0000FF;
+  --text-color-high-contrast: white;
   --input-color: #bbd0ff;
   --character-color: #1667ff;
   --modal-bg-color: hsl(219, 88%, 19%);
@@ -148,7 +158,9 @@ body {
 }
 
 #root {
-  margin: 0;
+  margin: auto;
+  max-width: 4000px;
+  width: 100%;
   flex-direction: column;
   background-image: 
     radial-gradient(var(--bg-color-secondary) 13.6%, transparent 3.6%),
@@ -157,6 +169,11 @@ body {
   background-size: 10vw 10vw;
   background-color: var(--bg-color-primary);
   min-height: 100vh;
+  box-shadow: inset 0px 0px clamp(12px, 5vw, 350px) clamp(12px, 6vw, 400px) var(--bg-color-primary);
+}
+
+#root.no-dots {
+  background-image: none;
 }
 
 #developer-info {
@@ -166,7 +183,6 @@ body {
 
 #app-container {
   padding: 10px;
-  
 }
 
 /* prevent text highlighting on buttons everywhere */
@@ -175,6 +191,12 @@ button, .btn {
   -webkit-user-select: none; /* Safari */
   -ms-user-select: none; /* IE 10 and IE 11 */
   user-select: none; /* Standard syntax */
+}
+
+.homepage-centered {
+  display: flex;
+  flex-direction: column;
+  height: max(100vh, 100vw);
 }
 
 .container {
@@ -186,12 +208,13 @@ button, .btn {
   max-width: min(min(calc(100% - 80px), 80%), 3840px); /*Adjust for padding */
   /* max-width: 3840px; */
   background-color: rgba(34, 34, 34, 0.98);
-  border: 2px solid white;
-  border-radius: clamp(50px, 2vw, 400px);
+  border: clamp(2px, 1vw, 10px) solid white;
+  border-radius: clamp(50px, 5vw, 200px);
   margin: 12px auto;
   -webkit-box-shadow: 0px 20px 25px 5px rgb(0, 0, 0);
   -moz-box-shadow: 0px 20px 25px 5px rgb(0, 0, 0);
   box-shadow: 0px 20px 25px 5px rgb(0, 0, 0);
+  width: 100%;
 }
 
 .container.auto-width {
@@ -220,11 +243,12 @@ button, .btn {
 }
 
 .container.invisible-container {
-  padding: 0;
-  margin: 0;
+  padding: 12px;
   border: none;
   background: none;
   box-shadow: none;
+  border-radius: 0;
+  color: var(--text-color-primary);
 }
 
 .container.clickable {
@@ -540,10 +564,10 @@ p.character-count {
 .logo {
   font-family: 'Eracake', 'Trebuchet MS', sans-serif;
   width: 95%; /* Set width */
-  letter-spacing: clamp(0.01rem, 0.9vw, 5rem);
+  letter-spacing: clamp(0.01rem, 0.9vw, 36px);
   max-width: 95%;
   margin:auto;
-  font-size: clamp(48px, 9vw, 500px);
+  font-size: clamp(48px, 9vw, 360px);
   text-wrap:nowrap;
   display: inline-block;
   color: orange;
@@ -691,5 +715,8 @@ p.character-count {
     }
     .big-button {
       font-size: 80px;
+    }
+    .homepage-centered {
+      justify-content: center;
     }
   }

@@ -11,7 +11,7 @@
     width: 100%;
     display: grid;
     display: grid;
-    grid-template-columns: 1fr 1fr; /* Ensures one or two columns based on space */
+    grid-template-columns: 1fr;
     gap: clamp(14px, 2vw, 64px); /* Space between columns */
     justify-items: center; /* Center content horizontally */
     align-items: stretch; /* Center content vertically */
@@ -24,8 +24,15 @@
 }
 
 
-/* Keyframe for scaling (pulsing) effect */
+/* Keyframe for spinning/ wiggle effect */
 @keyframes wiggle {
+    0% { transform: rotate(0deg); }
+    25% { transform: rotate(5deg); }
+    50% { transform: rotate(0deg); }
+    75% { transform: rotate(-5deg); }
+    100% { transform: rotate(0deg); }
+}
+@keyframes wiggle-360 {
     0% { transform: rotate(0deg); }
     25% { transform: rotate(360deg); }
     50% { transform: rotate(0deg); }
@@ -38,7 +45,7 @@
     border: #555 solid 1px;
     padding: clamp(12px, 1.5vw, 128px) 12px;
     width: 100%;
-    border-radius: 30px;
+    border-radius: clamp(30px, 4vw, 100px);
     transition: background-color 200ms ease-in-out, box-shadow 200ms ease-in-out;
     box-shadow: #000 0px 0px 5px 5px;
     -webkit-box-shadow: #000 0px 0px 5px 0px;
@@ -82,15 +89,16 @@
 .container.horizontal-flex {
     display: flex;
     gap: clamp(8px, 2vw, 48px);
+    flex-direction: column;
 }
 
-@media (width < 700px) {
+@media (width > 700px) {
     .options-container {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr 1fr;
     }
     .container.horizontal-flex {
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
     }
 }
 
