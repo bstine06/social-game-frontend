@@ -49,14 +49,15 @@ const Player: React.FC<PlayerProps> = ({
 
     // this hook will serve as a failsafe for edge cases where players do not
     // update past the finished/ waiting screen
-    // useEffect(() => {
-    //     const ensureMatchingGameState =  async () => {
-    //         const gameStateFromServer = await getGameStateByGameIdApi(gameData.gameId);
-    //         if (gameStateFromServer.gameState === gameData.gameState) return;
-    //     }
+    useEffect(() => {
+        const ensureMatchingGameState =  async () => {
+            const gameStateFromServer = await getGameStateByGameIdApi(gameData.gameId);
+            if (gameStateFromServer.gameState === gameData.gameState) return;
+            setFinished(false);
+        }
 
-    //     ensureMatchingGameState();
-    // }, [finished])
+        ensureMatchingGameState();
+    }, [finished])
 
     const updatePlayers = (newPlayersList: PlayerData[]) => {
         setPlayers(newPlayersList);
@@ -110,10 +111,6 @@ const Player: React.FC<PlayerProps> = ({
 
     const handleFinishSubmission = () => {
         const playersStillSubmitting = players.filter(p => !p.ready);
-        if (playersStillSubmitting.length === players.length){
-            setFinished(false);
-            return;
-        }
         if (playersStillSubmitting.length > 1) {
             setFinished(true);
             return;
@@ -161,7 +158,9 @@ const Player: React.FC<PlayerProps> = ({
                     )
                 }
             }
-            case "PRE_QUESTION": {
+            case "PRE_QUESTION":
+            case "PRE_ANSWER":
+            case "PRE_VOTE": {
                 return (
                     <PreRoundInstructions gameData={gameData}/>
                 )

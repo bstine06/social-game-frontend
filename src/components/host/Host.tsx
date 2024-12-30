@@ -52,7 +52,12 @@ const Host: React.FC<HostProps> = ({
                 );
             }
             case "PRE_QUESTION":
-                return <PreRoundInstructions gameData={gameData} />
+            case "PRE_ANSWER":
+            case "PRE_VOTE": {
+                return (
+                    <PreRoundInstructions gameData={gameData}/>
+                )
+            }
             case "QUESTION":
                 return <HostQuestion players={players} gameData={gameData}/>;
             case "ASSIGN":
