@@ -55,8 +55,8 @@ const StartGame: React.FC<StartGameProps> = ({ playerCount, gameData }) => {
                     </p>
                 )}
                 {playerCount >= 3 && (
-                    <p className="subheading">
-                        START {gameData.roundCount === 0 ? "GAME" : `ROUND ${gameData.roundCount}`}
+                    <p className="subheading one-line">
+                        START {gameData.roundCount === 0 ? "GAME" : `ROUND ${gameData.roundCount + 1}`}
                     </p>
                 )}
             </div>

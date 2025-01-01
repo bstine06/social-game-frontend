@@ -31,7 +31,7 @@ const LilGuySelect: React.FC<LilGuySelectProps> = ({
             <div className={`${lilGuySelection===0 ? "selection-container" : "lil-guy-display-container"}`}>
             
             {lilGuySelection > 0 && <button className="big-button width-4em-centered full-height" onClick={() => updateSelection(0)}>back</button>}
-            {[1, 2, 3, 4, 5].map((index) =>
+            {[1, 2, 3, 4, 5, 6].map((index) =>
                 lilGuySelection === 0 || lilGuySelection === index ? (
                     <LilGuy
                         key={index} // Use a unique key for each item

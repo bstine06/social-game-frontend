@@ -482,7 +482,7 @@ p.description {
 p.character-count {
   font-size: clamp(16px, 2vw, 48px);
   font-family: monospace;
-  margin: 0;
+  margin: 12px 0 0 0;
   color: #666;
 }
 
@@ -609,6 +609,12 @@ p.character-count {
   margin: auto;
   font-size: clamp(30px, 4vw, 128px);
   font-weight: 900;
+}
+
+.subheading.one-line {
+  overflow: hidden;
+  white-space: nowrap;
+  letter-spacing: 0.08em;
 }
 
 .subheading.view-option-name {

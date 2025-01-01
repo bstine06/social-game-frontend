@@ -48,11 +48,11 @@ const PlayersJoinedDisplay: React.FC<PlayersJoinedDisplayProps> = ({
         setPlayerToDelete(newPlayerToDelete);
     }
 
-    const playerDisplays = playerData.map((data) => (
+    const playerDisplays = playerData.sort((a, b) => b.player.score - a.player.score).map((data) => (
         <div style={{ display: "flex", flexDirection: "row" }} key={data.player.playerId}>
             <PlayerDisplay player={data.player} />
             {gameData.roundCount > 0 && (
-                <p>{data.player.score}</p>
+                <p className="score-display">{data.player.score}</p>
             )}
             {hostPrivileges &&  playerData.length > 1 && (
                 <button
@@ -69,7 +69,7 @@ const PlayersJoinedDisplay: React.FC<PlayersJoinedDisplayProps> = ({
 
     return (
         <>
-            <p className="description">{`Players joined: ${playerData.length}/8`}</p>
+            
             <div className="players-list-container">{playerDisplays}</div>
             {hostPrivileges && playerToDelete && <ConfirmModal 
                 message="Do you want to throw this player in the trash?"
@@ -80,6 +80,7 @@ const PlayersJoinedDisplay: React.FC<PlayersJoinedDisplayProps> = ({
                 onConfirm={handleConfirm}
                 onCancel={handleCancel}
             />}
+            <p className="character-count">{`players joined: ${playerData.length}/8`}</p>
         </>
     );
 };
