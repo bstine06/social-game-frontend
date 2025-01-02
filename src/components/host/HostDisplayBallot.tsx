@@ -49,6 +49,18 @@ const HostDisplayBallot: React.FC<HostDisplayBallotProps> = ({ gameId, displayin
     fetchBallotData();
   }, [gameId, displayingVotes]); // Add dependencies to ensure fresh data is fetched
 
+  useEffect(() => {
+          const rootElement = document.getElementById("root");
+          if (rootElement) {
+                      rootElement.classList.add('no-dots');
+          }
+          return () => {
+              if (rootElement) {
+                  rootElement.classList.remove('no-dots');
+              }
+          };
+      }, []);
+
   const renderPlayerOrUnknown = (isQuestion: boolean, entity: { player?: Player }) => {
     if (displayingVotes && entity.player) {
       return <PlayerDisplay player={entity.player} />;
@@ -66,6 +78,7 @@ const HostDisplayBallot: React.FC<HostDisplayBallotProps> = ({ gameId, displayin
     const answerVotes = votes.filter(vote => vote.answerId === answer.answerId);
     return answerVotes.length > 0 && (
       <div className="votes">
+        voted for by:
         {answerVotes.map((vote, index) => (
           <div key={`${vote.player.name}-${index}`} className="vote">{vote.player.name}</div>
         ))}
@@ -74,9 +87,9 @@ const HostDisplayBallot: React.FC<HostDisplayBallotProps> = ({ gameId, displayin
   };
 
   return (
-    <div className="container">
-      <h2>Vote for the best answer:</h2>
-      <div className="conversation-card">
+    <div className="container invisible-container">
+      <p className="game-flow">Vote for the best answer:</p>
+      <div className="conversation-card question game-flow slide-in-from-left">
         {renderPlayerOrUnknown(true, { player: question?.player })}
         <div className="question-display">
           {question && <h2>{he.decode(question.content)}</h2>}
@@ -84,7 +97,7 @@ const HostDisplayBallot: React.FC<HostDisplayBallotProps> = ({ gameId, displayin
       </div>
       <div className="answer-grid">
         {answers.map((answer) => (
-          <div className={`conversation-card ${answer.userSubmitted ? '' : 'failure'}`} key={answer.answerId || answer.player.playerId}>
+          <div className={`conversation-card answer game-flow slide-in-from-left ${answer.userSubmitted ? '' : 'failure'}`} key={answer.answerId || answer.player.playerId}>
             {renderPlayerOrUnknown(false, { player: answer.player })}
             <div className="answer-display">
               {renderAnswerContent(answer)}

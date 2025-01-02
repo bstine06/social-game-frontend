@@ -18,7 +18,7 @@ const HostScore: React.FC<HostScoreProps> = ({players}) => {
                     .map((entry) => (
                         <div className="score-row" key={entry.player.playerId}>
                             <PlayerDisplay player={entry.player} />
-                            <h2>{entry.player.score}</h2>
+                            <h2 className='score-display'>{entry.player.score}</h2>
                         </div>
                     ))}
             </div>

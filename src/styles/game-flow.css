@@ -5,6 +5,22 @@
     margin: clamp(24px, 2vw, 96px) auto;
 }
 
+.game-flow.conversation-card {
+    font-family: Arial, sans-serif;
+}
+
+.game-flow.conversation-card.question {
+    animation-delay: 1s;
+}
+
+.game-flow.conversation-card.answer {
+    animation-delay: 4s;
+}
+
+.game-flow.conversation-card.answer:last-of-type {
+    animation-delay: 3s;
+}
+
 h2.game-flow {
     font-size: clamp(36px, 6vw, 240px);
 }

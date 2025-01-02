@@ -76,7 +76,7 @@ const PlayerVote: React.FC<PlayerVoteProps> = ({ gameId, playerId }) => {
         <button
           disabled = {!canVote}
           key={answer.answerId}
-          className="big-button"
+          className="big-button answer-option"
           onClick={() => handleSubmit(answer.answerId, he.decode(answer.content))} // Call handleSubmit on button click
         >
           {he.decode(answer.content)}

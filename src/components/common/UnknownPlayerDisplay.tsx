@@ -9,16 +9,18 @@ const UnknownPlayerDisplay: React.FC<UnknownPlayerDisplayProps> = ({ purpose }) 
 
     const unknownQuestionPlayer = {
         playerId: "unknown",
-        name: "",
+        name: "Question",
         shape: 99,
-        color: "#FFF"
+        color: "#FFF",
+        score: 0
     }
 
     const unknownAnswerPlayer = {
         playerId: "unknown",
-        name: "",
+        name: "Answer",
         shape: 98,
-        color: "#FFF"
+        color: "#FFF",
+        score: 0
     }
 
     const renderComponent = () => {
