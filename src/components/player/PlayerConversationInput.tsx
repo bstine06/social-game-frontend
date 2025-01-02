@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import he from 'he';
 import Timer from "../common/Timer";
 import { GameData } from "../types/GameDataTypes";
@@ -18,7 +18,13 @@ const PlayerConversationInput: React.FC<PlayerConversationInputProps> = ({
 }) => {
     const [input, setInput] = useState<string>("");
 
+    const [helpAvailable, setHelpAvailable] = useState<boolean>(false);
+
     const maxInputLength = 80;
+
+    useEffect(() => {
+        setHelpAvailable(gameData.gameState === 'QUESTION' && input.length < 3)
+    }, [input])
 
     const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
         const newValue = event.target.value;
@@ -32,9 +38,13 @@ const PlayerConversationInput: React.FC<PlayerConversationInputProps> = ({
 
     return (
         <>
-            <p>{instructions}</p>
+            <p className="player-instructions">{instructions}</p>
             {prompt && <p><strong>{he.decode(prompt)}</strong></p>}
-            <textarea className="conversation-input" value={input} onChange={handleInputChange} />
+            <div style={{position:"relative"}}>
+                <textarea className="conversation-input" value={input} onChange={handleInputChange} />
+                {helpAvailable
+                    && <button className="help-btn">help me!</button>}
+            </div>
             <p className="character-count">{`${input.length}/${maxInputLength}`}</p>
             <div className="flex-split">
                 <button className="big-button" disabled={!input} onClick={handleSubmit}>Submit</button>

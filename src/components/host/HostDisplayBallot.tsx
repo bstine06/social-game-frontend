@@ -80,7 +80,7 @@ const HostDisplayBallot: React.FC<HostDisplayBallotProps> = ({ gameId, displayin
       <div className="votes">
         voted for by:
         {answerVotes.map((vote, index) => (
-          <div key={`${vote.player.name}-${index}`} className="vote">{vote.player.name}</div>
+          <PlayerDisplay key={`${vote.player.name}-${index}`} player={vote.player}/>
         ))}
       </div>
     );
