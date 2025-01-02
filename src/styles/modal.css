@@ -48,3 +48,8 @@
 .modal-content button:hover {
   box-shadow: #fff 0px 0px 12px 12px;
 }
+
+.modal-content button.question-option {
+  color: black;
+  background-color: var(--input-color);
+}

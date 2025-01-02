@@ -28,7 +28,7 @@ const PlayerQuestion: React.FC<PlayerQuestionProps> = ({
     <>
       <div className="container">
         <PlayerConversationInput 
-          instructions={"Enter a question for your friends to answer!"}
+          instructions={"Enter a question or a prompt for your friends to answer!"}
           gameData={gameData}
           onSubmit={handleSubmit}
         />

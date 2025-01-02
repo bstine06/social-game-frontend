@@ -381,7 +381,7 @@ button, .btn {
   right: clamp(30px, 5vw, 80px); /* Offset from right */
   padding: 1px 15px;
   background-color: white;
-  color: var(--text-color-high-contrast);
+  color: #222;
   border: 2px white solid;
   border-radius: clamp(5px, 5vw, 200px);
   cursor: pointer;
