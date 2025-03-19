@@ -45,7 +45,7 @@ const Header: React.FC<HeaderProps> = ({
                     </button>
                     {<div className="text-shrinker">
                         <h2 className="fun">
-                        JOKE ZONE
+                        POP SQUIZZY
                         </h2>
                     </div>}
                     <div className="flex">

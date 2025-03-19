@@ -431,7 +431,7 @@ button, .btn {
 }
 
 h2 {
-  font-size: clamp(30px, 8vw, 200px);
+  font-size: clamp(30px, 4vw, 100px);
   margin: clamp(10px, 1.5vw, 40px);
 }
 
@@ -476,11 +476,16 @@ h3 {
 }
 
 .conversation-card h2 {
-  font-size: clamp(18px, 4.4vw, 128px);
+  font-size: clamp(18px, 3.8vw, 112px);
 }
 
-.conversation-card.failure {
-  opacity: 50%;
+.conversation-card.answer.failure {
+  background-color: #444;
+  color: #999;
+}
+
+.conversation-card.answer.failure h2 {
+  font-size: clamp(18px, 2.85vw, 84px);
 }
 
 .conversation-card.question {
@@ -589,6 +594,10 @@ p.character-count {
   width: 100%;              /* Full width container */
 }
 
+.text-and-timer {
+  display:flex;
+  align-items: center;
+}
 
 .two-three-container > .container {
   max-width: 100%;

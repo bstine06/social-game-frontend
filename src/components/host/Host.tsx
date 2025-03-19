@@ -32,7 +32,7 @@ const Host: React.FC<HostProps> = ({
         if (isSoundEnabled) {
             switch (gameData.gameState) {
                 case "LOBBY": setSong('lobby'); break;
-                case "QUESTION": setSong('game'); break;
+                case "QUESTION": setSong('game1'); break;
             }
         }
     }, [gameData, isSoundEnabled]);
@@ -70,16 +70,16 @@ const Host: React.FC<HostProps> = ({
             case "VOTE":
                 return (
                     <HostDisplayBallot
-                        gameId={gameData.gameId}
+                        gameData={gameData}
                         displayingVotes={false}
                     />
                 );
             case "DISPLAY_VOTES":
                 return (
-                    <HostDisplayBallot gameId={gameData.gameId} displayingVotes={true}/>
+                    <HostDisplayBallot gameData={gameData} displayingVotes={true}/>
                 );
             case "SCORE":
-                return <HostScore players={players} />;
+                return <HostScore gameId={gameData.gameId} players={players} />;
             default: {
             }
         }

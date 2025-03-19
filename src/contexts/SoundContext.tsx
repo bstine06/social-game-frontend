@@ -1,14 +1,15 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
 import lobbySong from '../resources/audio/music/lobby-song.mp3';
-import demoTrack2 from '../resources/audio/music/demo-track-2.mp3';
+import game1 from '../resources/audio/music/demo-track-2.mp3';
+import game2 from '../resources/audio/music/demo-track.mp3';
 
-import playerJoined from '../resources/audio/sfx/player-joined.mp3';
+import playerJoined1 from '../resources/audio/sfx/player-joined.mp3';
 import playerJoined2 from '../resources/audio/sfx/player-joined-2.mp3';
 import playerLeft from '../resources/audio/sfx/player-left.mp3';
 
-type SoundName = 'playerJoined' | 'playerLeft';
-type SongName = 'lobby' | 'game';
+type SoundName = 'playerJoined1' | 'playerJoined2' | 'playerLeft';
+type SongName = 'lobby' | 'game1' | 'game2';
 
 // Define context type
 type SoundContextType = {
@@ -27,13 +28,16 @@ export const SoundProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   // Centralized sound registry
   const sounds: Record<SoundName, HTMLAudioElement> = {
-    playerJoined: (Math.random() > 0.5) ? new Audio(playerJoined) : new Audio(playerJoined2),
+    playerJoined1: new Audio(playerJoined1),
+    playerJoined2: new Audio(playerJoined2),
     playerLeft: new Audio(playerLeft),
   };
 
+  // Centralized song registry
   const songs: Record<SongName, HTMLAudioElement> = {
     lobby: new Audio(lobbySong),
-    game: new Audio(demoTrack2)
+    game1: new Audio(game1),
+    game2: new Audio(game2),
   }
 
   const toggleSound = () => setIsSoundEnabled((prev) => !prev);

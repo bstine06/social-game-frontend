@@ -13,6 +13,7 @@
     flex-direction: column;
     gap: 5px;
     margin: auto;
+    align-content: center;
 }
 
 .player-ready-element {
@@ -26,7 +27,7 @@
     border-radius: clamp(20px, 9vw, 50px);
     box-shadow: 0 0 2px 3px black;
     flex-shrink: 1;
-    max-width: 100%;
+    max-width: min(100%, 15em);
     width: 100%;
     max-height: 140px;
 }
@@ -40,7 +41,7 @@
 .player-name {
     max-width: 18em;
     margin: 0;
-    font-size: clamp(18px, 3vw, 128px);
+    font-size: clamp(18px, 2.5vw, 128px);
     padding-left: 1vw;
     padding-right: 5vw;
     font-weight: bold;
@@ -69,7 +70,7 @@
 }
 
 .lil-guy {
-    max-height: max(5vh, 100px);
+    max-height: max(5vh, 60px);
     max-width: 100%;
     width: clamp(80px, 10vw, 400px);
     border-radius: 15%;

@@ -22,7 +22,7 @@ const HostLobby: React.FC<HostLobbyProps> = ({ gameData, players, unremovablePla
 
     useEffect(() => {
         if (players.length > playerCountRef.current) {
-            playSound('playerJoined');
+            playSound('playerJoined1');
             playerCountRef.current += 1;
         } else if (players.length < playerCountRef.current) {
             playSound('playerLeft');

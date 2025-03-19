@@ -15,6 +15,8 @@ import HostLobby from "../host/HostLobby";
 import PreQuestion from "../common/PreRoundInstructions";
 import { getGameStateByGameIdApi } from "../../api/gameApi";
 import PreRoundInstructions from "../common/PreRoundInstructions";
+import HostScore from "../host/HostScore";
+import PlayerScore from "./PlayerScore";
 
 interface PlayerProps {
     gameData: GameData;
@@ -185,6 +187,13 @@ const Player: React.FC<PlayerProps> = ({
             }
             case "VOTE": {
                 return <PlayerVote gameId={gameData.gameId} playerId={playerId} />;
+            }
+            case "SCORE": {
+                if (isHostPlayer || isLeader) {
+                    return <HostScore gameId={gameData.gameId} players={players}/>
+                } else {
+                    return <PlayerScore players={players}/>;
+                }
             }
             default: {
             }

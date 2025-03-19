@@ -49,7 +49,7 @@ const PlayersJoinedDisplay: React.FC<PlayersJoinedDisplayProps> = ({
     }
 
     const playerDisplays = playerData.sort((a, b) => b.player.score - a.player.score).map((data) => (
-        <div style={{ display: "flex", flexDirection: "row" }} key={data.player.playerId}>
+        <div style={{ display: "flex", flexDirection: "row", justifyContent: "center" }} key={data.player.playerId}>
             <PlayerDisplay player={data.player} />
             {gameData.roundCount > 0 && (
                 <p className="score-display">{data.player.score}</p>

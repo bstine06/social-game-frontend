@@ -4,9 +4,11 @@ import he from 'he';
 import { Player, PlayerData } from "../types/playerDataTypes";
 import PlayerDisplay from "../common/PlayerDisplay";
 import UnknownPlayerDisplay from "../common/UnknownPlayerDisplay";
+import Timer from "../common/Timer";
+import { GameData } from "../types/GameDataTypes";
 
 interface HostDisplayBallotProps {
-  gameId: string;
+  gameData: GameData;
   displayingVotes: boolean;
 }
 
@@ -28,26 +30,26 @@ interface VoteDisplay {
   answerId: string;
 }
 
-const HostDisplayBallot: React.FC<HostDisplayBallotProps> = ({ gameId, displayingVotes }) => {
+const HostDisplayBallot: React.FC<HostDisplayBallotProps> = ({ gameData, displayingVotes }) => {
   const [answers, setAnswers] = useState<AnswerDisplay[]>([]);
   const [question, setQuestion] = useState<QuestionDisplay | null>(null);
   const [votes, setVotes] = useState<VoteDisplay[]>([]);
 
   useEffect(() => {
     const fetchBallotData = async () => {
-      const currentBallot = await getCurrentBallotApi(gameId);
+      const currentBallot = await getCurrentBallotApi(gameData.gameId);
       setQuestion(currentBallot.question);
       setAnswers(currentBallot.answers);
       console.log(currentBallot);
 
       if (displayingVotes) {
-        const currentBallotVotes = await getCurrentBallotVotesApi(gameId);
+        const currentBallotVotes = await getCurrentBallotVotesApi(gameData.gameId);
         setVotes(currentBallotVotes);
       }
     };
 
     fetchBallotData();
-  }, [gameId, displayingVotes]); // Add dependencies to ensure fresh data is fetched
+  }, [gameData.gameId, displayingVotes]); // Add dependencies to ensure fresh data is fetched
 
   useEffect(() => {
           const rootElement = document.getElementById("root");
@@ -88,7 +90,12 @@ const HostDisplayBallot: React.FC<HostDisplayBallotProps> = ({ gameId, displayin
 
   return (
     <div className="container invisible-container">
-      <p className="game-flow">Vote for the best answer:</p>
+      <div className="text-and-timer">
+        <p className="game-flow slide-in-from-left shrink text-glow">Pick the best answer</p>
+        <div className="appear-after-2s">
+          <Timer gameData={gameData}/>
+        </div>
+      </div>
       <div className="conversation-card question game-flow slide-in-from-left">
         {renderPlayerOrUnknown(true, { player: question?.player })}
         <div className="question-display">
@@ -96,7 +103,7 @@ const HostDisplayBallot: React.FC<HostDisplayBallotProps> = ({ gameId, displayin
         </div>
       </div>
       <div className="answer-grid">
-        {answers.map((answer) => (
+        {answers.map((answer, i) => (
           <div className={`conversation-card answer game-flow slide-in-from-left ${answer.userSubmitted ? '' : 'failure'}`} key={answer.answerId || answer.player.playerId}>
             {renderPlayerOrUnknown(false, { player: answer.player })}
             <div className="answer-display">

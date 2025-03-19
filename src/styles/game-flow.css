@@ -1,7 +1,7 @@
 .game-flow {
     color: var(--text-color-high-contrast);
     position: relative;
-    font-family: 'Eracake';
+    font-family: 'Eracake', 'Trebuchet MS', sans-serif;
     margin: clamp(24px, 2vw, 96px) auto;
 }
 
@@ -26,7 +26,7 @@ h2.game-flow {
 }
 
 h1.game-flow {
-    animation: text-glow 1s ease-in-out infinite, slide-in-from-left 200ms forwards 0.5s;
+    animation: text-glow 1s ease-in-out infinite, slide-in 200ms forwards 0.5s;
     margin-top: 0;
     font-size: clamp(56px, 10vw, 400px);
     text-shadow: #FFF 1px 0 10px;
@@ -51,26 +51,65 @@ h6.game-flow {
 
 .slide-in-from-left {
     left: -100%;
-    animation: slide-in-from-left 200ms ease-in-out forwards;
+    animation: slide-in 200ms ease-in-out forwards;
     opacity: 0%;
 }
 
-@keyframes slide-in-from-left {
+p.game-flow.slide-in-from-left.shrink.text-glow {
+    left: -100%;
+    animation: 
+        slide-in 200ms ease-in-out forwards, 
+        shrink 400ms ease-in 750ms forwards, 
+        text-glow 1s ease-in-out 2;
+    opacity: 0%;
+}
+
+.appear-after-2s {
+    transform: scale(0); /* Start at miniscule size */
+    opacity: 0; /* Make it invisible */
+    transition: transform 1s ease, opacity 1s ease; /* Animation duration and easing */
+    animation: delay 7s forwards; /* Delay before appearing */
+  }
+  
+  @keyframes delay {
+    0% {
+      transform: scale(0);
+      opacity: 0;
+    }
+    50% {
+        transform: scale(0);
+        opacity: 0;
+      }
+    100% {
+      transform: scale(0.7); /* Grow to original size */
+      opacity: 1;
+    }
+  }
+
+@keyframes slide-in {
     100% {
         left: 0px;
         opacity: 100%;
     }
 }
 
+@keyframes shrink {
+    100% {
+        font-size: clamp(19.2px, 3vw, 43.2px);
+        margin: clamp(12px, 1vw, 48px) auto;
+    }
+}
+
 @keyframes text-glow {
+    
     0% {
-        text-shadow: #FFF 1px 0 10px;
+        text-shadow: var(--text-color-high-contrast) 1px 0 0px;
     }
     50% {
-        text-shadow: #FFF 1px 0 0px;
+        text-shadow: var(--text-color-high-contrast) 1px 0 10px;
     }
-    100% {
-        text-shadow: #FFF 1px 0 10px;
+    1000% {
+        text-shadow: var(--text-color-high-contrast) 1px 0 0px;
     }
 }
 

@@ -156,26 +156,22 @@ const App = () => {
     useEffect(() => {
         getDataById(role);
     }, [role]);
-    
 
-    // // effect to change app colors on update of "color" state variable
-    // useEffect(() => {
-    //     const colorScheme = getColorScheme(themeColor);
-    //     const rootElement = document.getElementById("root");
-    //     const bodyElement = document.body;
+    //reload the page whenever the user returns to ensure user is immediately up to date
+    useEffect(() => {
+        const handleVisibilityChange = () => {
+          if (document.visibilityState === "visible") {
+            // Trigger a reload
+            window.location.reload();
+          }
+        };
     
-    //     if (rootElement) {
-    //         rootElement.style.backgroundImage = 
-    //             `radial-gradient(${colorScheme.text} 13.6%, transparent 3.6%),
-    //              radial-gradient(${colorScheme.text} 13.6%, transparent 3.6%)`;
-    //         rootElement.style.backgroundColor = colorScheme.bg;
-    //     }
+        document.addEventListener("visibilitychange", handleVisibilityChange);
     
-    //     // Change the color of the html element
-    //     if (bodyElement) {
-    //         bodyElement.style.backgroundColor = colorScheme.bg; // example background color
-    //     }
-    // }, [themeColor]);    
+        return () => {
+          document.removeEventListener("visibilitychange", handleVisibilityChange);
+        };
+      }, []);  
 
     const createAndHostGame = async (gameOptions: GameOptions) => {
         try {
@@ -286,13 +282,13 @@ const App = () => {
         loading: boolean
     ): JSX.Element | null => {
         if (loading) {
-            return <Waiting message={"LOADING"} />;
+            return <></>;
         } else if (role === "UNASSIGNED") {
             return (
                 <>
                     <div className="homepage-centered">
                     <div className="container no-top-margin">
-                        <p className="logo">JOKE ZONE</p>
+                        <p className="logo">POP SQUIZZY</p>
                     </div>
                     {!connected && <StaticNotification 
                         message={"We're having trouble connecting to the server. Reloading may help."} 
@@ -373,7 +369,7 @@ const App = () => {
                     gameId={gameData.gameId}
                 />
             )}
-            <button onClick={toggleDevDisplay}>Toggle Developer Panel</button>
+            {/* <button onClick={toggleDevDisplay}>Toggle Developer Panel</button> */}
             {devDisplayOpen && (
                 <DevDisplay
                     gameId={gameData.gameId}
