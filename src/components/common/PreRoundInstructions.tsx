@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from "react";
 import '../../styles/game-flow.css';
 import { GameData } from "../types/GameDataTypes";
-
-interface PreRoundInstructionsProps {
-    gameData: GameData;
-}
+import { useGame } from "../../contexts/GameContext";
 
 type PreRoundInstructions = {
     phase: string;
@@ -14,9 +11,9 @@ type PreRoundInstructions = {
     descriptionC: string;
 }
 
-const PreRoundInstructions: React.FC<PreRoundInstructionsProps> = ({
-    gameData
-}) => {
+const PreRoundInstructions: React.FC = () => {
+
+    const { gameData } = useGame();
 
     //default to question phase instructions
     const [instructions, setInstructions] = useState<PreRoundInstructions>({

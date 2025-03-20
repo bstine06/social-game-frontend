@@ -10,19 +10,19 @@ import { deleteGameApi } from "../../api/gameApi";
 import { PlayerData } from "../types/playerDataTypes";
 import { GameData } from "../types/GameDataTypes";
 import { useSound } from "../../contexts/SoundContext"
+import { useGame } from "../../contexts/GameContext";
 import PreRoundInstructions from "../common/PreRoundInstructions";
 
 interface HostProps {
-    gameData: GameData;
     onCancelHost: (message?: string) => void;
 }
 
 const Host: React.FC<HostProps> = ({
-    gameData,
     onCancelHost
 }) => {
     const [players, setPlayers] = useState<PlayerData[]>([]);
     const { isSoundEnabled, setSong, playSound } = useSound();
+    const { gameData, updateGameData } = useGame();
 
     const updatePlayers = (newPlayersList: PlayerData[]) => {
         setPlayers(newPlayersList);
@@ -46,7 +46,6 @@ const Host: React.FC<HostProps> = ({
             case "LOBBY": {
                 return (
                     <HostLobby
-                        gameData={gameData}
                         players={players}
                     />
                 );
@@ -55,31 +54,30 @@ const Host: React.FC<HostProps> = ({
             case "PRE_ANSWER":
             case "PRE_VOTE": {
                 return (
-                    <PreRoundInstructions gameData={gameData}/>
+                    <PreRoundInstructions />
                 )
             }
             case "QUESTION":
-                return <HostQuestion players={players} gameData={gameData}/>;
+                return <HostQuestion players={players}/>;
             case "ASSIGN":
                 return <p>Loading...</p>;
             case "ANSWER":
-                return <HostAnswer players={players} gameData={gameData}/>;
+                return <HostAnswer players={players} />;
             case "FIND_BALLOT":
-                return <p>Loading...</p>;
+                return;
             case "DISPLAY_BALLOT":
             case "VOTE":
                 return (
                     <HostDisplayBallot
-                        gameData={gameData}
                         displayingVotes={false}
                     />
                 );
             case "DISPLAY_VOTES":
                 return (
-                    <HostDisplayBallot gameData={gameData} displayingVotes={true}/>
+                    <HostDisplayBallot displayingVotes={true}/>
                 );
             case "SCORE":
-                return <HostScore gameId={gameData.gameId} players={players} />;
+                return <HostScore players={players} />;
             default: {
             }
         }
@@ -97,12 +95,11 @@ const Host: React.FC<HostProps> = ({
     return (
         <>
             <Header
-                gameData={gameData}
                 onCancel={deleteGame}
                 role={"HOST"}
                 confirmModalContent={`This will delete the game (${gameData.gameId})`}
             />
-            <WatchPlayers gameId={gameData.gameId} onError={onCancelHost} onPlayersChanged={updatePlayers} />
+            <WatchPlayers onError={onCancelHost} onPlayersChanged={updatePlayers} />
             {renderComponent()}
         </>
     );

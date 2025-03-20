@@ -3,21 +3,21 @@ import ConfirmModal from "../common/ConfirmModal";
 import "../../styles/header.css";
 import { GameData } from "../types/GameDataTypes";
 import MusicPlayer from "../host/MusicPlayer";
+import { useGame } from "../../contexts/GameContext";
 
 interface HeaderProps {
     onCancel: () => void;
-    gameData: GameData;
     role: string;
     confirmModalContent: string;
 }
 
 const Header: React.FC<HeaderProps> = ({
     onCancel,
-    gameData,
     role,
     confirmModalContent
 }) => {
     const [isBackModalOpen, setIsBackModalOpen] = useState<boolean>(false);
+    const { gameData } = useGame();
 
     const handleBackSubmit = async () => {
         setIsBackModalOpen(true);

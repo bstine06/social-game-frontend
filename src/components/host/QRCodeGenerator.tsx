@@ -17,7 +17,7 @@ const QRCodeGenerator: React.FC<QRCodeGeneratorProps> = ({ gameId }) => {
           <h2 className="subheading">Scan to join</h2>
           <QRCodeSVG className={"qr-code"} value={qrValue} bgColor={"#222"} fgColor={"#fff"} />
           <p className="instruction small">or, use Game ID:</p>
-          <h2 className="reduced-margin-top">{gameId}</h2>
+          <h2 className="reduced-margin-top" style={{userSelect: "text"}}>{gameId}</h2>
         </div>
       </>
     );

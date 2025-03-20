@@ -6,9 +6,9 @@ import PlayerDisplay from "../common/PlayerDisplay";
 import UnknownPlayerDisplay from "../common/UnknownPlayerDisplay";
 import Timer from "../common/Timer";
 import { GameData } from "../types/GameDataTypes";
+import { useGame } from "../../contexts/GameContext";
 
 interface HostDisplayBallotProps {
-  gameData: GameData;
   displayingVotes: boolean;
 }
 
@@ -30,10 +30,11 @@ interface VoteDisplay {
   answerId: string;
 }
 
-const HostDisplayBallot: React.FC<HostDisplayBallotProps> = ({ gameData, displayingVotes }) => {
+const HostDisplayBallot: React.FC<HostDisplayBallotProps> = ({ displayingVotes }) => {
   const [answers, setAnswers] = useState<AnswerDisplay[]>([]);
   const [question, setQuestion] = useState<QuestionDisplay | null>(null);
   const [votes, setVotes] = useState<VoteDisplay[]>([]);
+  const { gameData } = useGame();
 
   useEffect(() => {
     const fetchBallotData = async () => {
@@ -105,7 +106,7 @@ const HostDisplayBallot: React.FC<HostDisplayBallotProps> = ({ gameData, display
   return (
     <>
     <div className="absolute-top-left appear-after-2s">
-        <Timer gameData={gameData}/>
+        <Timer/>
     </div>
     <div className="container invisible-container">
       

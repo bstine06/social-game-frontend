@@ -2,22 +2,21 @@ import React, { useState } from "react";
 import { submitQuestionApi } from '../../api/questionApi';
 import PlayerConversationInput from "./PlayerConversationInput";
 import { GameData } from "../types/GameDataTypes";
+import { useGame } from "../../contexts/GameContext";
 
 interface PlayerQuestionProps {
-  gameId: string;
-  gameData: GameData;
   onFinishSubmission: () => void;
 }
 
 const PlayerQuestion: React.FC<PlayerQuestionProps> = ({
-  gameId,
-  gameData,
   onFinishSubmission
 }) => {
 
+  const { gameData } = useGame();
+
   const handleSubmit = async (questionInput: string) => {
     try {
-      await submitQuestionApi(gameId, questionInput);
+      await submitQuestionApi(gameData.gameId, questionInput);
       onFinishSubmission();
     } catch (error) {
       console.error("Error submitting question:", error);
@@ -29,7 +28,6 @@ const PlayerQuestion: React.FC<PlayerQuestionProps> = ({
       <div className="container">
         <PlayerConversationInput 
           instructions={"Enter a question or a prompt for your friends to answer!"}
-          gameData={gameData}
           onSubmit={handleSubmit}
         />
       </div>

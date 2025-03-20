@@ -38,19 +38,18 @@ const HostOptions: React.FC<HostOptionsProps> = ({onCreateGameAsHost, onCancelHo
         onCreateGameAsHost(gameOptions);
     }
 
-    const dummyGameData : GameData = {
-        gameId: "",
-        gameState: null,
-        timerEnd: null,
-        roundCount: 0
-    }
+    // const dummyGameData : GameData = {
+    //     gameId: "",
+    //     gameState: null,
+    //     timerEnd: null,
+    //     roundCount: 0
+    // }
 
     return (
         <>
             <Header 
                 onCancel={onCancelHost}
                 role={"CREATE GAME"}
-                gameData={dummyGameData}
                 confirmModalContent="Your changes will not be saved"
             />
             <div className="container">

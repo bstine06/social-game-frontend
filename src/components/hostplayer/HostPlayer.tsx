@@ -3,14 +3,16 @@ import { GameData } from "../types/GameDataTypes";
 import Header from "../common/Header";
 import { deleteGameApi } from "../../api/gameApi";
 import Player from "../player/Player";
+import { useGame } from "../../contexts/GameContext";
 
 interface HostPlayerProps {
-    gameData: GameData;
     playerId: string;
     onCancelHostPlayer: (message?: string) => void;
 }
 
-const HostPlayer: React.FC<HostPlayerProps> = ({gameData, playerId, onCancelHostPlayer}) => {
+const HostPlayer: React.FC<HostPlayerProps> = ({ playerId, onCancelHostPlayer}) => {
+
+    const { gameData } = useGame();
 
     const deleteGame = async () => {
         try {
@@ -23,11 +25,11 @@ const HostPlayer: React.FC<HostPlayerProps> = ({gameData, playerId, onCancelHost
 
     return (
         <>
-         <Player gameData={gameData}
-                    playerId={playerId}
-                    onCancelPlayer={deleteGame} 
-                    isHostPlayer={true}
-                    />
+            <Player
+                playerId={playerId}
+                onCancelPlayer={deleteGame} 
+                isHostPlayer={true}
+            />
         </>
     )
 

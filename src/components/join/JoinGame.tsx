@@ -3,26 +3,24 @@ import PlayerCreation from './PlayerCreation';
 import { getGameByIdApi } from '../../api/gameApi';
 import Header from '../common/Header';
 import { GameData } from '../types/GameDataTypes';
+import { useGame } from '../../contexts/GameContext';
 
 // Define the type for the props
 interface JoinGameProps {
     onCreatePlayer: () => void; // Function to handle hosting
     onCancelJoin: () => void;
-    updateGameId: (newGameId: string) => void;
-    gameData: GameData;
     isHostPlayer?: boolean;
 }
 
 const JoinGame: React.FC<JoinGameProps> = ({
   onCreatePlayer,
   onCancelJoin,
-  updateGameId,
-  gameData,
   isHostPlayer = false
 }) => {
   const [gameIdInput, setGameIdInput] = useState<string>("");
   const [isValidInput, setIsValidInput] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
+  const { gameData, updateGameData } = useGame();
 
   const handleBackSubmit = async () => {
     onCancelJoin();
@@ -42,7 +40,7 @@ const JoinGame: React.FC<JoinGameProps> = ({
       const game = await getGameByIdApi(gameIdInput);
       setIsValidInput(true); // React schedules this update, but it's not immediate
       setErrorMessage(""); // Clear the error message if valid
-      updateGameId(gameIdInput);
+      updateGameData({gameId: gameIdInput});
     } catch (error) {
       setErrorMessage("Please enter a valid game ID.");
       setGameIdInput("");
@@ -84,7 +82,6 @@ const JoinGame: React.FC<JoinGameProps> = ({
     <>
       <Header
         onCancel={handleBackSubmit}
-        gameData={gameData}
         role={"JOIN GAME"}
         confirmModalContent={
           isHostPlayer ?

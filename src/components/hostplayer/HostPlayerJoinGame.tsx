@@ -2,20 +2,19 @@ import React from "react";
 import { GameData } from "../types/GameDataTypes";
 import { deleteGameApi } from "../../api/gameApi";
 import JoinGame from "../join/JoinGame";
+import { useGame } from "../../contexts/GameContext";
 
 interface HostPlayerJoinGameProps {
     onCreatePlayer: () => void; // Function to handle hosting
     onCancelJoin: () => void;
-    updateGameId: (newGameId: string) => void;
-    gameData: GameData;
 }
 
 const HostPlayerJoinGame: React.FC<HostPlayerJoinGameProps> = ({
     onCreatePlayer,
     onCancelJoin,
-    updateGameId,
-    gameData
 }) => {
+
+    const { gameData } = useGame();
 
     const deleteGame = async () => {
         try {
@@ -30,8 +29,6 @@ const HostPlayerJoinGame: React.FC<HostPlayerJoinGameProps> = ({
         <JoinGame 
             onCreatePlayer={onCreatePlayer}
             onCancelJoin={deleteGame}
-            updateGameId={updateGameId}
-            gameData={gameData}
         />
     );
 

@@ -19,6 +19,7 @@ import HostOptions from './components/host/HostOptions';
 import HostPlayer from './components/hostplayer/HostPlayer';
 import HostPlayerJoinGame from './components/hostplayer/HostPlayerJoinGame';
 import SpeakerSVG from './resources/SpeakerSVG';
+import { useGame } from './contexts/GameContext';
 
 // Define the role types
 type Role =
@@ -33,7 +34,6 @@ type Role =
 
 const App = () => {
     const [loading, setLoading] = useState<boolean>(true);
-    const [gameData, setGameData] = useState<GameData>({gameId: "", gameState: null, timerEnd: null, roundCount: 0});
     const [role, setRole] = useState<Role>("PENDING");
     const [playerId, setPlayerId] = useState<string>("");
     const [hostId, setHostId] = useState<string>("");
@@ -44,31 +44,27 @@ const App = () => {
     // Hook to access the current route
     const location = useLocation();
 
+    const { gameData, updateGameData } = useGame();
+
     // Function to retrieve data by role
     const getDataById = async (role: Role): Promise<void> => {
         try {
             if (role === "HOST" || role === "HOSTPLAYER_CREATION") {
                 const game = await getGameByHostIdApi();
                 setHostId(game.hostId);
-                const newGameData : GameData = {
+                updateGameData({
                     gameId: game.gameId,
-                    gameState: game.gameState,
-                    timerEnd: null,
-                    roundCount: 0
-                }
-                setGameData(newGameData);
+                    gameState: game.gameState
+                });
             } else if (role === "PLAYER" || role === "HOSTPLAYER") {
                 const player = await getPlayerById();
                 setPlayerId(player.playerId);
                 changeThemeColor(player.color);
                 const game = await getGameByIdApi(player.gameId);
-                const newGameData : GameData = {
+                updateGameData({
                     gameId: game.gameId,
-                    gameState: game.gameState,
-                    timerEnd: null,
-                    roundCount: 0
-                }
-                setGameData(newGameData);
+                    gameState: game.gameState
+                });
             }
         } catch (err: any) {
             setErrorMessage("There was an error loading your current game");
@@ -121,10 +117,7 @@ const App = () => {
                                 "You're already in a game. Exit this game to join a new one."
                             );
                         }
-                        setGameData((prevGameData: GameData) => ({
-                            ...prevGameData,
-                            gameId: extractedGameId
-                          }));
+                        updateGameData({gameId: extractedGameId});
                     } catch (error) {
                         setRole("UNASSIGNED");
                         setErrorMessage("The game you're trying to join does not exist");
@@ -176,13 +169,10 @@ const App = () => {
     const createAndHostGame = async (gameOptions: GameOptions) => {
         try {
             const game = await createCustomGameApi(gameOptions); // Call API to create a new game
-            const newGameData : GameData = {
+            updateGameData({
                 gameId: game.gameId,
-                gameState: game.gameState,
-                timerEnd: null,
-                roundCount: 0
-            }
-            setGameData(newGameData);
+                gameState: game.gameState
+            });
             if (gameOptions.isHostPlayer) {
                 setRole("HOSTPLAYER_CREATION");
             } else {
@@ -195,13 +185,11 @@ const App = () => {
 
     const resetUserSession = (message?: string) => {
         setLoading(true);
-        const newGameData : GameData = {
-            gameId: "",
+        updateGameData({gameId: "",
             gameState: null,
             timerEnd: null,
             roundCount: 0
-        }
-        setGameData(newGameData);
+        });
         setRole("UNASSIGNED");
         setPlayerId("");
         setHostId("");
@@ -247,7 +235,7 @@ const App = () => {
             }
             resetUserSession(message);
         } else {
-            setGameData(newGameData);
+            updateGameData(newGameData);
         }
     };
 
@@ -260,10 +248,9 @@ const App = () => {
     };
 
     const updateGameId = (newGameId: string) => {
-        setGameData((prevGameData: GameData) => ({
-            ...prevGameData,
+        updateGameData({
             gameId: newGameId
-        }));
+        });
     }
 
     const reloadPageWithoutMessage = () => {
@@ -313,7 +300,6 @@ const App = () => {
         } else if (role === "HOST" && gameData.gameId) {
             return (
                 <Host
-                    gameData={gameData}
                     onCancelHost={resetUserSession}
                 />
             );
@@ -322,8 +308,6 @@ const App = () => {
                 <JoinGame
                     onCreatePlayer={updateRoleAfterPlayerCreation}
                     onCancelJoin={resetUserSession}
-                    updateGameId={updateGameId}
-                    gameData={gameData}
                 />
             );
         } else if (role === "HOSTPLAYER_CREATION") {
@@ -331,14 +315,11 @@ const App = () => {
                 <HostPlayerJoinGame
                     onCreatePlayer={updateRoleAfterPlayerCreation}
                     onCancelJoin={resetUserSession}
-                    updateGameId={updateGameId}
-                    gameData={gameData}
                 />
             );
         } else if (role === "PLAYER" && gameData.gameId) {
             return (
                 <Player
-                    gameData={gameData}
                     playerId={playerId}
                     onCancelPlayer={resetUserSession}
                 />
@@ -346,7 +327,6 @@ const App = () => {
         } else if (role === "HOSTPLAYER" && gameData.gameId) {
             return (
                 <HostPlayer 
-                    gameData={gameData}
                     playerId={playerId}
                     onCancelHostPlayer={resetUserSession}
                 />

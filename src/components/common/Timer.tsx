@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { GameData } from "../types/GameDataTypes";
+import { useGame } from "../../contexts/GameContext";
 
 interface TimerProps {
-    gameData: GameData;
     isVisible?: boolean;
 }
 
-const Timer: React.FC<TimerProps> = ({ gameData, isVisible=true }) => {
+const Timer: React.FC<TimerProps> = ({ isVisible=true }) => {
     const [timeRemaining, setTimeRemaining] = useState<number | null>(null);
     const [isTimeExpired, setIsTimeExpired] = useState<boolean>(false);
+    const { gameData } = useGame();
 
     useEffect(() => {
         const timerEnd = gameData.timerEnd;

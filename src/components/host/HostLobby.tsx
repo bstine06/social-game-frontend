@@ -7,18 +7,19 @@ import PlayersJoinedDisplay from "../common/PlayersJoinedDisplay";
 import StartGame from "../common/StartGame";
 import { useSound } from "../../contexts/SoundContext";
 import { GameData } from "../types/GameDataTypes";
+import { useGame } from "../../contexts/GameContext";
 
 // Define the type for the props
 interface HostLobbyProps {
-    gameData: GameData;
     players: PlayerData[];
     unremovablePlayerId?: string;
 }
 
-const HostLobby: React.FC<HostLobbyProps> = ({ gameData, players, unremovablePlayerId = null }) => {
+const HostLobby: React.FC<HostLobbyProps> = ({ players, unremovablePlayerId = null }) => {
 
     const playerCountRef = useRef<number>(0);
     const { playSound } = useSound();
+    const { gameData } = useGame();
 
     useEffect(() => {
         if (players.length > playerCountRef.current) {

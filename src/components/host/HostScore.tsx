@@ -3,16 +3,18 @@ import { getPlayersInGameApi } from '../../api/playerApi';
 import { PlayerData } from '../types/playerDataTypes';
 import PlayerDisplay from '../common/PlayerDisplay';
 import { updateGameStateApi } from '../../api/gameApi';
+import { useGame } from '../../contexts/GameContext';
 
 interface HostScoreProps {
-    gameId: string;
     players: PlayerData[];
 }
 
-const HostScore: React.FC<HostScoreProps> = ({players, gameId}) => {
+const HostScore: React.FC<HostScoreProps> = ({players}) => {
+
+    const { gameData } = useGame();
 
     const handleContinue = async () => {
-        await updateGameStateApi(gameId);
+        await updateGameStateApi(gameData.gameId);
     }
 
     return (

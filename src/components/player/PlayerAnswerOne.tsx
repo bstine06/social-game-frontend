@@ -2,11 +2,10 @@ import React, { useState } from "react";
 import { submitAnswerApi } from "../../api/answerApi";
 import PlayerConversationInput from "./PlayerConversationInput";
 import { GameData } from "../types/GameDataTypes";
+import { useGame } from "../../contexts/GameContext";
 
 interface PlayerAnswerOneProps {
-  gameId: string;
   question: Question;
-  gameData: GameData;
   onAnswerSubmit: () => void;
 }
 
@@ -16,15 +15,15 @@ interface Question {
 }
 
 const PlayerAnswerOne: React.FC<PlayerAnswerOneProps> = ({
-  gameId,
   question,
-  gameData,
   onAnswerSubmit,
 }) => {
 
+  const { gameData } = useGame();
+
   const handleSubmit = async (answerInput: string) => {
     try {
-      await submitAnswerApi(gameId, question.questionId, answerInput);
+      await submitAnswerApi(gameData.gameId, question.questionId, answerInput);
       onAnswerSubmit();
     } catch (error) {
       console.error("Error submitting answer:", error);
@@ -36,7 +35,6 @@ const PlayerAnswerOne: React.FC<PlayerAnswerOneProps> = ({
         <PlayerConversationInput 
           instructions={"Enter an answer to your friend's question."}
           prompt={question.content}
-          gameData={gameData}
           onSubmit={handleSubmit}
         />
     </>

@@ -3,9 +3,9 @@ import { getCurrentBallotApi, submitVoteApi } from "../../api/voteApi";
 import ConfirmModal from "../common/ConfirmModal";
 import he from 'he';
 import { Player } from "../types/playerDataTypes";
+import { useGame } from "../../contexts/GameContext";
 
 interface PlayerVoteProps {
-  gameId: string;
   playerId: string
 }
 
@@ -21,12 +21,13 @@ interface QuestionDisplay {
   player: Player;
 }
 
-const PlayerVote: React.FC<PlayerVoteProps> = ({ gameId, playerId }) => {
+const PlayerVote: React.FC<PlayerVoteProps> = ({ playerId }) => {
   const [answers, setAnswers] = useState<AnswerDisplay[]>([]); // Initialize the state as an empty array
   const [question, setQuestion] = useState<QuestionDisplay | null>(null);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [selectedAnswer, setSelectedAnswer] = useState<{ id: string; content: string } | null>(null); // State to store selected answer
   const [canVote, setCanVote] = useState<boolean>(true);
+  const { gameData } = useGame();
 
   useEffect(() => {
     const getCurrentBallot = async (gameId: string) => {
@@ -41,7 +42,7 @@ const PlayerVote: React.FC<PlayerVoteProps> = ({ gameId, playerId }) => {
       setAnswers(currentBallot.answers);
     };
 
-    getCurrentBallot(gameId);
+    getCurrentBallot(gameData.gameId);
   }, []);
 
   const handleSubmit = async (answerId: string, answerContent: string) => {

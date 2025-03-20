@@ -4,6 +4,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import App from "./App";
 import { SoundProvider } from "./contexts/SoundContext";
+import { GameProvider } from "./contexts/GameContext";
 
 // Get the root element from the DOM
 const container = document.getElementById("root");
@@ -13,11 +14,13 @@ if (container) {
   const root = createRoot(container);
   root.render(
     <Router>
-      <ThemeProvider>
-        <SoundProvider>
-          <App />
-        </SoundProvider>
-      </ThemeProvider>
+      <GameProvider>
+        <ThemeProvider>
+          <SoundProvider>
+            <App />
+          </SoundProvider>
+        </ThemeProvider>
+      </GameProvider>
     </Router>
   );
 } else {

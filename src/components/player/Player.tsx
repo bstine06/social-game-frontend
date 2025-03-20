@@ -17,20 +17,22 @@ import { getGameStateByGameIdApi } from "../../api/gameApi";
 import PreRoundInstructions from "../common/PreRoundInstructions";
 import HostScore from "../host/HostScore";
 import PlayerScore from "./PlayerScore";
+import { useGame } from "../../contexts/GameContext";
 
 interface PlayerProps {
-    gameData: GameData;
     playerId: string;
     onCancelPlayer: (message?: string) => void;
     isHostPlayer?: boolean;
 }
 
 const Player: React.FC<PlayerProps> = ({
-    gameData,
     playerId,
     onCancelPlayer,
     isHostPlayer
 }) => {
+
+    const { gameData } = useGame();
+
     const [deletePlayerConfirmMsg, setDeletePlayerConfirmMsg] = useState<string>(
         `This will remove you from the game (${gameData.gameId})`
     )
@@ -133,7 +135,7 @@ const Player: React.FC<PlayerProps> = ({
             case "LOBBY": {
                 if (isHostPlayer) {
                     return (
-                        <HostLobby gameData={gameData} players={players} unremovablePlayerId={playerId}/>
+                        <HostLobby players={players} unremovablePlayerId={playerId}/>
                     )
                 }
                 if (isLeader) {
@@ -164,14 +166,12 @@ const Player: React.FC<PlayerProps> = ({
             case "PRE_ANSWER":
             case "PRE_VOTE": {
                 return (
-                    <PreRoundInstructions gameData={gameData}/>
+                    <PreRoundInstructions/>
                 )
             }
             case "QUESTION": {
                 return (
                     <PlayerQuestion
-                        gameId={gameData.gameId}
-                        gameData={gameData}
                         onFinishSubmission={handleFinishSubmission}
                     />
                 );
@@ -179,18 +179,16 @@ const Player: React.FC<PlayerProps> = ({
             case "ANSWER": {
                 return (
                     <PlayerAnswer
-                        gameId={gameData.gameId}
-                        gameData={gameData}
                         onFinishSubmission={handleFinishSubmission}
                     />
                 );
             }
             case "VOTE": {
-                return <PlayerVote gameId={gameData.gameId} playerId={playerId} />;
+                return <PlayerVote playerId={playerId} />;
             }
             case "SCORE": {
                 if (isHostPlayer || isLeader) {
-                    return <HostScore gameId={gameData.gameId} players={players}/>
+                    return <HostScore players={players}/>
                 } else {
                     return <PlayerScore players={players}/>;
                 }
@@ -231,12 +229,11 @@ const Player: React.FC<PlayerProps> = ({
     return (
         <>
             <Header
-                gameData={gameData}
                 role={isHostPlayer ? "HOSTPLAYER" : "PLAYER"}
                 onCancel={deletePlayer}
                 confirmModalContent={deletePlayerConfirmMsg}
             />
-            <WatchPlayers gameId={gameData.gameId} onPlayersChanged={updatePlayers} onError={onCancelPlayer}/>
+            <WatchPlayers onPlayersChanged={updatePlayers} onError={onCancelPlayer}/>
             {finished ? renderWaitingComponent() : renderGameplayComponent()}
         </>
     );

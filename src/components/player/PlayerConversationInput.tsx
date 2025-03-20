@@ -5,17 +5,16 @@ import { GameData } from "../types/GameDataTypes";
 import OptionsModal from "../common/OptionsModal";
 import ConfirmModal from "../common/ConfirmModal";
 import { getQuestionHelpApi } from "../../api/questionHelpApi";
+import { useGame } from "../../contexts/GameContext";
 
 interface PlayerConversationInputProps {
     instructions: string;
-    gameData: GameData;
     prompt?: string;
     onSubmit: (content: string) => void;
 }
 
 const PlayerConversationInput: React.FC<PlayerConversationInputProps> = ({
     instructions,
-    gameData,
     prompt,
     onSubmit
 }) => {
@@ -24,6 +23,7 @@ const PlayerConversationInput: React.FC<PlayerConversationInputProps> = ({
     const [helpModalVisible, setHelpModalVisible] = useState<boolean>(false);
     const [confirmModalVisible, setConfirmModalVisible] = useState<boolean>(false);
     const [questionOptions, setQuestionOptions] = useState<string[]>(["","",""]);
+    const { gameData } = useGame();
 
     const maxInputLength = 80;
 
@@ -71,7 +71,7 @@ const PlayerConversationInput: React.FC<PlayerConversationInputProps> = ({
             <p className="character-count">{`${input.length}/${maxInputLength}`}</p>
             <div className="flex-split">
                 <button className="big-button" disabled={!input} onClick={handleSubmit}>Submit</button>
-                <Timer gameData={gameData}/>
+                <Timer/>
             </div>
             {helpModalVisible && <OptionsModal options={questionOptions} onSelection={updateInputFromHelpMenu} onClose={() => setHelpModalVisible(false)}/>}
             {confirmModalVisible && <ConfirmModal 

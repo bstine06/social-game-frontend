@@ -1,27 +1,27 @@
 import React, { useEffect, useRef } from 'react';
 import { WatchPlayersData, PlayerData } from '../types/playerDataTypes';
+import { useGame } from '../../contexts/GameContext';
 
 const websocketUrl = process.env.REACT_APP_WEBSOCKET_URL;
 
 interface WatchPlayersProps {
-    gameId: string;
     onPlayersChanged: (players: PlayerData[]) => void;
     onError: (message: string) => void;
 }
 
 const WatchPlayers: React.FC<WatchPlayersProps> = ({
-    gameId,
     onPlayersChanged,
     onError,
 }) => {
     const socketRef = useRef<WebSocket | null>(null);
     const reconnectTimeout = useRef<NodeJS.Timeout | null>(null);
     const retriesRef = useRef<number>(0); // Ref to track retry count
+    const { gameData } = useGame();
 
     const limit_retries = 5;
 
     const connectWebSocket = () => {
-        if (!gameId) {
+        if (!gameData.gameId) {
             return; // Return if gameId is not set
         }
 
@@ -36,7 +36,7 @@ const WatchPlayers: React.FC<WatchPlayersProps> = ({
         }
 
         try {
-            const socket = new WebSocket(`${websocketUrl}/watch-players?gameId=${gameId}`);
+            const socket = new WebSocket(`${websocketUrl}/watch-players?gameId=${gameData.gameId}`);
             socketRef.current = socket;
 
             socket.onopen = () => {
@@ -77,7 +77,7 @@ const WatchPlayers: React.FC<WatchPlayersProps> = ({
     };
 
     useEffect(() => {
-        if (!gameId) {
+        if (!gameData.gameId) {
             if (socketRef.current) {
                 socketRef.current.close();
             }
@@ -94,7 +94,7 @@ const WatchPlayers: React.FC<WatchPlayersProps> = ({
                 clearTimeout(reconnectTimeout.current);
             }
         };
-    }, [gameId]);
+    }, [gameData.gameId]);
 
     return null; // No JSX rendering needed
 };
