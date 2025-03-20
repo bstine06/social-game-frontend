@@ -25,8 +25,7 @@
   /* Remove default margins from the <p> tags */
 }
 
-.text-shrinker h2 {
-  font-size: clamp(24px, 4vw, 120px);
+.margin-zero h2 {
   margin: 0;
 }
 
@@ -34,7 +33,6 @@
   border-radius: 0px;
   background-color: var(--bg-color-primary);
   color: var(--text-color-primary);
-  height: calc(clamp(30px, 4vw, 140px) - 10px);
   border: none;
   transition: letter-spacing 0.2s ease;
 }

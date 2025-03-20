@@ -20,6 +20,7 @@ import HostPlayer from './components/hostplayer/HostPlayer';
 import HostPlayerJoinGame from './components/hostplayer/HostPlayerJoinGame';
 import SpeakerSVG from './resources/SpeakerSVG';
 import { useGame } from './contexts/GameContext';
+import { useTheme } from './contexts/ThemeContext';
 
 // Define the role types
 type Role =
@@ -45,6 +46,7 @@ const App = () => {
     const location = useLocation();
 
     const { gameData, updateGameData } = useGame();
+    const { themeColor, setThemeColor } = useTheme(); 
 
     // Function to retrieve data by role
     const getDataById = async (role: Role): Promise<void> => {
@@ -59,7 +61,7 @@ const App = () => {
             } else if (role === "PLAYER" || role === "HOSTPLAYER") {
                 const player = await getPlayerById();
                 setPlayerId(player.playerId);
-                changeThemeColor(player.color);
+                setThemeColor(player.color);
                 const game = await getGameByIdApi(player.gameId);
                 updateGameData({
                     gameId: game.gameId,
@@ -193,14 +195,9 @@ const App = () => {
         setRole("UNASSIGNED");
         setPlayerId("");
         setHostId("");
-        changeThemeColor("PURPLE");
+        setThemeColor("PURPLE");
         reloadPage(message);
     };
-
-    const changeThemeColor = (color: string) => {
-        document.querySelector('body')?.setAttribute('data-theme', color);
-        // setThemeColor(color);
-    }
 
     const updateRoleAfterPlayerCreation = () => {
         if (role === "HOSTPLAYER_CREATION") {

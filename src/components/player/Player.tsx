@@ -209,7 +209,7 @@ const Player: React.FC<PlayerProps> = ({
                 <>
                     <Waiting
                         message={"WAITING"}
-                        description={"(for these slowpokes)"}
+                        description={"for these slowpokes"}
                     />
                     <PlayerReadyDisplay players={playersStillWaiting} />
                 </>

@@ -16,6 +16,20 @@
     align-content: center;
 }
 
+.players-list-container > div {
+    display: flex;
+    flex-direction: row;
+    gap: clamp(5px, 2vw, 30px);
+    margin: auto;
+    align-content: center;
+}
+
+.players-list-container .player-ready-element {
+    width: clamp(40px, 35vw, 800px);
+    gap: 5px;
+    align-content: center;
+}
+
 .player-ready-element {
     font-size: 36px;
     display: flex;
@@ -155,7 +169,7 @@
 }
 
 .score-display {
-    margin: auto 24px;
+    margin: auto auto;
     font-size: clamp(24px, 4vw, 120px);
 }
 

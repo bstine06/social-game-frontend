@@ -43,7 +43,7 @@ const Header: React.FC<HeaderProps> = ({
                     >
                         EXIT
                     </button>
-                    {<div className="text-shrinker">
+                    {<div className="margin-zero">
                         <h2 className="fun">
                         POP SQUIZZY
                         </h2>
