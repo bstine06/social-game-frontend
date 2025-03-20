@@ -1,3 +1,13 @@
+:root {
+    --scale-size: 0.7; /* Default size */
+  }
+  
+  @media (max-width: 700px) {
+    :root {
+      --scale-size: 0.4;
+    }
+  }
+
 .game-flow {
     color: var(--text-color-high-contrast);
     position: relative;
@@ -64,6 +74,12 @@ p.game-flow.slide-in-from-left.shrink.text-glow {
     opacity: 0%;
 }
 
+.absolute-top-left {
+    position: absolute;
+    top: clamp(35px, 4vw, 140px);
+    right: 0px;
+}
+
 .appear-after-2s {
     transform: scale(0); /* Start at miniscule size */
     opacity: 0; /* Make it invisible */
@@ -81,7 +97,7 @@ p.game-flow.slide-in-from-left.shrink.text-glow {
         opacity: 0;
       }
     100% {
-      transform: scale(0.7); /* Grow to original size */
+      transform: scale(var(--scale-size)); /* Grow to original size */
       opacity: 1;
     }
   }
@@ -95,7 +111,7 @@ p.game-flow.slide-in-from-left.shrink.text-glow {
 
 @keyframes shrink {
     100% {
-        font-size: clamp(19.2px, 3vw, 43.2px);
+        font-size: clamp(19.2px, 3vw, 100px);
         margin: clamp(12px, 1vw, 48px) auto;
     }
 }

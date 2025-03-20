@@ -27,13 +27,13 @@
     border-radius: clamp(20px, 9vw, 50px);
     box-shadow: 0 0 2px 3px black;
     flex-shrink: 1;
-    max-width: min(100%, 15em);
+    max-width: 100%;
     width: 100%;
     max-height: 140px;
 }
 
 .player-ready-element > .lil-guy {
-    width: clamp(30px, 5vw, 100px);
+    width: clamp(20px, 2vw, 100px);
     min-width: clamp(30px, 4vw, 100px);
     animation: wiggle-360 4s ease-in-out infinite;
 }

@@ -63,6 +63,20 @@ const HostDisplayBallot: React.FC<HostDisplayBallotProps> = ({ gameData, display
           };
       }, []);
 
+  const applyHyphenation = (text: string) => {
+    const words = text.split(' ');
+
+    // Apply soft hyphen to words longer than a threshold (e.g., 10 characters)
+    const newText = words.map(word => {
+      if (word.length > 15) {
+        return word.split('').join('\u00AD'); // Add soft hyphen after each letter
+      }
+      return word;
+    }).join(' ');
+
+    return newText;
+  };
+
   const renderPlayerOrUnknown = (isQuestion: boolean, entity: { player?: Player }) => {
     if (displayingVotes && entity.player) {
       return <PlayerDisplay player={entity.player} />;
@@ -72,7 +86,7 @@ const HostDisplayBallot: React.FC<HostDisplayBallotProps> = ({ gameData, display
 
   const renderAnswerContent = (answer: AnswerDisplay) => {
     return answer.userSubmitted ?
-      <h2>{he.decode(answer.content)}</h2> :
+      <h2>{applyHyphenation(he.decode(answer.content))}</h2> :
       <h2>oops. no answer submitted</h2>;
   };
 
@@ -89,17 +103,17 @@ const HostDisplayBallot: React.FC<HostDisplayBallotProps> = ({ gameData, display
   };
 
   return (
+    <>
+    <div className="absolute-top-left appear-after-2s">
+        <Timer gameData={gameData}/>
+    </div>
     <div className="container invisible-container">
-      <div className="text-and-timer">
-        <p className="game-flow slide-in-from-left shrink text-glow">Pick the best answer</p>
-        <div className="appear-after-2s">
-          <Timer gameData={gameData}/>
-        </div>
-      </div>
+      
+      <p className="game-flow slide-in-from-left shrink text-glow">Pick the best answer</p>
       <div className="conversation-card question game-flow slide-in-from-left">
         {renderPlayerOrUnknown(true, { player: question?.player })}
         <div className="question-display">
-          {question && <h2>{he.decode(question.content)}</h2>}
+          {question && <h2>{applyHyphenation(he.decode(question.content))}</h2>}
         </div>
       </div>
       <div className="answer-grid">
@@ -114,6 +128,7 @@ const HostDisplayBallot: React.FC<HostDisplayBallotProps> = ({ gameData, display
         ))}
       </div>
     </div>
+    </>
   );
 };
 

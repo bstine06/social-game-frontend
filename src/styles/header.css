@@ -9,7 +9,7 @@
   width: 100%;
   color: var(--text-color-primary);
   background-color: var(--bg-color-primary);
-  height: clamp(50px, 4vw, 140px);
+  height: clamp(30px, 4vw, 140px);
   margin: 0;
   box-shadow: #000000 5px 0px 5px 5px;
   -webkit-box-shadow: #000000 5px 0px 25px 5px;
@@ -34,7 +34,7 @@
   border-radius: 0px;
   background-color: var(--bg-color-primary);
   color: var(--text-color-primary);
-  height: calc(clamp(50px, 4vw, 140px) - 10px);
+  height: calc(clamp(30px, 4vw, 140px) - 10px);
   border: none;
   transition: letter-spacing 0.2s ease;
 }

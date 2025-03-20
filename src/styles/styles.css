@@ -277,7 +277,7 @@ button, .btn {
   box-shadow: 0px 20px 25px 5px rgb(0, 0, 0), inset 0px 0px 55px 5px var(--bg-color-primary);
 }
 
-@media (width < 600px) {
+@media (width < 700px) {
   .container {
       margin-top: 12px;
   }
@@ -463,6 +463,7 @@ h3 {
   margin-top: clamp(12px, 2vw, 48px);
   align-items: stretch; /* Ensures all items in the row stretch to the same height */
   width: 100%;
+  max-width: 100vw;
 }
 
 .conversation-card {
@@ -476,7 +477,10 @@ h3 {
 }
 
 .conversation-card h2 {
-  font-size: clamp(18px, 3.8vw, 112px);
+  font-size: clamp(18px, 3vw, 112px);
+  hyphens: manual;
+  word-wrap: break-word; /* Ensures long words break */
+  overflow-wrap: break-word; /* Fallback for older browsers */
 }
 
 .conversation-card.answer.failure {
@@ -507,6 +511,7 @@ h3 {
 
 .answer-display {
   display: grid;
+  min-width: 0;
   grid-template-rows: repeat(auto-fit, minmax(0, 1fr)); /* Ensures one item per row */
   justify-items: center; /* Centers horizontally */
   align-items: center; /* Centers vertically */
