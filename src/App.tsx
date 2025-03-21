@@ -111,17 +111,22 @@ const App = () => {
                 if (match) {
                     const extractedGameId = match[1];
                     try {
-                        await getGameByIdApi(extractedGameId);
+                        const targetGame = await getGameByIdApi(extractedGameId);
                         setLoading(false);
     
                         // Check role before assigning PLAYER_CREATION
                         if (newRole === "UNASSIGNED") {
-                            setRole("PLAYER_CREATION");
+                            // Check if game is in lobby
+                            if (targetGame.gameState === "LOBBY") {
+                                setRole("PLAYER_CREATION");
+                            } else {
+                                window.history.replaceState(null, "", "/");
+                                reloadPage("You can't join a game mid-round. Please wait for the round to end then try again.");
+                            }
+                            
                         } else {
-                            setRole(newRole);
-                            setErrorMessage(
-                                "You're already in a game. Exit this game to join a new one."
-                            );
+                            window.history.replaceState(null, "", "/");
+                            reloadPage("You're already in a game. Exit this game to join a new one.");
                         }
                         updateGameData({gameId: extractedGameId});
                     } catch (error) {
@@ -240,10 +245,6 @@ const App = () => {
         }
     };
 
-    const closeErrorModal = () => {
-        setErrorMessage("");
-    };
-
     const toggleDevDisplay = () => {
         setDevDisplayOpen(!devDisplayOpen);
     };
@@ -348,7 +349,7 @@ const App = () => {
     return (
         <>
             {errorMessage && (
-                <ErrorModal message={errorMessage} onClose={closeErrorModal} />
+                <ErrorModal message={errorMessage} onClose={() => setErrorMessage("")} />
             )}
             {role && renderComponent(role, loading)}
             {gameData.gameId && gameData.gameId !== "" && (

@@ -55,13 +55,8 @@ const HostDisplayBallot: React.FC<HostDisplayBallotProps> = ({ displayingVotes }
   useEffect(() => {
           const rootElement = document.getElementById("root");
           if (rootElement) {
-                      rootElement.classList.add('no-dots');
+                      rootElement.classList.remove('dots');
           }
-          return () => {
-              if (rootElement) {
-                  rootElement.classList.remove('no-dots');
-              }
-          };
       }, []);
 
   const applyHyphenation = (text: string) => {

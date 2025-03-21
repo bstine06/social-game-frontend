@@ -13,6 +13,13 @@ const HostScore: React.FC<HostScoreProps> = ({players}) => {
 
     const { gameData } = useGame();
 
+    useEffect(() => {
+              const rootElement = document.getElementById("root");
+              if (rootElement) {
+                          rootElement.classList.add('dots');
+              }
+          }, []);
+
     const handleContinue = async () => {
         await updateGameStateApi(gameData.gameId);
     }

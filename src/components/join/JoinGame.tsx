@@ -4,6 +4,7 @@ import { getGameByIdApi } from '../../api/gameApi';
 import Header from '../common/Header';
 import { GameData } from '../types/GameDataTypes';
 import { useGame } from '../../contexts/GameContext';
+import ErrorModal from '../common/ErrorModal';
 
 // Define the type for the props
 interface JoinGameProps {
@@ -38,9 +39,13 @@ const JoinGame: React.FC<JoinGameProps> = ({
     event.preventDefault();
     try {
       const game = await getGameByIdApi(gameIdInput);
-      setIsValidInput(true); // React schedules this update, but it's not immediate
-      setErrorMessage(""); // Clear the error message if valid
-      updateGameData({gameId: gameIdInput});
+      if (game.gameState !== "LOBBY") {
+        setErrorMessage("You can't join a game mid-round. Please wait for the round to end then try again.");
+      } else {
+        setIsValidInput(true); // React schedules this update, but it's not immediate
+        setErrorMessage(""); // Clear the error message if valid
+        updateGameData({gameId: gameIdInput});
+      }
     } catch (error) {
       setErrorMessage("Please enter a valid game ID.");
       setGameIdInput("");
@@ -72,7 +77,6 @@ const JoinGame: React.FC<JoinGameProps> = ({
           <button className="big-button" onClick={handleSubmit}>
             Submit
           </button>
-          {errorMessage && <p className="error">{errorMessage}</p>}
         </div>
       );
     }
@@ -80,6 +84,9 @@ const JoinGame: React.FC<JoinGameProps> = ({
 
   return (
     <>
+      {errorMessage && (
+        <ErrorModal message={errorMessage} onClose={() => setErrorMessage("")} />
+      )}
       <Header
         onCancel={handleBackSubmit}
         role={"JOIN GAME"}
