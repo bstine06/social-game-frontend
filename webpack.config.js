@@ -57,10 +57,12 @@ module.exports = {
         use: ['@svgr/webpack'],
       },
       {
-        test: /\.otf$/i, // Add rule for .otf files
+        test: /\.(woff|woff2|eot|ttf|otf)$/i,
         type: 'asset/resource',
-        dependency: { not: ['url'] },
-      },
+        generator: {
+            filename: 'fonts/[name][ext]'
+        }
+    },
       {
         test: /\.mp3$/,
         use: [

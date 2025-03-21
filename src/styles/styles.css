@@ -155,6 +155,12 @@ body {
   min-width: 320px;
   max-width: 4000px;
   background-color: var(--bg-color-primary);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.font-loaded body {
+  opacity: 1;
 }
 
 #root {
@@ -612,6 +618,7 @@ p.character-count {
 @font-face {
   font-family: 'Eracake';
   src: url('./fonts/Eracake.otf') format('opentype');
+  font-display: block;
 }
 
 .logo {

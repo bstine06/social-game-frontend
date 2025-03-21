@@ -12,6 +12,7 @@ import GameState from './components/websocket/GameState';
 import './styles/styles.css';
 import DevDisplay from './components/DevDisplay';
 import Waiting from './components/common/Waiting';
+import './styles/text-animations.css'
 import './styles/fonts/Eracake.otf';
 import StaticNotification from './components/home/StaticNotification';
 import { GameData, GameOptions } from './components/types/GameDataTypes';
@@ -34,6 +35,9 @@ type Role =
     | "PENDING";
 
 const App = () => {
+
+    const GAME_TITLE = `POP\u00A0SQUIZZY`;
+
     const [loading, setLoading] = useState<boolean>(true);
     const [role, setRole] = useState<Role>("PENDING");
     const [playerId, setPlayerId] = useState<string>("");
@@ -271,19 +275,27 @@ const App = () => {
             return (
                 <>
                     <div className="homepage-centered">
-                    <div className="container no-top-margin">
-                        <p className="logo">POP SQUIZZY</p>
-                    </div>
-                    {!connected && <StaticNotification 
-                        message={"We're having trouble connecting to the server. Reloading may help."} 
-                        onButtonPress={reloadPageWithoutMessage}
-                        buttonText={"Reload"}
-                    />}
-                    <ChooseRole
-                        isConnected = {connected}
-                        onChooseHost={beginGameCreation}
-                        onChooseJoin={joinGame}
-                    />
+                        <div className="container no-top-margin">
+                            <p className="logo animate-dance">
+                                {GAME_TITLE.split("").map((letter, index) => (
+                                    <span key={index}>{letter}</span>
+                                ))}
+                            </p>
+                        </div>
+                        {!connected && (
+                            <StaticNotification
+                                message={
+                                    "We're having trouble connecting to the server. Reloading may help."
+                                }
+                                onButtonPress={reloadPageWithoutMessage}
+                                buttonText={"Reload"}
+                            />
+                        )}
+                        <ChooseRole
+                            isConnected={connected}
+                            onChooseHost={beginGameCreation}
+                            onChooseJoin={joinGame}
+                        />
                     </div>
                 </>
             );

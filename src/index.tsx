@@ -5,9 +5,13 @@ import { ThemeProvider } from "./contexts/ThemeContext";
 import App from "./App";
 import { SoundProvider } from "./contexts/SoundContext";
 import { GameProvider } from "./contexts/GameContext";
+import { loadFonts } from "./utils/FontLoader";
 
 // Get the root element from the DOM
 const container = document.getElementById("root");
+
+// load the custom / external fonts
+loadFonts();
 
 if (container) {
   // If the container exists, create and render the root

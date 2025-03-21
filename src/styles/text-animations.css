@@ -22,3 +22,18 @@
       transform: scale(0.8);
   }
 }
+
+.animate-dance span {
+  animation: animate-dance 2s infinite cubic-bezier(0.6, 0.04, 0.98, 0.335);
+  transform: rotate(5deg);
+  display: inline-block;
+}
+
+@keyframes animate-dance {
+  50% {
+    transform: rotate(-5deg)
+  }
+  0% {
+    transform: rotate(5deg)
+  }
+}
