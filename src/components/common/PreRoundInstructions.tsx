@@ -27,7 +27,7 @@ const PreRoundInstructions: React.FC = () => {
     useEffect(() => {
         const rootElement = document.getElementById("root");
         if (rootElement) {
-                    rootElement.classList.add('no-dots');
+                    rootElement.classList.remove('dots');
         }
 
         switch (gameData.gameState) {
@@ -53,7 +53,7 @@ const PreRoundInstructions: React.FC = () => {
 
         return () => {
             if (rootElement) {
-                rootElement.classList.remove('no-dots');
+                rootElement.classList.add('dots');
             }
         };
 

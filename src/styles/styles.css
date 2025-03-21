@@ -168,18 +168,17 @@ body {
   max-width: 4000px;
   width: 100%;
   flex-direction: column;
-  background-image: 
-    radial-gradient(var(--bg-color-secondary) 13.6%, transparent 3.6%),
-    radial-gradient(var(--bg-color-secondary) 13.6%, transparent 3.6%);
-  background-position: 0px 0px, 5vw 5vw, -0.5vw 0.5vw, 50.4px 61.6px;
-  background-size: 10vw 10vw;
   background-color: var(--bg-color-primary);
   min-height: 100vh;
   box-shadow: inset 0px 0px clamp(12px, 5vw, 350px) clamp(12px, 6vw, 400px) var(--bg-color-primary);
 }
 
-#root.no-dots {
-  background-image: none;
+#root.dots {
+  background-image: 
+    radial-gradient(var(--bg-color-secondary) 13.6%, transparent 3.6%),
+    radial-gradient(var(--bg-color-secondary) 13.6%, transparent 3.6%);
+  background-position: 0px 0px, 5vw 5vw, -0.5vw 0.5vw, 50.4px 61.6px;
+  background-size: 10vw 10vw;
 }
 
 #developer-info {

@@ -1,11 +1,12 @@
 @font-face {
     font-family: 'Eracake';
     src: url('./fonts/Eracake.otf') format('opentype');
+    font-display: block;
 }
 
 .options-container {
-    margin: clamp(24px, 5vw, 64px) auto;
-    margin-top: clamp(12px, 3vw, 50px);
+    margin: auto;
+    margin-top: clamp(12px, 1vw, 50px);
     margin-bottom: 0px;
     max-width: 95%;
     width: 100%;
@@ -71,7 +72,7 @@
     padding: 12px;
     padding-bottom: 12px;
     margin: auto;
-    font-size: clamp(36px, 10vw, 128px);
+    font-size: clamp(24px, 5vw, 128px);
     font-weight: 900;
 }
 

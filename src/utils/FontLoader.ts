@@ -3,6 +3,7 @@ export function loadFonts() {
 
     font.load().then(() => {
         document.fonts.add(font);
+        document.getElementById("root")?.classList.add("dots");
         document.documentElement.classList.add("font-loaded");
         console.log("Font loaded successfully!");
     }).catch((err) => {

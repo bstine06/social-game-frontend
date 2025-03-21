@@ -24,7 +24,7 @@
 }
 
 .animate-dance span {
-  animation: animate-dance 2s infinite cubic-bezier(0.6, 0.04, 0.98, 0.335);
+  animation: animate-dance 1.8s infinite cubic-bezier(1, 0, 0, 1);
   transform: rotate(5deg);
   display: inline-block;
 }
