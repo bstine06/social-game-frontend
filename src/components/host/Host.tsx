@@ -3,7 +3,7 @@ import HostLobby from "./HostLobby";
 import Header from "../common/Header";
 import HostQuestion from "./HostQuestion";
 import HostAnswer from "./HostAnswer";
-import HostDisplayBallot from "./HostDisplayBallot";
+import DisplayBallot from "../common/DisplayBallot";
 import HostScore from "./HostScore";
 import WatchPlayers from "../websocket/WatchPlayers";
 import { deleteGameApi } from "../../api/gameApi";
@@ -67,14 +67,9 @@ const Host: React.FC<HostProps> = ({
                 return;
             case "DISPLAY_BALLOT":
             case "VOTE":
-                return (
-                    <HostDisplayBallot
-                        displayingVotes={false}
-                    />
-                );
             case "DISPLAY_VOTES":
                 return (
-                    <HostDisplayBallot displayingVotes={true}/>
+                    <DisplayBallot />
                 );
             case "SCORE":
                 return <HostScore players={players} />;

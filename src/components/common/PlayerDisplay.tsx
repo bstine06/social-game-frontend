@@ -19,6 +19,7 @@ const PlayerDisplay: React.FC<PlayerDisplayProps> = ({
                         className={`player-ready-element ${
                             isReady ? "player-ready" : ""
                         }`}
+                        style={player.playerId==='unknown'?{opacity:'0'}:{}}
                     >
                         <LilGuy
                             lilGuyIndex={player.shape}

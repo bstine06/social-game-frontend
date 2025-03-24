@@ -15,6 +15,10 @@
     margin: clamp(24px, 2vw, 96px) auto;
 }
 
+.activity-header {
+    font-size: clamp(24px, 5vw, 96px);
+}
+
 .game-flow.conversation-card {
     font-family: Arial, sans-serif;
 }
@@ -72,12 +76,13 @@ p.game-flow.slide-in-from-left.shrink.text-glow {
         shrink 400ms ease-in 750ms forwards, 
         text-glow 1s ease-in-out 2;
     opacity: 0%;
+    white-space: nowrap;
 }
 
 .absolute-top-left {
     position: absolute;
-    top: clamp(35px, 4vw, 140px);
-    right: 0px;
+    top: clamp(5px, 4vw, 140px);
+    right: calc(clamp(0px, 4vw, 30px) - 30px);
 }
 
 .appear-after-2s {

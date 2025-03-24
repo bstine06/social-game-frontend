@@ -27,14 +27,25 @@ const PlayerConversationInput: React.FC<PlayerConversationInputProps> = ({
 
     const maxInputLength = 80;
 
+    const textarea = document.querySelector('.conversation-input') as HTMLTextAreaElement;
+
     useEffect(() => {
         setHelpAvailable(gameData.gameState === 'QUESTION' && input.length < 3)
     }, [input])
+
+    useEffect(() => {
+        const newTextareaHeight = 4 + input.length/20;
+        if (textarea) textarea.style.height = `${newTextareaHeight}em`;
+    }, [input]);
 
     const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
         const newValue = event.target.value;
         if (newValue.length <= maxInputLength) setInput(newValue);
     };
+
+    const changeTextAreaHeight = () => {
+        
+    }
 
     const handleSubmit = async () => {
         onSubmit(input);

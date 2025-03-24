@@ -18,6 +18,7 @@ import PreRoundInstructions from "../common/PreRoundInstructions";
 import HostScore from "../host/HostScore";
 import PlayerScore from "./PlayerScore";
 import { useGame } from "../../contexts/GameContext";
+import DisplayBallot from "../common/DisplayBallot";
 
 interface PlayerProps {
     playerId: string;
@@ -183,16 +184,14 @@ const Player: React.FC<PlayerProps> = ({
                     />
                 );
             }
-            case "VOTE": {
-                return <PlayerVote playerId={playerId} />;
-            }
-            case "SCORE": {
-                if (isHostPlayer || isLeader) {
-                    return <HostScore players={players}/>
-                } else {
-                    return <PlayerScore players={players}/>;
-                }
-            }
+            case "DISPLAY_BALLOT":
+            case "VOTE":
+            case "DISPLAY_VOTES":
+                return (
+                    <DisplayBallot playerId={playerId}/>
+                );
+            case "SCORE":
+                return <HostScore players={players} />;
             default: {
             }
         }
